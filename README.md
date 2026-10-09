@@ -19,4 +19,4 @@ Any static host works (GitHub Pages, Netlify, Vercel, Cloudflare Pages). Point t
 ## Notes
 
 - Listings and the broker dashboard on the page are illustrative examples.
-- The pilot sign-up form prepares an email to `hello@equire.ae`; connect it to a form backend or CRM before launch.
+- The pilot sign-up form prepares an email to `contact.us@equire.ae`; connect it to a form backend or CRM before launch.

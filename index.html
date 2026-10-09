@@ -868,7 +868,7 @@ footer nav a:hover{color:var(--on-navy)}
       <div class="done" id="formDone" hidden>
         <h3>Almost there</h3>
         <p>Send these details to the founding team and we will be in touch.</p>
-        <div class="mailbox"><code id="mailAddr">hello@equire.ae</code><button type="button" id="copyBtn">Copy details</button></div>
+        <div class="mailbox"><code id="mailAddr">contact.us@equire.ae</code><button type="button" id="copyBtn">Copy details</button></div>
         <pre id="mailBody"></pre>
         <a class="btn btn-ink" id="mailLink" href="#">Open in my email app</a>
       </div>
@@ -968,12 +968,12 @@ footer nav a:hover{color:var(--on-navy)}
     err.textContent="";
     var body="Role: "+d.get("role")+"\nName: "+name+"\nFirm: "+(d.get("firm")||"")+"\nEmail: "+email+"\nMobile: "+(d.get("phone")||"")+"\n"+sizeLabel.textContent+": "+d.get("size");
     document.getElementById("mailBody").textContent=body;
-    document.getElementById("mailLink").href="mailto:hello@equire.ae?subject="+encodeURIComponent("equire pilot access: "+name)+"&body="+encodeURIComponent(body);
+    document.getElementById("mailLink").href="mailto:contact.us@equire.ae?subject="+encodeURIComponent("equire pilot access: "+name)+"&body="+encodeURIComponent(body);
     document.getElementById("formFields").hidden=true;
     document.getElementById("formDone").hidden=false;
   });
   document.getElementById("copyBtn").addEventListener("click",function(){
-    var t="To: hello@equire.ae\n\n"+document.getElementById("mailBody").textContent, btn=this;
+    var t="To: contact.us@equire.ae\n\n"+document.getElementById("mailBody").textContent, btn=this;
     function sel(){var r=document.createRange();r.selectNodeContents(document.getElementById("mailBody"));var s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent="Selected, press copy";}
     try{navigator.clipboard.writeText(t).then(function(){btn.textContent="Copied";},sel);}catch(x){sel();}
   });
