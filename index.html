@@ -268,7 +268,7 @@ section{padding-block:clamp(72px,9vw,120px)}
 #verify{background:var(--navy);color:var(--on-navy)}
 #verify .eyebrow{color:var(--on-navy-muted)}
 #verify .lede{color:var(--on-navy-muted)}
-.vgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--navy-line);border:1px solid var(--navy-line);border-radius:14px;overflow:hidden}
+.vgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--navy-line);border:1px solid var(--navy-line);border-radius:14px;overflow:hidden}
 .vgrid article{background:var(--navy);padding:28px 26px;display:grid;gap:12px;align-content:start}
 .vgrid .doc{font-family:var(--mono);font-size:12px;color:var(--gold);letter-spacing:.06em}
 .vgrid h3{font-size:21px}
@@ -276,7 +276,8 @@ section{padding-block:clamp(72px,9vw,120px)}
 .vgrid ul{margin:4px 0 0;padding:0;list-style:none;display:grid;gap:6px;font-size:14px;color:var(--on-navy)}
 .vgrid li{display:flex;gap:8px}
 .vgrid li::before{content:"";flex:none;width:6px;height:6px;margin-top:9px;background:var(--gold)}
-@media (max-width:900px){.vgrid{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:1100px){.vgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.vgrid{grid-template-columns:minmax(0,1fr)}}
 .room{margin-top:28px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:22px;align-items:center;border:1px solid var(--navy-line);border-radius:14px;padding:22px 26px;background:var(--navy-2)}
 .room .lk{width:52px;height:52px;border-radius:12px;background:var(--gold);color:#1A1405;display:grid;place-items:center}
 .room .lk svg{width:24px;height:24px}
@@ -796,6 +797,12 @@ footer nav a:hover{color:var(--on-navy)}
         <h3>The premises come with the deal</h3>
         <p>For many sectors the lease is the business, so we check it before any buyer falls in love with the location.</p>
         <ul><li>Tenancy contract and Ejari</li><li>Years remaining and rent</li><li>Landlord NOC needed for transfer</li></ul>
+      </article>
+      <article>
+        <span class="doc">04 · SITE VISIT</span>
+        <h3>We have seen it open and trading</h3>
+        <p>Our team visits every owner listing, photographs the business and confirms it matches what the seller has told us.</p>
+        <ul><li>Full on-site photo shoot, included</li><li>Premises match the lease and licence</li><li>Visited by equire badge on the listing</li></ul>
       </article>
     </div>
     <div class="room">
