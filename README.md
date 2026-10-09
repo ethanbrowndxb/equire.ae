@@ -4,6 +4,10 @@ Marketing website for **equire**, the verified marketplace for UAE business sale
 
 A single static page (`index.html`) with no build step. Fonts load from Google Fonts; everything else is inline.
 
+## App preview
+
+`app/` holds the equire mobile app prototype, live at `equire.ae/app`. It is an installable web app (PWA): open it on a phone and use **Add to Home Screen** to get a full-screen app icon. Everything runs in the browser with example data; nothing is sent anywhere.
+
 ## Run locally
 
 Open `index.html` in a browser, or serve the folder:
