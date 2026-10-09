@@ -471,6 +471,22 @@ form.ld-form{background:var(--surface);border:1px solid var(--line);border-radiu
 .ld-done pre{margin:0;white-space:pre-wrap;font:13px/1.5 var(--mono);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;max-height:150px;overflow:auto}
 .ld-alt{display:block;text-align:center;font-size:13.5px;color:var(--muted);margin-top:12px}
 .ld-alt a{color:inherit;font-weight:600}
+.ld-nda-btn{margin-top:12px;width:100%}.ld-nda-btn svg{width:16px!important;height:16px!important;margin:0!important}
+.ld-nda{display:grid;gap:12px;margin-top:12px;border-top:1px solid var(--line);padding-top:14px}
+.ld-nda[hidden]{display:none}
+.ld-terms{font-size:13.5px;line-height:1.5;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;max-height:170px;overflow:auto}
+.ld-terms p{margin:0 0 6px}
+.ld-agree{display:flex;gap:9px;align-items:flex-start;font-size:14px}
+.ld-agree input{margin-top:3px;width:17px;height:17px;accent-color:var(--gold)}
+.ld-sig{font:italic 600 22px/1.2 "Brush Script MT","Segoe Script",cursive;min-height:30px;border-bottom:1.5px solid var(--fg);padding:2px 4px;color:var(--fg)}
+.ld-ds{display:flex;gap:6px;align-items:center;justify-content:center;font-size:12px;color:var(--muted)}
+.ld-files{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:8px}
+.ld-files li{display:flex;gap:10px;align-items:center;font-size:14px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 10px}
+.ld-files .fi{font:700 10.5px var(--mono);background:#C2402F;color:#fff;border-radius:5px;padding:4px 5px;flex:none}
+.ld-files .fi.x{background:var(--good)}
+.ld-files small{display:block;color:var(--muted);font-size:12px}
+.ld-open .okd{width:22px;height:22px;border-radius:50%;background:var(--good);color:#fff;display:grid;place-items:center;flex:none}.ld-open .okd svg{width:13px;height:13px}
+.ld-open{display:flex;gap:9px;align-items:center;color:var(--good);font-weight:600;font-size:14.5px}
 .ld-bar{display:none}
 @media (max-width:860px){
   .ld{padding:0;place-items:stretch;background:var(--bg)}
@@ -918,6 +934,30 @@ footer nav a:hover{color:var(--on-navy)}
   var xIco='<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
   var lockIco='<svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true" style="flex:none;margin-top:2px;color:var(--gold-ink)"><rect x="3" y="7" width="10" height="7.5" rx="1.5" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M5.5 7V5a2.5 2.5 0 015 0v2" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>';
   function chk(t,d){return '<div class="ld-chk"><b><i>'+tick+'</i>'+t+'</b><span>'+d+'</span></div>';}
+  var signedNda={};
+  function roomHTML(i){var x=L[i];
+    if(signedNda[i]){var files=[["PDF","Trade licence","Verified against the registry"],["XLS","Audited accounts FY2024","Verified by equire"],["XLS","Management accounts FY2025","Year to date"],
+      x.t==="equity"?["PDF","Cap table and MoA","Verified by equire"]:["PDF","Tenancy contract and Ejari","Verified by equire"],["PDF","Staff and visa list","Uploaded by the seller"],["XLS","Equipment and fit-out register","Uploaded by the seller"]];
+      return '<h4><span>Data room</span><span>Unlocked</span></h4><div class="ld-open"><span class="okd">'+tick+'</span>NDA signed by '+signedNda[i]+' · 6 documents</div>'+
+        '<ul class="ld-files">'+files.map(function(f){return '<li><span class="fi'+(f[0]==="XLS"?" x":"")+'">'+f[0]+'</span><span><b style="font-weight:600">'+f[1]+'</b><small>'+f[2]+'</small></span></li>';}).join("")+'</ul>'+
+        '<p class="ld-note" style="margin-top:10px">Demo data room: in the live product each document opens with your name watermarked on every page.</p>';}
+    return '<h4><span>Data room</span><span style="color:var(--gold-ink)">Locked</span></h4><div class="ld-lock">'+lockIco+'<span>6 documents including audited accounts, the '+(x.t==="equity"?'cap table':'tenancy contract')+' and the trade licence. Sign the NDA to unlock them.</span></div>'+
+      '<button type="button" class="btn btn-ink ld-nda-btn" data-ld="nda">'+lockIco.replace('color:var(--gold-ink)','color:inherit')+'Sign NDA to unlock</button>'+
+      '<form class="ld-nda" id="ldNda" hidden novalidate>'+
+        '<div class="ld-terms"><p><b>1. Confidential information.</b> Everything in the data room for this listing, including financial statements, contracts and the lease.</p><p><b>2. Use.</b> Only to evaluate a possible acquisition of or investment in the business.</p><p><b>3. No approach.</b> You will not contact staff, landlords or suppliers without the seller’s consent.</p><p><b>4. Term.</b> Two years from signing.</p><p style="margin:0"><b>5. Law.</b> Laws of the United Arab Emirates.</p></div>'+
+        '<div class="fld"><label for="nda-name">Full legal name</label><input id="nda-name" autocomplete="name" placeholder="e.g. Sara Al Mansoori"></div>'+
+        '<div class="fld"><label for="nda-email">Email</label><input id="nda-email" type="email" autocomplete="email"></div>'+
+        '<div class="fld"><span style="font-size:13px;font-weight:600">Signature</span><div class="ld-sig" id="ndaSig" aria-live="polite"></div></div>'+
+        '<label class="ld-agree"><input type="checkbox" id="ndaAgree">I agree to the terms of this NDA</label><p class="err" id="ndaErr" role="alert" style="margin:0"></p>'+
+        '<button type="submit" class="btn btn-gold">Sign and unlock data room</button>'+
+        '<div class="ld-ds">'+lockIco.replace(' style="flex:none;margin-top:2px;color:var(--gold-ink)"',' style="width:14px;height:14px"')+'Signed with DocuSign in the live product · demo only, nothing is signed</div></form>';}
+  function wireNda(){var f=ld.querySelector("#ldNda");if(!f)return;var nm=f.querySelector("#nda-name"),sg=f.querySelector("#ndaSig");
+    nm.addEventListener("input",function(){sg.textContent=nm.value;});
+    f.addEventListener("submit",function(e){e.preventDefault();var er=f.querySelector("#ndaErr"),n=nm.value.trim(),em=f.querySelector("#nda-email").value.trim();
+      if(n.split(/\s+/).length<2){er.textContent="Enter your full legal name, first and last.";return;}
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){er.textContent="Enter a valid email so we can send you a signed copy.";return;}
+      if(!f.querySelector("#ndaAgree").checked){er.textContent="Tick the box to agree to the NDA terms.";return;}
+      signedNda[ldCur]=n.replace(/[<>&"]/g,"");var room=ld.querySelector("#ldRoom");room.innerHTML=roomHTML(ldCur);room.scrollIntoView({behavior:"smooth",block:"start"});});}
   function ldHTML(i){
     var x=L[i], m=MORE[x.ref]||["UAE","–","–",""], by=BY[i%BY.length], tc=x.t==="distress"?" distress":x.t==="equity"?" equity":"";
     var labels=x.labels||["Asking","Turnover","Profit"], vals=x.vals||[x.ask,x.to,x.pr];
@@ -935,7 +975,7 @@ footer nav a:hover{color:var(--on-navy)}
           chk("Trade licence matched to the registry","02 Oct 2026")+chk("Financials, last 2 years","03 Oct 2026")+
           (x.t==="equity"?chk("Cap table and MoA","03 Oct 2026"):chk("Lease, "+x.lease+" remaining","03 Oct 2026"))+'</div>'+
         '<div class="ld-box2"><h4><span>Key facts</span></h4><dl class="ld-kv"><div><dt>Established</dt><dd>'+m[1]+'</dd></div><div><dt>Staff</dt><dd>'+m[2]+'</dd></div><div><dt>Licence</dt><dd>'+x.zone+'</dd></div><div><dt>Emirate</dt><dd>'+m[0]+'</dd></div></dl></div>'+
-        '<div class="ld-box2"><h4><span>Data room</span></h4><div class="ld-lock">'+lockIco+'<span>Audited accounts, the '+(x.t==="equity"?'cap table':'tenancy contract')+', the trade licence and 3 more documents. Opened to serious buyers once they sign an NDA.</span></div></div>'+
+        '<div class="ld-box2" id="ldRoom">'+roomHTML(i)+'</div>'+
         '<div class="ld-box2"><h4><span>Listed by</span></h4><div class="ld-by"><i>'+by[0]+'</i><div><b>'+by[1]+'</b><span>'+(by[0]==="OW"?'Business owner · identity verified':'Verified broker')+'</span></div></div></div>'+
         '<p class="ld-note">Illustrative listing created to show the product.</p>'+
       '</div>'+
@@ -957,7 +997,7 @@ footer nav a:hover{color:var(--on-navy)}
   function openListing(i,fromHash){
     ldCur=i;ldFrom=document.activeElement;ld.innerHTML=ldHTML(i);ld.hidden=false;docEl.classList.add("lopen");
     if(!fromHash){try{history.pushState({ld:L[i].ref},"","#"+L[i].ref);ldPushed=true;}catch(e){}}
-    var b=ld.querySelector(".ld-box");b.scrollTop=0;b.focus({preventScroll:true});
+    var b=ld.querySelector(".ld-box");b.scrollTop=0;b.focus({preventScroll:true});wireNda();
     var f=ld.querySelector("#ldForm");f.addEventListener("submit",function(e){e.preventDefault();
       var d=new FormData(f),name=(d.get("name")||"").trim(),email=(d.get("email")||"").trim(),er=f.querySelector("#ldErr");
       if(!name){er.textContent="Add your name so the seller knows who to reply to.";return;}
@@ -977,6 +1017,7 @@ footer nav a:hover{color:var(--on-navy)}
     if(e.target===ld){closeListing();return;}
     var a=e.target.closest("[data-ld]");if(!a)return;
     if(a.dataset.ld==="close")closeListing();
+    else if(a.dataset.ld==="nda"){var nf=ld.querySelector("#ldNda");nf.hidden=false;a.hidden=true;nf.scrollIntoView({behavior:"smooth",block:"start"});setTimeout(function(){nf.querySelector("#nda-name").focus({preventScroll:true});},450);}
     else if(a.dataset.ld==="save"){saved[ldCur]=!saved[ldCur];ld.querySelectorAll('[data-ld="save"]').forEach(function(b){b.setAttribute("aria-pressed",String(!!saved[ldCur]));if(b.classList.contains("btn"))b.textContent=saved[ldCur]?"Saved":"Save";});
       var h=grid.querySelector('.card[data-i="'+ldCur+'"] .heart');if(h)h.setAttribute("aria-pressed",String(!!saved[ldCur]));}
     else if(a.dataset.ld==="enquire"){var f=ld.querySelector("#ldForm");f.scrollIntoView({behavior:"smooth",block:"start"});setTimeout(function(){var n=ld.querySelector("#ld-name");if(n&&!ld.querySelector("#ldFields").hidden)n.focus({preventScroll:true});},450);}
