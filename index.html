@@ -314,13 +314,30 @@ section{padding-block:clamp(72px,9vw,120px)}
 .plan li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:9px}
 .plan li svg{width:16px;height:16px;margin-top:4px;color:var(--gold-ink)}
 .plan.feat li svg{color:var(--gold)}
-.addons{margin-top:24px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.addons div{padding:16px 20px;display:grid;gap:2px;background:var(--bg)}
+.addons{margin-top:24px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.addons div{padding:16px 20px;display:grid;gap:6px;align-content:space-between;background:var(--bg)}
 .addons div+div{border-left:1px solid var(--line)}
 .addons span{font-size:13.5px;color:var(--muted)}
 .addons b{font-family:var(--mono);font-size:16px}
+.plan .tiers li{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+.plan .tiers li b{font-family:var(--mono);font-size:14px;color:var(--on-navy);white-space:nowrap}
+.plan .tiers{gap:0}
+@media (max-width:1000px) and (min-width:721px){.addons{grid-template-columns:repeat(2,minmax(0,1fr))}.addons div:nth-child(3){border-left:0}.addons div:nth-child(n+3){border-top:1px solid var(--line)}}
 @media (max-width:720px){.addons{grid-template-columns:minmax(0,1fr)}.addons div+div{border-left:0;border-top:1px solid var(--line)}}
 
+.price s{font-size:16px;color:var(--muted);font-weight:500}
+.plan.feat .price s,.plan .tiers s{color:var(--on-navy-muted)}
+.plan .tiers s,.addons s,.shoot s{font-weight:400;opacity:.7;margin-right:4px}
+.addons s,.shoot s{font-size:.85em}
+.shoot{margin-top:16px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:18px;align-items:center;padding:20px 24px;border-radius:12px;background:var(--navy);color:var(--on-navy)}
+.shoot .ic{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;background:rgba(217,164,65,.16);color:var(--gold)}
+.shoot .ic svg{width:24px;height:24px}
+.shoot b{font-family:var(--display);font-size:18px}
+.shoot p{margin:4px 0 0;font-size:14.5px;color:var(--on-navy-muted)}
+.shoot .num{font-family:var(--mono);font-size:18px;font-weight:600;white-space:nowrap;color:var(--gold)}
+.shoot .num s{color:var(--on-navy-muted)}
+@media (max-width:720px){.shoot{grid-template-columns:auto minmax(0,1fr)}.shoot .num{grid-column:2}}
+.launch-note{margin-top:14px;font-size:13.5px;color:var(--muted)}
 /* market */
 .mkt{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:start}
 @media (max-width:900px){.mkt{grid-template-columns:minmax(0,1fr);gap:40px}}
@@ -594,7 +611,7 @@ footer nav a:hover{color:var(--on-navy)}
   <div class="wrap">
     <div><b class="num">AED 4.2bn</b><span>UAE SME sales a year, with no single trusted marketplace</span></div>
     <div><b class="num">558,000</b><span>SMEs in the UAE today, on track for 1 million by 2030</span></div>
-    <div><b class="num">2%</b><span>owner success fee, against the 8–12% brokers typically charge</span></div>
+    <div><b class="num">0%</b><span>taken from any sale. Brokers keep their full 8–12% commission</span></div>
     <div><b class="num">100%</b><span>of listings checked before they go live</span></div>
   </div>
 </div>
@@ -624,7 +641,7 @@ footer nav a:hover{color:var(--on-navy)}
       <h2>Your listing pipeline. Your clients. Your commission.</h2>
       <p class="lede">equire is a tool for brokers, and we will never compete with you for a mandate. List your stock once, and it reaches buyers who have already been qualified.</p>
       <ul class="points">
-        <li><span class="pi"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h12M8 2v12" stroke="currentColor" stroke-width="2"/></svg></span><div><b>Free for founding brokers</b><span>No cost during the pilot. After launch it is AED 500 per seat a month, with no cut of your fee.</span></div></li>
+        <li><span class="pi"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h12M8 2v12" stroke="currentColor" stroke-width="2"/></svg></span><div><b>Free for founding brokers</b><span>No cost during the pilot. After launch, packages start at AED 4,500 a year, with no cut of your fee.</span></div></li>
         <li><span class="pi"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg></span><div><b>Leads arrive with an NDA signed</b><span>Buyers sign in the app before they see your client’s financials, so your first call is with someone serious.</span></div></li>
         <li><span class="pi"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="2" width="5" height="5" fill="currentColor"/><rect x="9" y="2" width="5" height="5" fill="currentColor"/><rect x="2" y="9" width="5" height="5" fill="currentColor"/><rect x="9" y="9" width="5" height="5" fill="currentColor"/></svg></span><div><b>Every mandate in one dashboard</b><span>Track verification, data-room views, NDAs and buyer messages across all your listings.</span></div></li>
         <li><span class="pi"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5l5.5 2v4.2c0 3.3-2.3 5.9-5.5 6.8-3.2-.9-5.5-3.5-5.5-6.8V3.5z" fill="currentColor"/></svg></span><div><b>The verified badge works for you</b><span>Checked listings stand apart from the classifieds noise and give your clients a reason to choose you.</span></div></li>
@@ -784,7 +801,7 @@ footer nav a:hover{color:var(--on-navy)}
     <div class="room">
       <span class="lk"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2" fill="currentColor"/><path d="M8 10.5V7.5a4 4 0 018 0v3" stroke="currentColor" stroke-width="2" fill="none"/></svg></span>
       <div><b>NDA-gated data rooms</b><p>Buyers sign a DocuSign NDA in the app to unlock full financials, contracts and the lease. Owners and brokers see exactly who opened what.</p></div>
-      <span class="num">AED 1,500 per listing</span>
+      <span class="num">Included with every listing</span>
     </div>
   </div>
 </section>
@@ -841,28 +858,34 @@ footer nav a:hover{color:var(--on-navy)}
   <div class="wrap">
     <div class="sec-head">
       <div class="eyebrow">Pricing</div>
-      <h2>Simple, and a fraction of a traditional brokerage fee.</h2>
+      <h2>Priced like a property portal, built for business sales.</h2>
+      <p class="lede">Brokers pay a yearly package, owners pay to list, and buyers search for free. equire never takes a cut of a sale.</p>
     </div>
     <div class="plans">
       <article class="plan">
         <span class="who">Business owners</span>
-        <h3>Sell direct</h3>
-        <div class="price"><b>2%</b><span class="unit">success fee, paid only on sale</span></div>
+        <h3>List direct</h3>
+        <div class="price"><b>AED 995</b><s>AED 2,500</s><span class="unit">launch price, per listing for 90 days</span></div>
         <ul>
-          <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg>List for free and get verified</li>
-          <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg>Upload licence, financials and lease once</li>
-          <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg>Compared with the 8–12% brokers typically charge</li>
+          <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg>Full on-site photo shoot by the equire team included</li>
+          <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg>Licence check and NDA data room included</li>
+          <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg>No success fee, so the full sale price is yours</li>
+          <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg>Renew for AED 495 every 90 days until sold</li>
         </ul>
       </article>
       <article class="plan feat">
         <span class="flag">Founding pilot</span>
         <span class="who">Brokers</span>
-        <h3>Your pipeline</h3>
-        <div class="price"><b>Free</b><span class="unit">during the pilot, then AED 500 per seat a month</span></div>
+        <h3>Broker packages</h3>
+        <div class="price"><b>Free</b><span class="unit">during the pilot, then launch prices locked for 12 months</span></div>
+        <ul class="tiers">
+          <li><span>Starter · 15 live listings, 2 seats</span><b><s>9,000</s> AED 4,500</b></li>
+          <li><span>Growth · 50 live listings, 6 seats</span><b><s>24,000</s> AED 12,000</b></li>
+          <li><span>Agency · unlimited, 15 seats</span><b><s>48,000</s> AED 24,000</b></li>
+        </ul>
         <ul>
           <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg>Keep 100% of your commission</li>
-          <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg>Unlimited listings from one account</li>
-          <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg>Help shape the product before launch</li>
+          <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg>Every package includes verification and data rooms</li>
         </ul>
       </article>
       <article class="plan">
@@ -877,10 +900,17 @@ footer nav a:hover{color:var(--on-navy)}
       </article>
     </div>
     <div class="addons">
-      <div><span>Verified data room</span><b>AED 1,500 per listing</b></div>
-      <div><span>Featured listing</span><b>AED 250 per 30 days</b></div>
-      <div><span>Broker seat after pilot</span><b>AED 500 per month</b></div>
+      <div><span>Featured listing · top of search</span><b>AED 150 / 30 days <s>250</s></b></div>
+      <div><span>Premium listing · top slot, bigger card, investor alerts</span><b>AED 350 / 30 days <s>600</s></b></div>
+      <div><span>Owner spotlight · homepage and email to matched investors</span><b>AED 1,500 per campaign <s>3,500</s></b></div>
+      <div><span>Investor Pro · 48-hour early access and sector data</span><b>Free for 6 months, then AED 750 <s>1,500</s></b></div>
     </div>
+    <div class="shoot">
+      <span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="7.5" width="17" height="12" rx="2" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M9 7.5V5.5h6v2M3.5 12.5h17" stroke="currentColor" stroke-width="1.8" fill="none"/></svg></span>
+      <div><b>Business services, coming next</b><p>Valuations, licence transfer support and legal introductions, so a deal can go from listing to handover without leaving equire.</p></div>
+      <span class="num">Coming soon</span>
+    </div>
+    <p class="launch-note">Launch prices are locked for 12 months for everyone who joins before public launch.</p>
   </div>
 </section>
 
