@@ -378,7 +378,8 @@ section{padding-block:clamp(72px,9vw,120px)}
 /* team */
 .team{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
 @media (max-width:760px){.team{grid-template-columns:minmax(0,1fr)}}
-.person{display:grid;grid-template-columns:64px minmax(0,1fr);gap:18px;padding:24px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.person{display:grid;grid-template-columns:104px minmax(0,1fr);gap:18px;padding:24px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+img.av{width:104px;height:104px;border-radius:50%;object-fit:cover;background:#F7F6F2;box-shadow:0 0 0 3px var(--surface),0 0 0 5px var(--gold)}
 .av{width:64px;height:64px;border-radius:50%;background:var(--navy);color:var(--gold);display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:22px}
 .person b{font-family:var(--display);font-size:19px;display:block}
 .person .role{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-ink);font-weight:600}
@@ -961,8 +962,8 @@ footer nav a:hover{color:var(--on-navy)}
       <h2>Built by people who have sold on every side of this market.</h2>
     </div>
     <div class="team">
-      <div class="person"><span class="av">EB</span><div><span class="role">Founder &amp; CEO</span><b>Ethan Brown</b><p>Six years of high-trust, relationship-led sales across ACMI and VIP charter brokerage at Chapman Freeborn, property sales leadership at The Boros Collection, and freight forwarding. Leads brokers, partnerships and growth.</p></div></div>
-      <div class="person"><span class="av">AS</span><div><span class="role">CTO</span><b>Antonio Senatore</b><p>25+ years across SME startups and web and app development. Leads equire’s technology: the web and mobile app, listing verification and secure data rooms.</p></div></div>
+      <div class="person"><img class="av" src="img/ethan.jpg" alt="Ethan Brown" width="104" height="104" loading="lazy"><div><span class="role">Founder &amp; CEO</span><b>Ethan Brown</b><p>Six years of high-trust, relationship-led sales across ACMI and VIP charter brokerage at Chapman Freeborn, property sales leadership at The Boros Collection, and freight forwarding. Leads brokers, partnerships and growth.</p></div></div>
+      <div class="person"><img class="av" src="img/antonio.jpg" alt="Antonio Senatore" width="104" height="104" loading="lazy"><div><span class="role">CTO</span><b>Antonio Senatore</b><p>25+ years across SME startups and web and app development. Leads equire’s technology: the web and mobile app, listing verification and secure data rooms.</p></div></div>
     </div>
     <blockquote class="quote">“Mobile has made almost everything instant, finding a flight, a flat, a driver, but not the search for your next business or investment. equire is what happens when it finally does.”<cite>Ethan Brown, Founder</cite></blockquote>
   </div>
