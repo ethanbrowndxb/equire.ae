@@ -1,0 +1,980 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="equire is the verified marketplace for UAE business sales and investment. Licence-checked listings, structured financials and NDA-gated data rooms for brokers, private equity and venture capital.">
+<meta property="og:title" content="equire · The Business Marketplace">
+<meta property="og:description" content="Verified UAE businesses for sale and investment. Built for brokers, PE and VC.">
+<meta property="og:url" content="https://equire.ae">
+<meta name="theme-color" content="#13233C">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2313233C'/%3E%3Crect x='7' y='8' width='18' height='4' fill='%23D9A441'/%3E%3Crect x='7' y='14' width='11' height='4' fill='%23D9A441'/%3E%3Crect x='7' y='20' width='15' height='4' fill='%23D9A441'/%3E%3C/svg%3E">
+<!--ARTIFACT-START-->
+<title>equire · The Business Marketplace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout: an institutional "deal ledger" — navy masthead with a live verification card, cream body set in ruled columns, figures always in mono, gold reserved for verification and money */
+:root{
+  --navy:#13233C; --navy-2:#1C3152; --navy-3:#0C1828;
+  --gold:#D9A441; --gold-soft:#F1DDAE; --gold-ink:#8C6417;
+  --cream:#F3F0E8;
+  --bg:#F3F0E8; --surface:#FFFDF8; --fg:#13233C; --muted:#57627A; --line:#DDD6C6; --chip:#E9E3D5;
+  --good:#1E7A4F; --warn:#B4541F;
+  --on-navy:#F3F0E8; --on-navy-muted:#AEB8CC; --navy-line:#2A3F62;
+  --shadow:0 1px 2px rgba(19,35,60,.06),0 14px 36px rgba(19,35,60,.09);
+  --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --body:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --gutter:clamp(16px,4vw,32px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0A1424; --surface:#111F36; --fg:#ECE7DB; --muted:#9DA8BE; --line:#22355A; --chip:#182A48;
+  --gold:#E2B256; --gold-soft:#3A3120; --gold-ink:#EBC678;
+  --good:#5CC490; --warn:#EC8B55;
+  --navy:#0E1A2E; --navy-2:#16294A; --navy-3:#070F1C; --navy-line:#22355A;
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 14px 36px rgba(0,0,0,.3);
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0A1424; --surface:#111F36; --fg:#ECE7DB; --muted:#9DA8BE; --line:#22355A; --chip:#182A48;
+  --gold:#E2B256; --gold-soft:#3A3120; --gold-ink:#EBC678;
+  --good:#5CC490; --warn:#EC8B55;
+  --navy:#0E1A2E; --navy-2:#16294A; --navy-3:#070F1C; --navy-line:#22355A;
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 14px 36px rgba(0,0,0,.3);
+  color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1200px;margin:0 auto;padding-inline:var(--gutter)}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* type scale */
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;letter-spacing:-.025em}
+h2{font-size:clamp(30px,4.2vw,48px);line-height:1.04;font-weight:800;font-stretch:108%}
+h3{font-size:20px;line-height:1.2;font-weight:700}
+p{margin:0}
+.lede{font-size:clamp(17px,1.6vw,19px);color:var(--muted);max-width:60ch}
+.eyebrow{display:flex;align-items:center;gap:10px;font-weight:600;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-ink)}
+.eyebrow::before{content:"";width:22px;height:4px;background:var(--gold);flex:none}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:8px;padding:13px 20px;font-weight:600;font-size:15px;text-decoration:none;border:1px solid transparent;cursor:pointer;transition:transform .15s ease,background-color .15s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn-gold{background:var(--gold);color:#1A1405}
+.btn-gold:hover{background:#E6B455}
+.btn-line{border-color:var(--navy-line);color:var(--on-navy)}
+.btn-line:hover{background:rgba(255,255,255,.06)}
+.btn-ink{background:var(--fg);color:var(--bg)}
+
+/* nav */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--navy);color:var(--on-navy);border-bottom:1px solid var(--navy-line)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:68px}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none}
+.brand svg{flex:none}
+.brand b{display:block;font-family:var(--display);font-weight:800;font-size:27px;line-height:.9;letter-spacing:-.04em}
+.brand small{display:block;margin-top:5px;font-size:8.5px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--on-navy-muted)}
+.links{display:flex;gap:26px;font-size:14.5px;font-weight:500}
+.links a{text-decoration:none;color:var(--on-navy-muted)}
+.links a:hover{color:var(--on-navy)}
+.nav .btn{padding:10px 16px;font-size:14px}
+@media (max-width:960px){.links{display:none}}
+@media (max-width:420px){.nav .btn{padding:9px 12px;font-size:13px}.brand small{display:none}}
+
+/* hero */
+.hero{background:var(--navy);color:var(--on-navy);position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:
+  linear-gradient(90deg,transparent 0 calc(100% - 1px),rgba(255,255,255,.035) 0) 0 0/80px 80px,
+  linear-gradient(transparent 0 calc(100% - 1px),rgba(255,255,255,.035) 0) 0 0/80px 80px;
+  mask-image:linear-gradient(180deg,#000,transparent 85%);-webkit-mask-image:linear-gradient(180deg,#000,transparent 85%);pointer-events:none}
+.hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:56px;align-items:center;padding-block:72px 84px}
+@media (max-width:960px){.hero-grid{grid-template-columns:minmax(0,1fr);gap:44px;padding-block:52px 64px}}
+.hero .eyebrow{color:var(--on-navy-muted)}
+.hero h1{font-size:clamp(40px,6.4vw,78px);line-height:.96;font-weight:900;font-stretch:112%;letter-spacing:-.035em;margin-top:22px}
+.hero h1 .g{color:var(--gold)}
+.hero .lede{color:var(--on-navy-muted);margin-top:24px}
+.hero .lede strong{color:var(--on-navy);font-weight:600}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.aud{display:flex;flex-wrap:wrap;gap:8px;margin-top:34px;font-size:13px;color:var(--on-navy-muted)}
+.aud span{border:1px solid var(--navy-line);border-radius:999px;padding:5px 12px}
+
+/* verification card (hero) */
+.vcard{background:var(--surface);color:var(--fg);border-radius:14px;box-shadow:0 30px 60px rgba(0,0,0,.35);overflow:hidden;max-width:460px;justify-self:end;width:100%}
+@media (max-width:960px){.vcard{justify-self:start}}
+.vphoto{height:132px;position:relative;background:
+  radial-gradient(120% 90% at 85% 10%,rgba(217,164,65,.55),transparent 55%),
+  linear-gradient(135deg,#2B4470,#13233C 70%);display:flex;align-items:flex-end;justify-content:space-between;padding:14px 16px;color:#F3F0E8}
+.vphoto .ref{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;opacity:.8}
+.badge{display:inline-flex;align-items:center;gap:6px;background:var(--gold);color:#1A1405;font-weight:700;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;border-radius:6px;padding:5px 9px}
+.badge svg{width:13px;height:13px}
+.vbody{padding:18px 18px 8px}
+.vbody .meta{font-size:12.5px;color:var(--muted);display:flex;gap:6px;flex-wrap:wrap}
+.vbody h3{margin-top:4px;font-size:19px}
+.figs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border-block:1px solid var(--line);margin-top:14px}
+.figs div{background:var(--surface);padding:10px 4px 10px 0}
+.figs div+div{padding-left:12px}
+.figs dt{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
+.figs dd{margin:3px 0 0;font-family:var(--mono);font-weight:600;font-size:15.5px;font-variant-numeric:tabular-nums}
+.checks{list-style:none;margin:0;padding:12px 18px 18px;display:grid;gap:9px}
+.checks li{display:grid;grid-template-columns:22px minmax(0,1fr) auto;align-items:center;gap:10px;font-size:14px}
+.checks .ic{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--good);color:#fff}
+.checks .ic svg{width:12px;height:12px}
+.checks .st{font-family:var(--mono);font-size:11.5px;color:var(--good)}
+.checks li.lock .ic{background:var(--gold);color:#1A1405}
+.checks li.lock .st{color:var(--gold-ink)}
+/* one orchestrated moment: checks resolve in sequence; resting state is verified */
+@keyframes pend{from{background:var(--chip);color:transparent}}
+@keyframes pendTxt{from{color:var(--muted)}}
+@keyframes stamp{0%{transform:scale(.6) rotate(-8deg);opacity:0}70%{transform:scale(1.08) rotate(2deg);opacity:1}100%{transform:none}}
+.checks li .ic{animation:pend .01s steps(1) both}
+.checks li .st{animation:pendTxt .01s steps(1) both}
+.checks li:nth-child(1) .ic,.checks li:nth-child(1) .st{animation-delay:.5s}
+.checks li:nth-child(2) .ic,.checks li:nth-child(2) .st{animation-delay:.9s}
+.checks li:nth-child(3) .ic,.checks li:nth-child(3) .st{animation-delay:1.3s}
+.checks li.lock .ic,.checks li.lock .st{animation:none}
+.vphoto .badge{animation:stamp .5s 1.7s cubic-bezier(.3,1.4,.5,1) both}
+
+/* trust strip */
+.strip{background:var(--navy-3);color:var(--on-navy-muted);border-top:1px solid var(--navy-line)}
+.strip .wrap{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;padding-block:26px}
+.strip b{display:block;font-family:var(--display);font-stretch:110%;font-weight:800;font-size:clamp(24px,2.8vw,32px);color:var(--on-navy);letter-spacing:-.02em;line-height:1.05}
+.strip span{font-size:13.5px}
+@media (max-width:760px){.strip .wrap{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* sections */
+section{padding-block:clamp(72px,9vw,120px)}
+.sec-head{display:grid;gap:18px;max-width:780px;margin-bottom:52px}
+.rule{border-top:1px solid var(--line)}
+
+/* problem */
+.problems{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:2px solid var(--fg)}
+.problems article{padding:22px 22px 0 0;display:grid;gap:10px;align-content:start}
+.problems article+article{padding-left:22px;border-left:1px solid var(--line)}
+.problems .k{font-family:var(--mono);font-size:12px;color:var(--gold-ink);letter-spacing:.06em}
+.problems p{color:var(--muted);font-size:15px}
+@media (max-width:900px){.problems{grid-template-columns:repeat(2,minmax(0,1fr))}.problems article:nth-child(3){padding-left:0;border-left:0}.problems article{padding-bottom:26px}}
+@media (max-width:520px){.problems{grid-template-columns:minmax(0,1fr)}.problems article+article{padding-left:0;border-left:0;border-top:1px solid var(--line)}}
+
+/* audience split */
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:64px;align-items:center}
+.split.rev{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}
+.split.rev .copy{order:2}
+@media (max-width:960px){.split,.split.rev{grid-template-columns:minmax(0,1fr);gap:40px}.split.rev .copy{order:0}}
+.copy{display:grid;gap:20px;align-content:start}
+.points{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:18px}
+.points li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:14px}
+.points .pi{width:28px;height:28px;border-radius:7px;background:var(--gold-soft);color:var(--gold-ink);display:grid;place-items:center}
+.points .pi svg{width:15px;height:15px}
+.points b{display:block;font-weight:700;font-size:16.5px}
+.points span{color:var(--muted);font-size:15px}
+
+#brokers{background:var(--surface);border-block:1px solid var(--line)}
+
+/* broker dashboard mock */
+.dash{background:var(--bg);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.dash-top{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line);background:var(--surface)}
+.dash-top b{font-family:var(--display);font-size:15px}
+.dash-top span{font-size:12px;color:var(--muted)}
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border-bottom:1px solid var(--line)}
+.kpis div{background:var(--surface);padding:14px 18px}
+.kpis dt{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.kpis dd{margin:4px 0 0;font-family:var(--mono);font-size:22px;font-weight:600}
+.kpis dd small{font-size:12px;color:var(--good);margin-left:6px}
+.tbl-wrap{overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px;min-width:520px}
+.tbl th{text-align:left;font-weight:600;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:10px 18px;border-bottom:1px solid var(--line)}
+.tbl td{padding:12px 18px;border-bottom:1px solid var(--line);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:0}
+.tbl td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right}
+.tbl th.n{text-align:right}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;border-radius:999px;padding:3px 10px;white-space:nowrap}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.p-live{background:rgba(30,122,79,.12);color:var(--good)}
+.p-review{background:rgba(180,84,31,.12);color:var(--warn)}
+.p-gold{background:var(--gold-soft);color:var(--gold-ink)}
+.mock-note{font-size:12px;color:var(--muted);padding:10px 18px;border-top:1px solid var(--line);background:var(--surface)}
+
+/* investor filter mock */
+.filter{background:var(--navy);color:var(--on-navy);border-radius:14px;padding:22px;box-shadow:var(--shadow);display:grid;gap:18px}
+.filter h4{margin:0;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--on-navy-muted);font-weight:600}
+.fgroup{display:grid;gap:9px}
+.fchips{display:flex;flex-wrap:wrap;gap:7px}
+.fchips button{border:1px solid var(--navy-line);background:none;border-radius:999px;padding:6px 12px;font-size:13px;color:var(--on-navy-muted);cursor:pointer}
+.fchips button[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:#1A1405;font-weight:600}
+.range{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12.5px;color:var(--on-navy-muted)}
+.track{height:6px;border-radius:3px;background:var(--navy-line);position:relative}
+.track i{position:absolute;left:18%;right:34%;top:0;bottom:0;background:var(--gold);border-radius:3px}
+.track i::before,.track i::after{content:"";position:absolute;top:50%;width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--gold);transform:translate(-50%,-50%)}
+.track i::before{left:0}.track i::after{left:100%}
+.fresult{display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid var(--navy-line);padding-top:16px;flex-wrap:wrap}
+.fresult b{font-family:var(--mono);font-size:24px;color:var(--gold)}
+.fresult span{font-size:13px;color:var(--on-navy-muted)}
+
+/* flow */
+.flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;counter-reset:step}
+.flow li{list-style:none;position:relative;padding:28px 24px 0 0;display:grid;gap:10px;align-content:start}
+.flow li::before{counter-increment:step;content:counter(step,decimal-leading-zero);font-family:var(--mono);font-size:13px;color:var(--gold-ink);font-weight:600}
+.flow li::after{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--line)}
+.flow li:first-child::after{background:var(--gold)}
+.flow h3{font-size:24px;font-stretch:110%}
+.flow p{color:var(--muted);font-size:15px}
+.flow{padding:0;margin:0}
+@media (max-width:860px){.flow{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:34px}}
+@media (max-width:480px){.flow{grid-template-columns:minmax(0,1fr)}}
+.types{display:flex;flex-wrap:wrap;gap:10px;margin-top:44px;align-items:center}
+.types span{font-size:14px;color:var(--muted);margin-right:6px}
+.type{border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:14px;font-weight:600;background:var(--surface)}
+.type small{font-weight:500;color:var(--muted);margin-left:4px}
+
+/* listings */
+.listings-bar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:18px;margin-bottom:28px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.tabs button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;font-size:13.5px;font-weight:500;cursor:pointer}
+.tabs button[aria-pressed="true"]{background:var(--fg);border-color:var(--fg);color:var(--bg)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+@media (max-width:960px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.grid{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:grid;grid-template-rows:auto 1fr;transition:transform .2s ease,box-shadow .2s ease}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.ph{height:150px;position:relative;display:flex;flex-direction:column;justify-content:space-between;padding:12px 14px;color:#F3F0E8}
+.ph .row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.ph .tag{font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:rgba(10,20,36,.55);backdrop-filter:blur(4px);padding:4px 8px;border-radius:5px}
+.ph .tag.distress{background:var(--warn);color:#fff}
+.ph .tag.equity{background:#F3F0E8;color:#13233C}
+.ph .glyph{width:44px;height:44px;opacity:.9}
+.ph .loc{font-size:12.5px;font-weight:500;display:flex;align-items:center;gap:5px}
+.cb{padding:16px 16px 14px;display:grid;gap:12px;align-content:start}
+.cb .sec{font-size:12px;color:var(--muted);letter-spacing:.04em}
+.cb h3{font-size:17.5px;line-height:1.25}
+.cb .figs{margin-top:0}
+.cb .figs dd{font-size:14.5px}
+.cb .foot{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+.cb .foot .vf{display:inline-flex;align-items:center;gap:5px;color:var(--gold-ink);font-weight:600}
+.cb .foot svg{width:14px;height:14px}
+.neg{color:var(--warn)}
+.illus{margin-top:18px;font-size:13px;color:var(--muted)}
+
+/* verification */
+#verify{background:var(--navy);color:var(--on-navy)}
+#verify .eyebrow{color:var(--on-navy-muted)}
+#verify .lede{color:var(--on-navy-muted)}
+.vgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--navy-line);border:1px solid var(--navy-line);border-radius:14px;overflow:hidden}
+.vgrid article{background:var(--navy);padding:28px 26px;display:grid;gap:12px;align-content:start}
+.vgrid .doc{font-family:var(--mono);font-size:12px;color:var(--gold);letter-spacing:.06em}
+.vgrid h3{font-size:21px}
+.vgrid p{color:var(--on-navy-muted);font-size:15px}
+.vgrid ul{margin:4px 0 0;padding:0;list-style:none;display:grid;gap:6px;font-size:14px;color:var(--on-navy)}
+.vgrid li{display:flex;gap:8px}
+.vgrid li::before{content:"";flex:none;width:6px;height:6px;margin-top:9px;background:var(--gold)}
+@media (max-width:900px){.vgrid{grid-template-columns:minmax(0,1fr)}}
+.room{margin-top:28px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:22px;align-items:center;border:1px solid var(--navy-line);border-radius:14px;padding:22px 26px;background:var(--navy-2)}
+.room .lk{width:52px;height:52px;border-radius:12px;background:var(--gold);color:#1A1405;display:grid;place-items:center}
+.room .lk svg{width:24px;height:24px}
+.room b{font-family:var(--display);font-size:19px;display:block}
+.room p{color:var(--on-navy-muted);font-size:15px}
+.room .num{color:var(--gold);font-size:14px;white-space:nowrap}
+@media (max-width:720px){.room{grid-template-columns:minmax(0,1fr)}}
+
+/* sectors table */
+.sect-wrap{overflow-x:auto;border-top:2px solid var(--fg)}
+.sect{width:100%;border-collapse:collapse;min-width:760px}
+.sect th,.sect td{text-align:left;padding:18px 20px 18px 0;border-bottom:1px solid var(--line);vertical-align:top;font-size:15px}
+.sect th{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.sect td:first-child{font-weight:700;width:26%}
+.sect td:first-child small{display:block;font-weight:400;color:var(--muted);font-size:13.5px;margin-top:2px}
+.sect td{color:var(--muted)}
+.sect td:first-child{color:var(--fg)}
+.sect-note{margin-top:22px;font-size:14px;color:var(--muted);max-width:90ch}
+.sect-note b{color:var(--fg)}
+
+/* pricing */
+#pricing{background:var(--surface);border-block:1px solid var(--line)}
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+@media (max-width:900px){.plans{grid-template-columns:minmax(0,1fr)}}
+.plan{border:1px solid var(--line);border-radius:14px;padding:28px 26px;display:grid;gap:16px;align-content:start;background:var(--bg)}
+.plan.feat{background:var(--navy);color:var(--on-navy);border-color:var(--navy);position:relative}
+.plan.feat .who,.plan.feat .unit,.plan.feat li{color:var(--on-navy-muted)}
+.plan.feat .flag{position:absolute;top:-12px;left:26px;background:var(--gold);color:#1A1405;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:6px}
+.plan .who{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.plan h3{font-size:22px}
+.price{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.price b{font-family:var(--display);font-stretch:110%;font-weight:900;font-size:44px;letter-spacing:-.03em;line-height:1}
+.price .unit{font-size:14px;color:var(--muted)}
+.plan ul{list-style:none;padding:0;margin:0;display:grid;gap:9px;font-size:15px;color:var(--muted)}
+.plan li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:9px}
+.plan li svg{width:16px;height:16px;margin-top:4px;color:var(--gold-ink)}
+.plan.feat li svg{color:var(--gold)}
+.addons{margin-top:24px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.addons div{padding:16px 20px;display:grid;gap:2px;background:var(--bg)}
+.addons div+div{border-left:1px solid var(--line)}
+.addons span{font-size:13.5px;color:var(--muted)}
+.addons b{font-family:var(--mono);font-size:16px}
+@media (max-width:720px){.addons{grid-template-columns:minmax(0,1fr)}.addons div+div{border-left:0;border-top:1px solid var(--line)}}
+
+/* market */
+.mkt{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:start}
+@media (max-width:900px){.mkt{grid-template-columns:minmax(0,1fr);gap:40px}}
+.funnel{display:grid;gap:12px}
+.fbar{display:grid;gap:6px}
+.fbar .lbl{display:flex;justify-content:space-between;gap:10px;font-size:14px;flex-wrap:wrap}
+.fbar .lbl b{font-family:var(--mono);font-size:20px}
+.fbar .bar{height:44px;background:var(--navy);border-radius:6px;display:flex;align-items:center;padding-inline:14px;color:var(--on-navy);font-size:13px;font-weight:600;min-width:0}
+.fbar:nth-child(2) .bar{width:79%;background:var(--navy-2)}
+.fbar:nth-child(3) .bar{width:22%;min-width:84px;background:var(--gold);color:#1A1405}
+.mstats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:32px}
+.mstats div{background:var(--bg);padding:18px 20px;display:grid;gap:4px}
+.mstats b{font-family:var(--display);font-stretch:110%;font-weight:800;font-size:28px;letter-spacing:-.02em}
+.mstats span{font-size:13.5px;color:var(--muted)}
+.src{margin-top:18px;font-size:12px;color:var(--muted)}
+
+/* roadmap */
+.road{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;padding:0;margin:0}
+.road li{list-style:none;padding:0 24px 0 0;display:grid;gap:10px;align-content:start;position:relative}
+.road .when{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--gold-ink);padding-bottom:16px;border-bottom:4px solid var(--line);position:relative}
+.road li.now .when{border-bottom-color:var(--gold)}
+.road li.now .when::after{content:"We are here";position:absolute;right:24px;top:0;font-family:var(--body);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg);background:var(--gold-soft);padding:2px 8px;border-radius:4px}
+.road h3{margin-top:8px}
+.road p{color:var(--muted);font-size:15px}
+@media (max-width:860px){.road{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:36px}}
+@media (max-width:480px){.road{grid-template-columns:minmax(0,1fr)}}
+
+/* app teaser */
+#app{background:var(--navy-3);color:var(--on-navy);overflow:hidden}
+#app .eyebrow{color:var(--on-navy-muted)}
+#app .lede{color:var(--on-navy-muted)}
+.app-grid{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:64px;align-items:center}
+@media (max-width:860px){.app-grid{grid-template-columns:minmax(0,1fr);justify-items:start}}
+.phone{width:290px;max-width:100%;border-radius:40px;background:#0A0F18;padding:12px;box-shadow:0 40px 80px rgba(0,0,0,.45),inset 0 0 0 2px #2A3242}
+.screen{border-radius:30px;overflow:hidden;background:#F3F0E8;color:#13233C;font-size:12px}
+.s-top{background:#13233C;color:#F3F0E8;padding:16px 16px 14px;display:grid;gap:10px}
+.s-top .bar0{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;opacity:.8}
+.s-search{background:#F3F0E8;color:#57627A;border-radius:9px;padding:9px 11px;font-size:12px}
+.s-chips{display:flex;gap:5px;overflow:hidden}
+.s-chips span{flex:none;border:1px solid #2A3F62;border-radius:99px;padding:3px 8px;font-size:10.5px;color:#AEB8CC}
+.s-chips span.on{background:#D9A441;border-color:#D9A441;color:#1A1405;font-weight:600}
+.s-list{padding:12px;display:grid;gap:10px}
+.s-card{background:#FFFDF8;border:1px solid #DDD6C6;border-radius:12px;overflow:hidden}
+.s-card .sp{height:64px;background:linear-gradient(135deg,#2B4470,#13233C);position:relative}
+.s-card .sp .badge{position:absolute;left:8px;bottom:8px;font-size:9px;padding:3px 6px}
+.s-card .sb{padding:9px 10px;display:grid;gap:4px}
+.s-card .sb b{font-size:12.5px}
+.s-card .sb span{font-family:var(--mono);font-size:11px;color:#57627A}
+.s-nav{display:flex;justify-content:space-around;border-top:1px solid #DDD6C6;padding:10px 0 14px;background:#FFFDF8;font-size:10px;color:#57627A}
+.s-nav span.on{color:#13233C;font-weight:700}
+.stores{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.store{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--navy-line);border-radius:10px;padding:10px 16px;font-size:13px;color:var(--on-navy-muted)}
+.store b{display:block;color:var(--on-navy);font-size:15px}
+
+/* team */
+.team{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+@media (max-width:760px){.team{grid-template-columns:minmax(0,1fr)}}
+.person{display:grid;grid-template-columns:64px minmax(0,1fr);gap:18px;padding:24px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.av{width:64px;height:64px;border-radius:50%;background:var(--navy);color:var(--gold);display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:22px}
+.person b{font-family:var(--display);font-size:19px;display:block}
+.person .role{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-ink);font-weight:600}
+.person p{color:var(--muted);font-size:15px;margin-top:8px}
+.quote{margin-top:44px;font-family:var(--display);font-weight:600;font-stretch:104%;font-size:clamp(20px,2.4vw,28px);line-height:1.3;max-width:34ch;letter-spacing:-.015em;text-wrap:balance}
+.quote cite{display:block;margin-top:14px;font-family:var(--body);font-style:normal;font-size:14px;font-weight:500;color:var(--muted);letter-spacing:0}
+
+/* join / form */
+#join{background:var(--navy);color:var(--on-navy)}
+#join .eyebrow{color:var(--on-navy-muted)}
+#join .lede{color:var(--on-navy-muted)}
+.join-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:start}
+@media (max-width:900px){.join-grid{grid-template-columns:minmax(0,1fr);gap:40px}}
+.perks{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:12px}
+.perks li{display:flex;gap:12px;color:var(--on-navy);font-size:15.5px}
+.perks li svg{flex:none;width:20px;height:20px;color:var(--gold);margin-top:2px}
+form.join{background:var(--surface);color:var(--fg);border-radius:14px;padding:28px;display:grid;gap:16px;box-shadow:0 30px 60px rgba(0,0,0,.3)}
+.f2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:520px){.f2{grid-template-columns:minmax(0,1fr)}}
+.fld{display:grid;gap:6px;min-width:0}
+.fld label{font-size:13px;font-weight:600}
+.fld input,.fld select{width:100%;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:11px 12px;font-size:15px}
+.fld input:focus,.fld select:focus{border-color:var(--gold);outline:none;box-shadow:0 0 0 3px rgba(217,164,65,.25)}
+.roles{display:flex;flex-wrap:wrap;gap:8px}
+.roles label{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:999px;padding:7px 13px;font-size:14px;cursor:pointer;background:var(--bg)}
+.roles input{accent-color:var(--gold)}
+.roles label:has(input:checked){border-color:var(--gold);background:var(--gold-soft);color:var(--gold-ink);font-weight:600}
+.err{font-size:13px;color:var(--warn);min-height:1em}
+.done{display:grid;gap:12px}
+.done h3{font-size:22px}
+.done p{color:var(--muted);font-size:15px}
+.mailbox{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.mailbox code{font-family:var(--mono);font-size:14px;user-select:all;flex:1;min-width:0}
+.mailbox button{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:6px 10px;font-size:13px;cursor:pointer}
+.done pre{margin:0;white-space:pre-wrap;font-family:var(--mono);font-size:12.5px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px;max-height:180px;overflow:auto;user-select:all}
+
+/* footer */
+footer{background:var(--navy-3);color:var(--on-navy-muted);padding-block:48px 40px;font-size:14px}
+.foot-grid{display:flex;flex-wrap:wrap;justify-content:space-between;gap:28px;align-items:flex-start}
+footer .brand{color:var(--on-navy)}
+footer nav{display:flex;flex-wrap:wrap;gap:12px 24px}
+footer nav a{text-decoration:none}
+footer nav a:hover{color:var(--on-navy)}
+.legal{margin-top:36px;padding-top:20px;border-top:1px solid var(--navy-line);display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:12.5px}
+</style>
+<!--ARTIFACT-HEAD-END-->
+</head>
+<body>
+<header class="top">
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="equire home">
+      <svg width="28" height="24" viewBox="0 0 30 26" aria-hidden="true"><rect x="0" y="1" width="30" height="5" fill="#D9A441"/><rect x="0" y="10.5" width="19" height="5" fill="#D9A441"/><rect x="0" y="20" width="26" height="5" fill="#D9A441"/></svg>
+      <span><b>equire</b><small>The Business Marketplace</small></span>
+    </a>
+    <nav class="links" aria-label="Sections">
+      <a href="#brokers">For brokers</a>
+      <a href="#investors">For PE &amp; VC</a>
+      <a href="#verify">Verification</a>
+      <a href="#listings">Listings</a>
+      <a href="#pricing">Pricing</a>
+    </nav>
+    <a class="btn btn-gold" href="#join">Join the broker pilot</a>
+  </div>
+</header>
+
+<main id="top">
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">The Business Marketplace · UAE</div>
+      <h1>Every business verified. <span class="g">Every deal qualified.</span></h1>
+      <p class="lede">equire is where UAE businesses are bought, sold and invested in, with the trust you expect from a property portal. <strong>Every listing is licence-checked before it goes live</strong>, every financial is structured, and every serious buyer signs an NDA before opening the data room.</p>
+      <div class="hero-cta">
+        <a class="btn btn-gold" href="#join">Join the founding broker pilot</a>
+        <a class="btn btn-line" href="#listings">See verified listings</a>
+      </div>
+      <div class="aud" aria-label="Built for">
+        <span>Business brokers</span><span>Private equity</span><span>Venture capital</span><span>Business owners</span>
+      </div>
+    </div>
+
+    <article class="vcard" aria-label="Example verified listing">
+      <div class="vphoto">
+        <span class="badge"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg>Verified</span>
+        <span class="ref">EQ-DXB-00412</span>
+      </div>
+      <div class="vbody">
+        <div class="meta"><span>Healthcare</span><span>·</span><span>Dubai Healthcare City</span><span>·</span><span>Free zone</span></div>
+        <h3>Dental clinic, 4 chairs, DHA licensed</h3>
+        <dl class="figs">
+          <div><dt>Asking</dt><dd>3.2m</dd></div>
+          <div><dt>Turnover</dt><dd>2.9m</dd></div>
+          <div><dt>Profit</dt><dd>780k</dd></div>
+        </dl>
+      </div>
+      <ul class="checks">
+        <li><span class="ic"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.4" fill="none"/></svg></span>Trade licence matched to registry<span class="st">checked</span></li>
+        <li><span class="ic"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.4" fill="none"/></svg></span>Financials, last 2 years<span class="st">checked</span></li>
+        <li><span class="ic"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.4" fill="none"/></svg></span>Lease, 6 years remaining<span class="st">checked</span></li>
+        <li class="lock"><span class="ic"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="7" width="9" height="6.5" rx="1" fill="currentColor"/><path d="M5.5 7V5.3a2.5 2.5 0 015 0V7" stroke="currentColor" stroke-width="1.6" fill="none"/></svg></span>Data room, NDA to unlock<span class="st">ready</span></li>
+      </ul>
+    </article>
+  </div>
+</div>
+
+<div class="strip">
+  <div class="wrap">
+    <div><b class="num">AED 4.2bn</b><span>UAE SME sales a year, with no single trusted marketplace</span></div>
+    <div><b class="num">558,000</b><span>SMEs in the UAE today, on track for 1 million by 2030</span></div>
+    <div><b class="num">2%</b><span>owner success fee, against the 8–12% brokers typically charge</span></div>
+    <div><b class="num">100%</b><span>of listings checked before they go live</span></div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">The problem</div>
+      <h2>Buying or selling a UAE business still runs on word of mouth.</h2>
+      <p class="lede">Property search moved online and earned people’s trust years ago. Business sales did not. Deals still move through private contact books, forwarded PDFs and classifieds that nobody checks.</p>
+    </div>
+    <div class="problems">
+      <article><span class="k">Opaque</span><h3>No single place to look</h3><p>Businesses change hands through personal networks and scattered classifieds. Nobody can see what is actually for sale.</p></article>
+      <article><span class="k">Unverified</span><h3>Trust comes too late</h3><p>Buyers cannot check a trade licence, real turnover or lease status until they have signed an NDA and spent hours with a seller.</p></article>
+      <article><span class="k">Unsafe</span><h3>Fake and inflated listings</h3><p>Duplicate, stale and inflated listings crowd out the real ones and waste everyone’s time, brokers’ most of all.</p></article>
+      <article><span class="k">Outdated</span><h3>Directories, not products</h3><p>Existing sites feel like 2010 classifieds, a long way from the map-and-filter search buyers already use for property.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- BROKERS -->
+<section id="brokers">
+  <div class="wrap split">
+    <div class="copy">
+      <div class="eyebrow">For business brokers</div>
+      <h2>Your listing pipeline. Your clients. Your commission.</h2>
+      <p class="lede">equire is a tool for brokers, and we will never compete with you for a mandate. List your stock once, and it reaches buyers who have already been qualified.</p>
+      <ul class="points">
+        <li><span class="pi"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h12M8 2v12" stroke="currentColor" stroke-width="2"/></svg></span><div><b>Free for founding brokers</b><span>No cost during the pilot. After launch it is AED 500 per seat a month, with no cut of your fee.</span></div></li>
+        <li><span class="pi"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg></span><div><b>Leads arrive with an NDA signed</b><span>Buyers sign in the app before they see your client’s financials, so your first call is with someone serious.</span></div></li>
+        <li><span class="pi"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="2" width="5" height="5" fill="currentColor"/><rect x="9" y="2" width="5" height="5" fill="currentColor"/><rect x="2" y="9" width="5" height="5" fill="currentColor"/><rect x="9" y="9" width="5" height="5" fill="currentColor"/></svg></span><div><b>Every mandate in one dashboard</b><span>Track verification, data-room views, NDAs and buyer messages across all your listings.</span></div></li>
+        <li><span class="pi"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5l5.5 2v4.2c0 3.3-2.3 5.9-5.5 6.8-3.2-.9-5.5-3.5-5.5-6.8V3.5z" fill="currentColor"/></svg></span><div><b>The verified badge works for you</b><span>Checked listings stand apart from the classifieds noise and give your clients a reason to choose you.</span></div></li>
+      </ul>
+    </div>
+
+    <div class="dash" aria-label="Example broker dashboard">
+      <div class="dash-top"><b>Broker dashboard</b><span>Al Noor Business Advisory · 3 seats</span></div>
+      <dl class="kpis">
+        <div><dt>Live listings</dt><dd>14</dd></div>
+        <div><dt>NDAs signed</dt><dd>37<small>+9 this week</small></dd></div>
+        <div><dt>Data room views</dt><dd>212</dd></div>
+      </dl>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>Listing</th><th>Status</th><th class="n">NDAs</th><th class="n">Asking (AED)</th></tr></thead>
+          <tbody>
+            <tr><td>Specialty coffee roastery, JLT</td><td><span class="pill p-live">Verified</span></td><td class="n">11</td><td class="n">1,850,000</td></tr>
+            <tr><td>Nursery, 120 seats, Mirdif</td><td><span class="pill p-live">Verified</span></td><td class="n">8</td><td class="n">6,500,000</td></tr>
+            <tr><td>Freight forwarder, SAIF Zone</td><td><span class="pill p-gold">Featured</span></td><td class="n">14</td><td class="n">4,800,000</td></tr>
+            <tr><td>Ladies’ salon, Al Barsha</td><td><span class="pill p-review">In review</span></td><td class="n">–</td><td class="n">690,000</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mock-note">Example dashboard with illustrative data</div>
+    </div>
+  </div>
+</section>
+
+<!-- INVESTORS -->
+<section id="investors">
+  <div class="wrap split rev">
+    <div class="copy">
+      <div class="eyebrow">For private equity &amp; venture capital</div>
+      <h2>Deal sourcing without the cold email and the spreadsheet.</h2>
+      <p class="lede">UAE funds still find deals through bankers, personal networks and PDFs forwarded by email. equire lets you search live, verified opportunities the way you would search for property.</p>
+      <ul class="points">
+        <li><span class="pi"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 3h12l-4.5 5.5V13l-3 1.5V8.5z" fill="currentColor"/></svg></span><div><b>Filter like a buyer, not a banker</b><span>Sector, emirate, revenue band, distress signals, growth stage and equity on offer. Weeks of sourcing become minutes.</span></div></li>
+        <li><span class="pi"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 5h9M8 2l3 3-3 3M14 11H5M8 8l-3 3 3 3" stroke="currentColor" stroke-width="1.8" fill="none"/></svg></span><div><b>Matched to your mandate</b><span>Distressed assets route to turnaround buyers and growth stakes route to VCs. One portal serves both intents.</span></div></li>
+        <li><span class="pi"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg></span><div><b>Diligence starts pre-verified</b><span>Licence checks and structured financials mean your first call qualifies the deal instead of fact-finding.</span></div></li>
+        <li><span class="pi"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 12.5V6M7 12.5V3.5M11 12.5V8" stroke="currentColor" stroke-width="2.4"/></svg></span><div><b>Saved searches and alerts</b><span>Get notified the day a business matching your thesis is verified and goes live.</span></div></li>
+      </ul>
+    </div>
+
+    <div class="filter" id="filterMock" aria-label="Example investor search">
+      <div class="fgroup">
+        <h4>Sector</h4>
+        <div class="fchips" data-group="sector">
+          <button type="button" aria-pressed="true">F&amp;B</button><button type="button" aria-pressed="true">Healthcare</button><button type="button" aria-pressed="false">Education</button><button type="button" aria-pressed="false">Logistics</button><button type="button" aria-pressed="false">Beauty</button><button type="button" aria-pressed="false">Tech</button>
+        </div>
+      </div>
+      <div class="fgroup">
+        <h4>Emirate</h4>
+        <div class="fchips" data-group="emirate">
+          <button type="button" aria-pressed="true">Dubai</button><button type="button" aria-pressed="true">Abu Dhabi</button><button type="button" aria-pressed="false">Sharjah</button><button type="button" aria-pressed="false">Northern Emirates</button>
+        </div>
+      </div>
+      <div class="fgroup">
+        <h4>Annual turnover (AED)</h4>
+        <div class="track" aria-hidden="true"><i></i></div>
+        <div class="range"><span>1m</span><span>10m+</span></div>
+      </div>
+      <div class="fgroup">
+        <h4>Opportunity</h4>
+        <div class="fchips" data-group="type">
+          <button type="button" aria-pressed="true">Full sale</button><button type="button" aria-pressed="false">Distressed</button><button type="button" aria-pressed="false">Equity stake</button>
+        </div>
+      </div>
+      <div class="fresult"><span><b class="num" id="matchCount">23</b> verified matches</span><a class="btn btn-gold" href="#listings">View results</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- FLOW -->
+<section id="how" class="rule">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">How a deal moves</div>
+      <h2>Every listing follows one flow.</h2>
+      <p class="lede">The same four steps on every listing, whether it is a café in JLT or a logistics group in Sharjah.</p>
+    </div>
+    <ol class="flow">
+      <li><h3>Discover</h3><p>Search verified listings by sector, emirate, price and turnover. Every card shows photos, a financial snapshot and its verified status.</p></li>
+      <li><h3>Verify</h3><p>Sign the NDA in the app with DocuSign to unlock full financials, contracts and the lease in a secure data room.</p></li>
+      <li><h3>Connect</h3><p>Message the owner or their broker directly. Every conversation stays in one thread, attached to the listing.</p></li>
+      <li><h3>Close</h3><p>Agree terms and move to the share purchase agreement, MoA addendum and licence amendment, with each step tracked.</p></li>
+    </ol>
+    <div class="types"><span>Three kinds of opportunity:</span><b class="type">Full sale</b><b class="type">Distressed asset</b><b class="type">Equity stake <small>Phase 2</small></b></div>
+  </div>
+</section>
+
+<!-- LISTINGS -->
+<section id="listings" class="rule">
+  <div class="wrap">
+    <div class="listings-bar">
+      <div class="sec-head" style="margin-bottom:0">
+        <div class="eyebrow">Inside the marketplace</div>
+        <h2>What a verified listing looks like.</h2>
+      </div>
+      <div class="tabs" role="group" aria-label="Filter listings">
+        <button type="button" data-f="all" aria-pressed="true">All</button>
+        <button type="button" data-f="sale" aria-pressed="false">Full sale</button>
+        <button type="button" data-f="distress" aria-pressed="false">Distressed</button>
+        <button type="button" data-f="equity" aria-pressed="false">Equity stake</button>
+      </div>
+    </div>
+    <div class="grid" id="grid"></div>
+    <p class="illus">These are illustrative listings, created to show the product. Live listings open to the broker pilot in Q1 2027.</p>
+  </div>
+</section>
+
+<!-- VERIFICATION -->
+<section id="verify">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Verification</div>
+      <h2>Nothing goes live until we have checked it.</h2>
+      <p class="lede">Every listing passes the same checks before it earns the verified badge. Buyers see what was checked and when, so trust is built into the listing from the start.</p>
+    </div>
+    <div class="vgrid">
+      <article>
+        <span class="doc">01 · TRADE LICENCE</span>
+        <h3>The business exists, and the seller owns it</h3>
+        <p>The licence is matched against the issuing authority, whether DET in Dubai or the relevant free zone.</p>
+        <ul><li>Licence number, activity and expiry</li><li>Mainland or free zone jurisdiction</li><li>Owners and partners named on the MoA</li></ul>
+      </article>
+      <article>
+        <span class="doc">02 · FINANCIALS</span>
+        <h3>The numbers on the card are real</h3>
+        <p>Turnover and profit come from the uploaded statements, not from the asking price the seller would like.</p>
+        <ul><li>Last two years of accounts</li><li>Structured into turnover, profit and margin</li><li>Flagged where figures do not reconcile</li></ul>
+      </article>
+      <article>
+        <span class="doc">03 · LEASE</span>
+        <h3>The premises come with the deal</h3>
+        <p>For many sectors the lease is the business, so we check it before any buyer falls in love with the location.</p>
+        <ul><li>Tenancy contract and Ejari</li><li>Years remaining and rent</li><li>Landlord NOC needed for transfer</li></ul>
+      </article>
+    </div>
+    <div class="room">
+      <span class="lk"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2" fill="currentColor"/><path d="M8 10.5V7.5a4 4 0 018 0v3" stroke="currentColor" stroke-width="2" fill="none"/></svg></span>
+      <div><b>NDA-gated data rooms</b><p>Buyers sign a DocuSign NDA in the app to unlock full financials, contracts and the lease. Owners and brokers see exactly who opened what.</p></div>
+      <span class="num">AED 1,500 per listing</span>
+    </div>
+  </div>
+</section>
+
+<!-- SECTORS -->
+<section id="sectors">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Sector playbooks</div>
+      <h2>Every sector sells differently, so equire guides each path.</h2>
+      <p class="lede">What buyers check, and which approvals the sale needs, change by sector. Listings carry the right fields and the right checklist for each.</p>
+    </div>
+    <div class="sect-wrap">
+      <table class="sect">
+        <thead><tr><th>Business area</th><th>What buyers look for</th><th>How it changes hands</th></tr></thead>
+        <tbody>
+          <tr><td>F&amp;B<small>Restaurants, cafés, cloud kitchens</small></td><td>Footfall, lease term, fit-out, monthly covers</td><td>Landlord NOC and new Ejari, food permit re-issued by Dubai Municipality, DET licence amendment</td></tr>
+          <tr><td>Beauty &amp; wellness<small>Salons, spas, gyms</small></td><td>Repeat clients, staff retention, location</td><td>Share or asset sale, municipality health permit, staff visa transfers</td></tr>
+          <tr><td>Healthcare<small>Clinics, pharmacies</small></td><td>Licences, patient base, medical staff</td><td>DHA facility licence updated to the new owner, licensed medical director in place</td></tr>
+          <tr><td>Education &amp; childcare<small>Nurseries, training centres</small></td><td>Enrolment, ratings, premises approval</td><td>KHDA approval of the new owner before the licence is amended</td></tr>
+          <tr><td>Retail, trading &amp; logistics<small>Shops, distributors, fleets</small></td><td>Stock, supplier contracts, fleet, margins</td><td>Share or asset sale with inventory valuation, customs and RTA records updated</td></tr>
+          <tr><td>Startups &amp; distressed SMEs<small>Growth and turnaround</small></td><td>Traction for VCs, undervalued assets for PE</td><td>Equity stake issued to investors (licensed, Phase 2) or fast asset purchase with creditor settlement</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sect-note"><b>Mainland sales</b> run share purchase agreement, then notarised MoA addendum, then DET licence amendment, typically in 1 to 2 weeks (4 to 6 with regulator approvals). <b>Free zone</b> transfers are handled in-house by the authority, often in days.</p>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Pricing</div>
+      <h2>Simple, and a fraction of a traditional brokerage fee.</h2>
+    </div>
+    <div class="plans">
+      <article class="plan">
+        <span class="who">Business owners</span>
+        <h3>Sell direct</h3>
+        <div class="price"><b>2%</b><span class="unit">success fee, paid only on sale</span></div>
+        <ul>
+          <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg>List for free and get verified</li>
+          <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg>Upload licence, financials and lease once</li>
+          <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg>Compared with the 8–12% brokers typically charge</li>
+        </ul>
+      </article>
+      <article class="plan feat">
+        <span class="flag">Founding pilot</span>
+        <span class="who">Brokers</span>
+        <h3>Your pipeline</h3>
+        <div class="price"><b>Free</b><span class="unit">during the pilot, then AED 500 per seat a month</span></div>
+        <ul>
+          <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg>Keep 100% of your commission</li>
+          <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg>Unlimited listings from one account</li>
+          <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg>Help shape the product before launch</li>
+        </ul>
+      </article>
+      <article class="plan">
+        <span class="who">Buyers &amp; investors</span>
+        <h3>Deal flow</h3>
+        <div class="price"><b>Free</b><span class="unit">to search, save and message</span></div>
+        <ul>
+          <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg>Filters, map search and saved alerts</li>
+          <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg>NDA in the app, data room unlocked</li>
+          <li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg>Equity placements at 4% of capital raised, Phase 2</li>
+        </ul>
+      </article>
+    </div>
+    <div class="addons">
+      <div><span>Verified data room</span><b>AED 1,500 per listing</b></div>
+      <div><span>Featured listing</span><b>AED 250 per 30 days</b></div>
+      <div><span>Broker seat after pilot</span><b>AED 500 per month</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARKET -->
+<section id="market">
+  <div class="wrap mkt">
+    <div class="copy">
+      <div class="eyebrow">The market</div>
+      <h2>An AED 4bn-a-year market with almost no infrastructure.</h2>
+      <p class="lede">Around 5,600 UAE SMEs change hands every year. Roughly 100 verified brokers serve the whole country, with no RERA-style licensing and no common marketplace. The biggest SME portal closes about 200 deals a year.</p>
+      <div class="mstats">
+        <div><b class="num">558k → 1M</b><span>SMEs today against the 2030 target</span></div>
+        <div><b class="num">94.4%</b><span>of UAE companies are SMEs</span></div>
+        <div><b class="num">63.5%</b><span>of non-oil GDP comes from SMEs</span></div>
+        <div><b class="num">10,000</b><span>SME sales a year expected by 2030</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="funnel" aria-label="Market size">
+        <div class="fbar"><div class="lbl"><span>TAM · UAE SME sales a year</span><b>AED 4.2bn</b></div><div class="bar">~5,600 sales at AED 750k average</div></div>
+        <div class="fbar"><div class="lbl"><span>SAM · Dubai</span><b>AED 3.3bn</b></div><div class="bar">~78% of UAE listings</div></div>
+        <div class="fbar"><div class="lbl"><span>SOM · equire by 2029</span><b>AED 225m</b></div><div class="bar">300 deals</div></div>
+      </div>
+      <p class="src">Sources: UAE Ministry of Economy; CBUAE and EY via Gulf Today; SMERGERS; BusinessesForSale.com UAE; Business Finder. Assumes 1% of SMEs change hands a year at an AED 750k average deal.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap" class="rule">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Roadmap</div>
+      <h2>Brokers first. Then we open the doors.</h2>
+    </div>
+    <ol class="road">
+      <li class="now"><span class="when">Now – Q4 2026</span><h3>Broker relationships and MVP</h3><p>Meeting Dubai’s leading brokerages one by one and building the MVP around their feedback.</p></li>
+      <li><span class="when">Q1 2027</span><h3>Closed broker pilot</h3><p>10 to 20 Dubai brokers onboarded and the first 100 verified listings live.</p></li>
+      <li><span class="when">Q2 2027</span><h3>Public launch, Dubai</h3><p>Self-serve owner listings open alongside broker stock, and the iOS and Android apps launch.</p></li>
+      <li><span class="when">Q3 2027 – 2028</span><h3>Investors and the GCC</h3><p>PE and VC funds onboarded, Abu Dhabi launch, then Saudi Arabia and Qatar.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- APP -->
+<section id="app">
+  <div class="wrap app-grid">
+    <div class="copy">
+      <div class="eyebrow">equire on mobile</div>
+      <h2>Your next acquisition, in your pocket.</h2>
+      <p class="lede">Mobile made finding a flight, a flat or a driver instant. equire does the same for your next business or investment. Search, sign the NDA, open the data room and message the seller from one app.</p>
+      <div class="stores">
+        <span class="store"><span><b>iOS</b>Coming 2027</span></span>
+        <span class="store"><span><b>Android</b>Coming 2027</span></span>
+      </div>
+    </div>
+    <div class="phone" aria-label="equire app preview">
+      <div class="screen">
+        <div class="s-top">
+          <div class="bar0"><span>9:41</span><span>equire</span></div>
+          <div class="s-search">Clinics in Dubai under AED 4m</div>
+          <div class="s-chips"><span class="on">Healthcare</span><span class="on">Dubai</span><span>Full sale</span><span>Free zone</span></div>
+        </div>
+        <div class="s-list">
+          <div class="s-card"><div class="sp"><span class="badge">Verified</span></div><div class="sb"><b>Dental clinic, 4 chairs</b><span>AED 3.2m · profit 780k</span></div></div>
+          <div class="s-card"><div class="sp" style="background:linear-gradient(135deg,#6E5A2E,#13233C)"><span class="badge">Verified</span></div><div class="sb"><b>Physiotherapy centre, Jumeirah</b><span>AED 1.4m · profit 310k</span></div></div>
+        </div>
+        <div class="s-nav"><span class="on">Search</span><span>Saved</span><span>Data rooms</span><span>Messages</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">The team</div>
+      <h2>Built by people who have sold on every side of this market.</h2>
+    </div>
+    <div class="team">
+      <div class="person"><span class="av">EB</span><div><span class="role">Founder &amp; CEO</span><b>Ethan Brown</b><p>Six years of high-trust, relationship-led sales across ACMI and VIP charter brokerage at Chapman Freeborn, property sales leadership at The Boros Collection, and freight forwarding. Leads brokers, partnerships and growth.</p></div></div>
+      <div class="person"><span class="av">AS</span><div><span class="role">CTO</span><b>Antonio Senatore</b><p>25+ years across SME startups and web and app development. Leads equire’s technology: the web and mobile app, listing verification and secure data rooms.</p></div></div>
+    </div>
+    <blockquote class="quote">“Mobile has made almost everything instant, finding a flight, a flat, a driver, but not the search for your next business or investment. equire is what happens when it finally does.”<cite>Ethan Brown, Founder</cite></blockquote>
+  </div>
+</section>
+
+<!-- JOIN -->
+<section id="join">
+  <div class="wrap join-grid">
+    <div class="copy">
+      <div class="eyebrow">Founding broker pilot · Q1 2027</div>
+      <h2>Be one of the first 20 brokers on equire.</h2>
+      <p class="lede">We are onboarding 10 to 20 Dubai brokerages for a closed pilot. Founding brokers list for free, shape the product with us, and get their stock in front of qualified buyers first.</p>
+      <ul class="perks">
+        <li><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" fill="currentColor"/><path d="M5.8 10.3l2.8 2.8 5.6-5.9" stroke="#13233C" stroke-width="2" fill="none"/></svg>Free seats for your whole team during the pilot</li>
+        <li><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" fill="currentColor"/><path d="M5.8 10.3l2.8 2.8 5.6-5.9" stroke="#13233C" stroke-width="2" fill="none"/></svg>Your listings go live before the public launch in Q2 2027</li>
+        <li><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" fill="currentColor"/><path d="M5.8 10.3l2.8 2.8 5.6-5.9" stroke="#13233C" stroke-width="2" fill="none"/></svg>A direct line to the founders on what we build next</li>
+        <li><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" fill="currentColor"/><path d="M5.8 10.3l2.8 2.8 5.6-5.9" stroke="#13233C" stroke-width="2" fill="none"/></svg>Investors and funds can request early access too</li>
+      </ul>
+    </div>
+
+    <form class="join" id="joinForm" novalidate>
+      <div id="formFields" style="display:grid;gap:16px">
+        <div class="fld"><span style="font-size:13px;font-weight:600">I am a</span>
+          <div class="roles" role="radiogroup" aria-label="I am a">
+            <label><input type="radio" name="role" id="r-broker" value="Broker" checked>Broker</label>
+            <label><input type="radio" name="role" id="r-pe" value="Private equity">Private equity</label>
+            <label><input type="radio" name="role" id="r-vc" value="Venture capital">Venture capital</label>
+            <label><input type="radio" name="role" id="r-owner" value="Business owner">Business owner</label>
+          </div>
+        </div>
+        <div class="f2">
+          <div class="fld"><label for="f-name">Full name</label><input id="f-name" name="name" autocomplete="name" required></div>
+          <div class="fld"><label for="f-firm">Firm</label><input id="f-firm" name="firm" autocomplete="organization"></div>
+        </div>
+        <div class="f2">
+          <div class="fld"><label for="f-email">Work email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+          <div class="fld"><label for="f-phone">Mobile</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="+971"></div>
+        </div>
+        <div class="fld"><label for="f-size" id="sizeLabel">Active mandates</label>
+          <select id="f-size" name="size"><option>1 to 5</option><option>6 to 20</option><option>21 to 50</option><option>More than 50</option></select>
+        </div>
+        <p class="err" id="formErr" role="alert"></p>
+        <button class="btn btn-gold" type="submit">Request pilot access</button>
+      </div>
+      <div class="done" id="formDone" hidden>
+        <h3>Almost there</h3>
+        <p>Send these details to the founding team and we will be in touch.</p>
+        <div class="mailbox"><code id="mailAddr">hello@equire.ae</code><button type="button" id="copyBtn">Copy details</button></div>
+        <pre id="mailBody"></pre>
+        <a class="btn btn-ink" id="mailLink" href="#">Open in my email app</a>
+      </div>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <a class="brand" href="#top" aria-label="equire home">
+        <svg width="28" height="24" viewBox="0 0 30 26" aria-hidden="true"><rect x="0" y="1" width="30" height="5" fill="#D9A441"/><rect x="0" y="10.5" width="19" height="5" fill="#D9A441"/><rect x="0" y="20" width="26" height="5" fill="#D9A441"/></svg>
+        <span><b>equire</b><small>The Business Marketplace</small></span>
+      </a>
+      <nav aria-label="Footer">
+        <a href="#brokers">For brokers</a><a href="#investors">For PE &amp; VC</a><a href="#verify">Verification</a><a href="#pricing">Pricing</a><a href="#roadmap">Roadmap</a><a href="#join">Join the pilot</a>
+      </nav>
+    </div>
+    <div class="legal">
+      <span>© 2026 equire · equire.ae · Dubai, United Arab Emirates</span>
+      <span>Equity placements launch in Phase 2, subject to licensing.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var L=[
+    {t:"sale",sec:"F&B · Specialty coffee",title:"Coffee roastery with 2 cafés",loc:"JLT, Dubai",zone:"Free zone",ask:"1.85m",to:"2.4m",pr:"520k",lease:"4 yrs",ref:"EQ-DXB-00388",g:["#7A5A30","#2A1E14"],ico:"cup"},
+    {t:"sale",sec:"Healthcare · Dental",title:"Dental clinic, 4 chairs",loc:"Al Reem, Abu Dhabi",zone:"Mainland",ask:"3.2m",to:"2.9m",pr:"780k",lease:"6 yrs",ref:"EQ-AUH-00121",g:["#2B5C70","#13233C"],ico:"plus"},
+    {t:"distress",sec:"F&B · Cloud kitchen",title:"Cloud kitchen running 3 brands",loc:"Al Quoz, Dubai",zone:"Mainland",ask:"420k",to:"1.1m",pr:"−90k",lease:"2 yrs",ref:"EQ-DXB-00402",g:["#7A3A22","#2A1A14"],ico:"flame"},
+    {t:"sale",sec:"Education · Nursery",title:"Nursery, 120 seats, KHDA rated Good",loc:"Mirdif, Dubai",zone:"Mainland",ask:"6.5m",to:"4.1m",pr:"1.2m",lease:"9 yrs",ref:"EQ-DXB-00297",g:["#3E6B4F","#13233C"],ico:"star"},
+    {t:"equity",sec:"Tech · B2B logistics SaaS",title:"Raising AED 2m for a 15% stake",loc:"DIFC, Dubai",zone:"Free zone",ask:"2.0m",to:"1.6m",pr:"ARR",lease:"–",ref:"EQ-DXB-00415",g:["#4A3F7A","#13233C"],ico:"chart",labels:["Raising","ARR","Stake"],vals:["2.0m","1.6m","15%"]},
+    {t:"distress",sec:"Beauty · Fitness",title:"Boutique gym, fully fitted",loc:"Al Majaz, Sharjah",zone:"Mainland",ask:"350k",to:"880k",pr:"−40k",lease:"3 yrs",ref:"EQ-SHJ-00057",g:["#6B2F45","#1F1420"],ico:"bolt"},
+    {t:"sale",sec:"Logistics · Freight",title:"Freight forwarder with 12-truck fleet",loc:"SAIF Zone, Sharjah",zone:"Free zone",ask:"4.8m",to:"9.3m",pr:"1.05m",lease:"5 yrs",ref:"EQ-SHJ-00061",g:["#55606E","#13233C"],ico:"truck"},
+    {t:"equity",sec:"Beauty · Clean skincare",title:"D2C skincare brand, 30% stake",loc:"Dubai Design District",zone:"Free zone",ref:"EQ-DXB-00421",g:["#8A6A3A","#2A2016"],ico:"leaf",labels:["Raising","Revenue","Stake"],vals:["1.2m","3.4m","30%"]},
+    {t:"sale",sec:"Beauty · Salon",title:"Ladies’ salon, 9 stations",loc:"Al Barsha, Dubai",zone:"Mainland",ask:"690k",to:"1.3m",pr:"240k",lease:"3 yrs",ref:"EQ-DXB-00430",g:["#7A4A5A","#13233C"],ico:"spark"}
+  ];
+  var I={
+    cup:'<path d="M10 18h20v10a8 8 0 01-8 8h-4a8 8 0 01-8-8zM30 21h3a4 4 0 010 8h-3" stroke="currentColor" stroke-width="2.5" fill="none"/><path d="M16 8c0 3 3 3 3 6M22 8c0 3 3 3 3 6" stroke="currentColor" stroke-width="2.5" fill="none"/>',
+    plus:'<rect x="6" y="6" width="32" height="32" rx="8" stroke="currentColor" stroke-width="2.5" fill="none"/><path d="M22 14v16M14 22h16" stroke="currentColor" stroke-width="3"/>',
+    flame:'<path d="M22 6c2 6 10 9 10 19a10 10 0 01-20 0c0-5 3-7 4-11 2 3 3 4 5 4-2-4-1-8 1-12z" stroke="currentColor" stroke-width="2.5" fill="none"/>',
+    star:'<path d="M22 6l4.8 10 11 1.4-8 7.6 2 11L22 30.7 12.2 36l2-11-8-7.6 11-1.4z" stroke="currentColor" stroke-width="2.5" fill="none"/>',
+    chart:'<path d="M8 36h28M12 30V22M20 30V14M28 30V18M36 30V8" stroke="currentColor" stroke-width="3"/>',
+    bolt:'<path d="M24 5L10 25h11l-2 14 15-21H23z" stroke="currentColor" stroke-width="2.5" fill="none"/>',
+    truck:'<path d="M5 12h22v18H5zM27 18h7l5 6v6H27z" stroke="currentColor" stroke-width="2.5" fill="none"/><circle cx="12" cy="32" r="3.5" fill="currentColor"/><circle cx="32" cy="32" r="3.5" fill="currentColor"/>',
+    leaf:'<path d="M8 36C8 18 18 8 37 7c0 19-10 29-27 29zM8 36l16-16" stroke="currentColor" stroke-width="2.5" fill="none"/>',
+    spark:'<path d="M22 5v34M5 22h34M10 10l24 24M34 10L10 34" stroke="currentColor" stroke-width="2" opacity=".9"/>'
+  };
+  var tick='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg>';
+  var typeName={sale:"Full sale",distress:"Distressed",equity:"Equity stake"};
+  function card(x){
+    var labels=x.labels||["Asking","Turnover","Profit"], vals=x.vals||[x.ask,x.to,x.pr];
+    var figs=labels.map(function(l,i){var v=vals[i];return '<div><dt>'+l+'</dt><dd'+(String(v).charAt(0)==="−"?' class="neg"':'')+'>'+v+'</dd></div>';}).join("");
+    var tagCls=x.t==="distress"?" distress":x.t==="equity"?" equity":"";
+    return '<article class="card" data-t="'+x.t+'">'+
+      '<div class="ph" style="background:radial-gradient(110% 90% at 90% 0%,rgba(217,164,65,.35),transparent 55%),linear-gradient(135deg,'+x.g[0]+','+x.g[1]+')">'+
+        '<div class="row"><span class="tag'+tagCls+'">'+typeName[x.t]+'</span><span class="badge">'+tick+'Verified</span></div>'+
+        '<div class="row"><span class="loc">'+x.loc+'</span><svg class="glyph" viewBox="0 0 44 44" aria-hidden="true">'+I[x.ico]+'</svg></div>'+
+      '</div>'+
+      '<div class="cb"><span class="sec">'+x.sec+'</span><h3>'+x.title+'</h3>'+
+        '<dl class="figs">'+figs+'</dl>'+
+        '<div class="foot"><span class="vf">'+tick+'Licence · financials · lease</span><span>'+x.zone+(x.lease&&x.lease!=="–"?' · lease '+x.lease:'')+'</span></div>'+
+      '</div></article>';
+  }
+  var grid=document.getElementById("grid");
+  grid.innerHTML=L.map(card).join("");
+  var tabs=document.querySelectorAll(".tabs button");
+  tabs.forEach(function(b){b.addEventListener("click",function(){
+    tabs.forEach(function(o){o.setAttribute("aria-pressed",String(o===b));});
+    var f=b.dataset.f;
+    grid.querySelectorAll(".card").forEach(function(c){c.hidden=!(f==="all"||c.dataset.t===f);});
+  });});
+
+  // investor filter mock: toggling chips changes the illustrative match count
+  var mc=document.getElementById("matchCount");
+  document.querySelectorAll("#filterMock .fchips button").forEach(function(b){
+    b.addEventListener("click",function(){
+      b.setAttribute("aria-pressed",b.getAttribute("aria-pressed")==="true"?"false":"true");
+      var on=document.querySelectorAll('#filterMock .fchips button[aria-pressed="true"]').length;
+      mc.textContent=String(Math.max(3,on*5+3));
+    });
+  });
+
+  // pilot form
+  var form=document.getElementById("joinForm"), err=document.getElementById("formErr");
+  var sizeLabel=document.getElementById("sizeLabel");
+  form.querySelectorAll('input[name="role"]').forEach(function(r){r.addEventListener("change",function(){
+    sizeLabel.textContent=r.value==="Broker"?"Active mandates":r.value==="Business owner"?"Annual turnover (AED m)":"Typical ticket (AED m)";
+  });});
+  form.addEventListener("submit",function(e){
+    e.preventDefault();
+    var d=new FormData(form), name=(d.get("name")||"").trim(), email=(d.get("email")||"").trim();
+    if(!name){err.textContent="Add your name so we know who to reply to.";return;}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){err.textContent="Enter a work email like name@firm.ae.";return;}
+    err.textContent="";
+    var body="Role: "+d.get("role")+"\nName: "+name+"\nFirm: "+(d.get("firm")||"")+"\nEmail: "+email+"\nMobile: "+(d.get("phone")||"")+"\n"+sizeLabel.textContent+": "+d.get("size");
+    document.getElementById("mailBody").textContent=body;
+    document.getElementById("mailLink").href="mailto:hello@equire.ae?subject="+encodeURIComponent("equire pilot access: "+name)+"&body="+encodeURIComponent(body);
+    document.getElementById("formFields").hidden=true;
+    document.getElementById("formDone").hidden=false;
+  });
+  document.getElementById("copyBtn").addEventListener("click",function(){
+    var t="To: hello@equire.ae\n\n"+document.getElementById("mailBody").textContent, btn=this;
+    function sel(){var r=document.createRange();r.selectNodeContents(document.getElementById("mailBody"));var s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent="Selected, press copy";}
+    try{navigator.clipboard.writeText(t).then(function(){btn.textContent="Copied";},sel);}catch(x){sel();}
+  });
+})();
+</script>
+<!--ARTIFACT-END-->
+</body>
+</html>
