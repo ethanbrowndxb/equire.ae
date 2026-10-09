@@ -216,8 +216,20 @@ section{padding-block:clamp(72px,9vw,120px)}
 .range{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12.5px;color:var(--on-navy-muted)}
 .track{height:6px;border-radius:3px;background:var(--navy-line);position:relative}
 .track i{position:absolute;left:18%;right:34%;top:0;bottom:0;background:var(--gold);border-radius:3px}
-.track i::before,.track i::after{content:"";position:absolute;top:50%;width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--gold);transform:translate(-50%,-50%)}
-.track i::before{left:0}.track i::after{left:100%}
+.filter h4{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.toout{font:600 12.5px var(--mono);letter-spacing:0;text-transform:none;color:var(--gold)}
+.track.dual{margin:8px 0 2px}
+.track.dual i{left:10%;right:0;transition:none}
+.track.dual input{position:absolute;left:-8px;right:-8px;width:calc(100% + 16px);top:50%;height:28px;margin:0;transform:translateY(-50%);background:none;-webkit-appearance:none;appearance:none;pointer-events:none;outline:none}
+.track.dual input::-webkit-slider-runnable-track{background:none;height:28px}
+.track.dual input::-moz-range-track{background:none;height:28px}
+.track.dual input::-webkit-slider-thumb{-webkit-appearance:none;pointer-events:auto;width:24px;height:24px;margin-top:2px;border-radius:50%;background:#fff;border:4px solid var(--gold);box-shadow:0 2px 8px rgba(0,0,0,.35);cursor:grab}
+.track.dual input::-moz-range-thumb{pointer-events:auto;width:16px;height:16px;border-radius:50%;background:#fff;border:4px solid var(--gold);box-shadow:0 2px 8px rgba(0,0,0,.35);cursor:grab}
+.track.dual input:active::-webkit-slider-thumb{cursor:grabbing;transform:scale(1.12)}
+.track.dual input:focus-visible::-webkit-slider-thumb{outline:2px solid #fff;outline-offset:2px}
+.fnote{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 16px;padding:10px 14px;border-radius:10px;background:var(--navy);color:var(--on-navy);font-size:13.5px}
+.fnote b{color:var(--gold);font-family:var(--mono)}
+.fnote button{background:none;border:1px solid var(--navy-line);color:var(--on-navy);border-radius:999px;padding:5px 12px;font-size:12.5px;cursor:pointer}
 .fresult{display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid var(--navy-line);padding-top:16px;flex-wrap:wrap}
 .fresult b{font-family:var(--mono);font-size:24px;color:var(--gold)}
 .fresult span{font-size:13px;color:var(--on-navy-muted)}
@@ -810,27 +822,30 @@ form.join{box-shadow:0 2px 4px rgba(0,0,0,.14),0 30px 70px rgba(4,10,20,.4)}
       <div class="fgroup">
         <h4>Sector</h4>
         <div class="fchips" data-group="sector">
-          <button type="button" aria-pressed="true">F&amp;B</button><button type="button" aria-pressed="true">Healthcare</button><button type="button" aria-pressed="false">Education</button><button type="button" aria-pressed="false">Logistics</button><button type="button" aria-pressed="false">Beauty</button><button type="button" aria-pressed="false">Tech</button>
+          <button type="button" aria-pressed="true">F&amp;B</button><button type="button" aria-pressed="true">Healthcare</button><button type="button" aria-pressed="true">Education</button><button type="button" aria-pressed="false">Logistics</button><button type="button" aria-pressed="true">Beauty</button><button type="button" aria-pressed="false">Tech</button>
         </div>
       </div>
       <div class="fgroup">
         <h4>Emirate</h4>
         <div class="fchips" data-group="emirate">
-          <button type="button" aria-pressed="true">Dubai</button><button type="button" aria-pressed="true">Abu Dhabi</button><button type="button" aria-pressed="false">Sharjah</button><button type="button" aria-pressed="false">Northern Emirates</button>
+          <button type="button" aria-pressed="true">Dubai</button><button type="button" aria-pressed="true">Abu Dhabi</button><button type="button" aria-pressed="true">Sharjah</button><button type="button" aria-pressed="false">Northern Emirates</button>
         </div>
       </div>
       <div class="fgroup">
-        <h4>Annual turnover (AED)</h4>
-        <div class="track" aria-hidden="true"><i></i></div>
-        <div class="range"><span>1m</span><span>10m+</span></div>
+        <h4>Annual turnover (AED) <output id="toOut" class="toout">1m – 10m+</output></h4>
+        <div class="track dual"><i id="toFill"></i>
+          <input type="range" id="toMin" min="0" max="10" step="0.5" value="1" aria-label="Minimum annual turnover, AED millions">
+          <input type="range" id="toMax" min="0" max="10" step="0.5" value="10" aria-label="Maximum annual turnover, AED millions">
+        </div>
+        <div class="range"><span>0</span><span>5m</span><span>10m+</span></div>
       </div>
       <div class="fgroup">
         <h4>Opportunity</h4>
         <div class="fchips" data-group="type">
-          <button type="button" aria-pressed="true">Full sale</button><button type="button" aria-pressed="false">Distressed</button><button type="button" aria-pressed="false">Equity stake</button>
+          <button type="button" aria-pressed="true">Full sale</button><button type="button" aria-pressed="true">Distressed</button><button type="button" aria-pressed="false">Equity stake</button>
         </div>
       </div>
-      <div class="fresult"><span><b class="num" id="matchCount">23</b> verified matches</span><a class="btn btn-gold" href="#listings">View results</a></div>
+      <div class="fresult"><span><b class="num" id="matchCount">5</b> verified matches</span><a class="btn btn-gold" href="#listings" id="viewRes">View results</a></div>
     </div>
   </div>
 </section>
@@ -874,6 +889,7 @@ form.join{box-shadow:0 2px 4px rgba(0,0,0,.14),0 30px 70px rgba(4,10,20,.4)}
       </div>
       </div>
     </div>
+    <div class="fnote" id="fNote" hidden><span>Showing <b id="fN">0</b> listings from your investor search</span><button type="button" id="fClear">Show all listings</button></div>
     <div class="grid" id="grid"></div>
     <div class="mapview" id="mapView" hidden>
       <div class="mapstage">
@@ -1261,7 +1277,7 @@ form.join{box-shadow:0 2px 4px rgba(0,0,0,.14),0 30px 70px rgba(4,10,20,.4)}
   }
   function drawPins(){
     pinG.innerHTML=""; var k=scale();
-    L.forEach(function(x,i){ if(!x.ll||!(curF==="all"||x.t===curF))return;
+    L.forEach(function(x,i){ if(!x.ll||!(curF==="all"||x.t===curF)||(fActive&&fLive&&fLive.indexOf(i)<0))return;
       var p=P(x.ll[0],x.ll[1]), g=document.createElementNS(NS,"g");
       g.setAttribute("class","pin "+x.t+(i===sel?" on":"")); g.setAttribute("tabindex","0"); g.setAttribute("role","button");
       g.setAttribute("aria-label",x.title+", "+x.loc);
@@ -1365,15 +1381,37 @@ form.join{box-shadow:0 2px 4px rgba(0,0,0,.14),0 30px 70px rgba(4,10,20,.4)}
   function openListing(i){D.i=i;D.signed=false;D.msgs=null;D.reached=1;go(1);document.getElementById("demo").scrollIntoView({behavior:"smooth",block:"start"});}
   render();
 
-  // investor filter mock: toggling chips changes the illustrative match count
-  var mc=document.getElementById("matchCount");
-  document.querySelectorAll("#filterMock .fchips button").forEach(function(b){
-    b.addEventListener("click",function(){
-      b.setAttribute("aria-pressed",b.getAttribute("aria-pressed")==="true"?"false":"true");
-      var on=document.querySelectorAll('#filterMock .fchips button[aria-pressed="true"]').length;
-      mc.textContent=String(Math.max(3,on*5+3));
-    });
+  // investor search: sector, emirate, turnover and type filter the example listings
+  var mc=document.getElementById("matchCount"), fm=document.getElementById("filterMock");
+  var toMin=document.getElementById("toMin"), toMax=document.getElementById("toMax"), toFill=document.getElementById("toFill"), toOut=document.getElementById("toOut");
+  var fNote=document.getElementById("fNote"), fN=document.getElementById("fN"), fActive=false;
+  var EM={"Dubai":/Dubai|JLT|DIFC/,"Abu Dhabi":/Abu Dhabi/,"Sharjah":/Sharjah/,"Northern Emirates":/Ras Al Khaimah|Ajman|Fujairah|Umm Al Quwain/};
+  var TY={"Full sale":"sale","Distressed":"distress","Equity stake":"equity"};
+  function toM(v){v=String(v||"");var n=parseFloat(v);return /k$/.test(v)?n/1000:n;}
+  function on(g){return Array.prototype.map.call(fm.querySelectorAll('[data-group="'+g+'"] button[aria-pressed="true"]'),function(b){return b.textContent;});}
+  function fmt(v,top){return v>=10&&top?"10m+":v===0?"0":(v<1?Math.round(v*1000)+"k":(+v).toString()+"m");}
+  function matches(){var sec=on("sector"),em=on("emirate"),ty=on("type").map(function(t){return TY[t];}),lo=+toMin.value,hi=+toMax.value;
+    return L.map(function(x,i){var t=toM(x.to);return (sec.some(function(s){return x.sec.indexOf(s)===0;}))&&(em.some(function(e){return EM[e].test(x.loc);}))&&ty.indexOf(x.t)>-1&&t>=lo&&(hi>=10||t<=hi)?i:-1;}).filter(function(i){return i>-1;});}
+  function applyGrid(){var m=matches();
+    grid.querySelectorAll(".card").forEach(function(c){c.hidden=fActive?m.indexOf(+c.dataset.i)<0:!(curF==="all"||c.dataset.t===curF);});
+    fNote.hidden=!fActive;fN.textContent=m.length;fLive=m;drawPins();if(window.__cGrid)window.__cGrid.rebuild();}
+  var fLive=null;
+  function update(src){
+    var lo=+toMin.value,hi=+toMax.value;
+    if(lo>hi){if(src===toMin){toMin.value=hi;lo=hi;}else{toMax.value=lo;hi=lo;}}
+    toFill.style.left=(lo*10)+"%";toFill.style.right=(100-hi*10)+"%";
+    toOut.textContent=fmt(lo)+" – "+fmt(hi,true);
+    var n=matches().length;mc.textContent=String(n);
+    if(fActive)applyGrid();
+  }
+  fm.querySelectorAll(".fchips button").forEach(function(b){
+    b.addEventListener("click",function(){b.setAttribute("aria-pressed",b.getAttribute("aria-pressed")==="true"?"false":"true");update(b);});
   });
+  [toMin,toMax].forEach(function(r){r.addEventListener("input",function(){update(r);});});
+  document.getElementById("viewRes").addEventListener("click",function(){fActive=true;showMap(false);tabs.forEach(function(o){o.setAttribute("aria-pressed",String(o.dataset.f==="all"));});curF="all";applyGrid();});
+  document.getElementById("fClear").addEventListener("click",function(){fActive=false;applyGrid();});
+  tabs.forEach(function(b){b.addEventListener("click",function(){if(fActive){fActive=false;fNote.hidden=true;}});});
+  update();
 
   // pilot form
   var form=document.getElementById("joinForm"), err=document.getElementById("formErr");
@@ -1421,7 +1459,7 @@ form.join{box-shadow:0 2px 4px rgba(0,0,0,.14),0 30px 70px rgba(4,10,20,.4)}
     var raf=0;sc.addEventListener("scroll",function(){if(!raf)raf=requestAnimationFrame(function(){raf=0;mark();});},{passive:true});
     build();return {rebuild:function(){sc.scrollLeft=0;build();}};
   }
-  var cGrid=carousel(grid,grid.parentNode.querySelector("#mapView"));
+  var cGrid=carousel(grid,grid.parentNode.querySelector("#mapView"));window.__cGrid=cGrid;
   tabs.forEach(function(b){b.addEventListener("click",function(){cGrid.rebuild();});});
   [vG,vM].forEach(function(b){b.addEventListener("click",function(){cGrid.rebuild();});});
   var vg=document.querySelector(".vgrid");carousel(vg,vg);
