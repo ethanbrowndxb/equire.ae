@@ -487,6 +487,17 @@ form.ld-form{background:var(--surface);border:1px solid var(--line);border-radiu
 .ld-files small{display:block;color:var(--muted);font-size:12px}
 .ld-open .okd{width:22px;height:22px;border-radius:50%;background:var(--good);color:#fff;display:grid;place-items:center;flex:none}.ld-open .okd svg{width:13px;height:13px}
 .ld-open{display:flex;gap:9px;align-items:center;color:var(--good);font-weight:600;font-size:14.5px}
+.ld-routes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ld-routes .rt{display:grid;gap:6px;align-content:start;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--sh-1)}
+.ld-routes .rt b{font:700 16px var(--display)}
+.ld-routes .rt span{font-size:14px;color:var(--muted);line-height:1.45}
+.ld-routes .rt .btn{margin-top:6px;width:100%;padding:11px 14px}
+.ld-routes .rt .btn svg{width:16px;height:16px;flex:none}
+.ld-routes .rt.done{grid-column:1/-1;border-color:var(--good)}
+.ld-routes .rb{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.btn-line2{border:1px solid var(--line);color:var(--fg);background:transparent}
+.ld-nda-btn svg{width:16px;height:16px;flex:none}
+@media (max-width:520px){.ld-routes{grid-template-columns:minmax(0,1fr)}}
 .ld-bar{display:none}
 @media (max-width:860px){
   .ld{padding:0;place-items:stretch;background:var(--bg)}
@@ -940,7 +951,8 @@ footer nav a:hover{color:var(--on-navy)}
       x.t==="equity"?["PDF","Cap table and MoA","Verified by equire"]:["PDF","Tenancy contract and Ejari","Verified by equire"],["PDF","Staff and visa list","Uploaded by the seller"],["XLS","Equipment and fit-out register","Uploaded by the seller"]];
       return '<h4><span>Data room</span><span>Unlocked</span></h4><div class="ld-open"><span class="okd">'+tick+'</span>NDA signed by '+signedNda[i]+' · 6 documents</div>'+
         '<ul class="ld-files">'+files.map(function(f){return '<li><span class="fi'+(f[0]==="XLS"?" x":"")+'">'+f[0]+'</span><span><b style="font-weight:600">'+f[1]+'</b><small>'+f[2]+'</small></span></li>';}).join("")+'</ul>'+
-        '<p class="ld-note" style="margin-top:10px">Demo data room: in the live product each document opens with your name watermarked on every page.</p>';}
+        '<p class="ld-note" style="margin-top:10px">Demo data room: in the live product each document opens with your name watermarked on every page.</p>'+
+        '<button type="button" class="btn btn-gold ld-nda-btn" data-ld="enquire">'+ico.chat+'Enquire about this business</button>';}
     return '<h4><span>Data room</span><span style="color:var(--gold-ink)">Locked</span></h4><div class="ld-lock">'+lockIco+'<span>6 documents including audited accounts, the '+(x.t==="equity"?'cap table':'tenancy contract')+' and the trade licence. Sign the NDA to unlock them.</span></div>'+
       '<button type="button" class="btn btn-ink ld-nda-btn" data-ld="nda">'+lockIco.replace('color:var(--gold-ink)','color:inherit')+'Sign NDA to unlock</button>'+
       '<form class="ld-nda" id="ldNda" hidden novalidate>'+
@@ -957,7 +969,17 @@ footer nav a:hover{color:var(--on-navy)}
       if(n.split(/\s+/).length<2){er.textContent="Enter your full legal name, first and last.";return;}
       if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){er.textContent="Enter a valid email so we can send you a signed copy.";return;}
       if(!f.querySelector("#ndaAgree").checked){er.textContent="Tick the box to agree to the NDA terms.";return;}
-      signedNda[ldCur]=n.replace(/[<>&"]/g,"");var room=ld.querySelector("#ldRoom");room.innerHTML=roomHTML(ldCur);room.scrollIntoView({behavior:"smooth",block:"start"});});}
+      signedNda[ldCur]=n.replace(/[<>&"]/g,"");var room=ld.querySelector("#ldRoom");room.innerHTML=roomHTML(ldCur);
+      ld.querySelector("#ldRoutes").innerHTML=routesHTML(ldCur);ld.querySelector("#ldBar").innerHTML=barHTML(ldCur);
+      var fn=ld.querySelector("#ld-name"),fe=ld.querySelector("#ld-email"),fm=ld.querySelector("#ld-msg");if(fn&&!fn.value)fn.value=n;if(fe&&!fe.value)fe.value=em;
+      if(fm)fm.value="I have signed the NDA and reviewed the data room for "+L[ldCur].title+" ("+L[ldCur].ref+"). I would like to discuss next steps.";
+      room.scrollIntoView({behavior:"smooth",block:"start"});});}
+  function barHTML(i){return signedNda[i]?'<button type="button" class="btn btn-line" data-ld="room">Data room</button><button type="button" class="btn btn-gold" data-ld="enquire">'+ico.chat+'Enquire</button>':
+    '<button type="button" class="btn btn-line" data-ld="nda">Sign NDA</button><button type="button" class="btn btn-gold" data-ld="enquire">'+ico.chat+'Enquire now</button>';}
+  function routesHTML(i){
+    if(signedNda[i])return '<div class="rt done"><b>NDA signed. The full details are unlocked.</b><span>Review the data room below, then send your enquiry when you are ready.</span><div class="rb"><button type="button" class="btn btn-line2" data-ld="room">View data room</button><button type="button" class="btn btn-gold" data-ld="enquire">Enquire now</button></div></div>';
+    return '<div class="rt"><b>Enquire now</b><span>Ask a question or register interest. No NDA needed.</span><button type="button" class="btn btn-gold" data-ld="enquire">'+ico.chat+'Enquire now</button></div>'+
+      '<div class="rt"><b>See the full details first</b><span>Sign a short NDA to open the financials and documents, then enquire.</span><button type="button" class="btn btn-ink" data-ld="nda">Sign NDA</button></div>';}
   function ldHTML(i){
     var x=L[i], m=MORE[x.ref]||["UAE","–","–",""], by=BY[i%BY.length], tc=x.t==="distress"?" distress":x.t==="equity"?" equity":"";
     var labels=x.labels||["Asking","Turnover","Profit"], vals=x.vals||[x.ask,x.to,x.pr];
@@ -971,6 +993,7 @@ footer nav a:hover{color:var(--on-navy)}
         '<div><div class="eyebrow">'+x.sec+'</div><h2 id="ldT">'+x.title+'</h2><div class="ld-meta">'+x.loc+' · '+x.zone+' · <span class="mono">'+x.ref+'</span></div></div>'+
         '<dl class="ld-figs">'+labels.map(function(l,j){var v=vals[j];return '<div><dt>'+l+'</dt><dd'+(String(v).charAt(0)==="−"?' class="neg"':'')+'>'+(j<2&&/\d/.test(v)&&!/%/.test(v)?'<small>AED</small>':'')+v+'</dd></div>';}).join("")+'</dl>'+
         '<p class="ld-desc">'+m[3]+'</p>'+
+        '<div class="ld-routes" id="ldRoutes">'+routesHTML(i)+'</div>'+
         '<div class="ld-box2"><h4><span>Verified by equire</span><span>3 of 3 checks</span></h4>'+
           chk("Trade licence matched to the registry","02 Oct 2026")+chk("Financials, last 2 years","03 Oct 2026")+
           (x.t==="equity"?chk("Cap table and MoA","03 Oct 2026"):chk("Lease, "+x.lease+" remaining","03 Oct 2026"))+'</div>'+
@@ -981,7 +1004,7 @@ footer nav a:hover{color:var(--on-navy)}
       '</div>'+
       '<aside class="ld-side"><form class="ld-form" id="ldForm" novalidate>'+
         '<div id="ldFields" style="display:grid;gap:14px">'+
-        '<h3>Enquire about this business</h3><p>Your enquiry goes to '+(by[0]==="OW"?'the owner':by[1])+' through equire.</p>'+
+        '<h3>Enquire about this business</h3><p>Your enquiry goes to '+(by[0]==="OW"?'the owner':by[1])+' through equire. No NDA is needed to enquire.</p>'+
         '<div class="fld"><label for="ld-role">I am a</label><select id="ld-role" name="role"><option>Buyer</option><option>Investor or fund</option><option>Broker</option><option>Other</option></select></div>'+
         '<div class="fld"><label for="ld-name">Full name</label><input id="ld-name" name="name" autocomplete="name" required></div>'+
         '<div class="fld"><label for="ld-email">Email</label><input id="ld-email" name="email" type="email" autocomplete="email" required></div>'+
@@ -991,7 +1014,7 @@ footer nav a:hover{color:var(--on-navy)}
         '<button class="btn btn-gold" type="submit">Send enquiry</button></div>'+
         '<div class="ld-done" id="ldDone" hidden><span class="ok">'+tick+'</span><h3>Your enquiry is ready</h3><p style="margin:0;color:var(--muted);font-size:14.5px">During the pilot, enquiries are sent by email to <b>contact.us@equire.ae</b>. Tap below to send it and we will connect you with the '+(by[0]==="OW"?'owner':'broker')+'.</p><pre id="ldBody"></pre><a class="btn btn-gold" id="ldMail" href="#">Send by email</a></div>'+
       '</form><span class="ld-alt">Prefer the app? <a href="'+APP+'" target="_blank" rel="noopener">Open in the equire app</a></span></aside></div>'+
-      '<div class="ld-bar"><button type="button" class="btn btn-line" data-ld="save" aria-pressed="'+!!saved[i]+'">'+(saved[i]?'Saved':'Save')+'</button><button type="button" class="btn btn-gold" data-ld="enquire">'+ico.chat+'Enquire</button></div>'+
+      '<div class="ld-bar" id="ldBar">'+barHTML(i)+'</div>'+
     '</div>';
   }
   function openListing(i,fromHash){
@@ -1003,7 +1026,7 @@ footer nav a:hover{color:var(--on-navy)}
       if(!name){er.textContent="Add your name so the seller knows who to reply to.";return;}
       if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){er.textContent="Enter a valid email, like name@company.com.";return;}
       er.textContent="";var x=L[ldCur];
-      var body="Listing: "+x.title+" ("+x.ref+")\nI am a: "+d.get("role")+"\nName: "+name+"\nEmail: "+email+"\nMobile: "+(d.get("phone")||"")+"\n\n"+(d.get("msg")||"");
+      var body="Listing: "+x.title+" ("+x.ref+")\nNDA signed: "+(signedNda[ldCur]?"Yes, by "+signedNda[ldCur]:"No")+"\nI am a: "+d.get("role")+"\nName: "+name+"\nEmail: "+email+"\nMobile: "+(d.get("phone")||"")+"\n\n"+(d.get("msg")||"");
       f.querySelector("#ldBody").textContent=body;
       f.querySelector("#ldMail").href="mailto:contact.us@equire.ae?subject="+encodeURIComponent("Enquiry: "+x.title+" ("+x.ref+")")+"&body="+encodeURIComponent(body);
       f.querySelector("#ldFields").hidden=true;f.querySelector("#ldDone").hidden=false;f.scrollIntoView({behavior:"smooth",block:"nearest"});});
@@ -1017,7 +1040,8 @@ footer nav a:hover{color:var(--on-navy)}
     if(e.target===ld){closeListing();return;}
     var a=e.target.closest("[data-ld]");if(!a)return;
     if(a.dataset.ld==="close")closeListing();
-    else if(a.dataset.ld==="nda"){var nf=ld.querySelector("#ldNda");nf.hidden=false;a.hidden=true;nf.scrollIntoView({behavior:"smooth",block:"start"});setTimeout(function(){nf.querySelector("#nda-name").focus({preventScroll:true});},450);}
+    else if(a.dataset.ld==="room"){ld.querySelector("#ldRoom").scrollIntoView({behavior:"smooth",block:"start"});}
+    else if(a.dataset.ld==="nda"){var nf=ld.querySelector("#ldNda");if(!nf)return;nf.hidden=false;var lb=ld.querySelector(".ld-nda-btn[data-ld=nda]");if(lb)lb.hidden=true;nf.scrollIntoView({behavior:"smooth",block:"start"});setTimeout(function(){nf.querySelector("#nda-name").focus({preventScroll:true});},450);}
     else if(a.dataset.ld==="save"){saved[ldCur]=!saved[ldCur];ld.querySelectorAll('[data-ld="save"]').forEach(function(b){b.setAttribute("aria-pressed",String(!!saved[ldCur]));if(b.classList.contains("btn"))b.textContent=saved[ldCur]?"Saved":"Save";});
       var h=grid.querySelector('.card[data-i="'+ldCur+'"] .heart');if(h)h.setAttribute("aria-pressed",String(!!saved[ldCur]));}
     else if(a.dataset.ld==="enquire"){var f=ld.querySelector("#ldForm");f.scrollIntoView({behavior:"smooth",block:"start"});setTimeout(function(){var n=ld.querySelector("#ld-name");if(n&&!ld.querySelector("#ldFields").hidden)n.focus({preventScroll:true});},450);}
