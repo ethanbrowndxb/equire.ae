@@ -104,6 +104,7 @@ p{margin:0}
 .hero .lede{color:var(--on-navy-muted);margin-top:24px}
 .hero .lede strong{color:var(--on-navy);font-weight:600}
 .hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+@media (max-width:520px){.hero-cta{display:grid;gap:10px}.hero-cta .btn{width:100%;justify-content:center;text-align:center}}
 .aud{display:flex;flex-wrap:wrap;gap:8px;margin-top:34px;font-size:13px;color:var(--on-navy-muted)}
 .aud span{border:1px solid var(--navy-line);border-radius:999px;padding:5px 12px}
 
@@ -421,9 +422,11 @@ form.join{background:var(--surface);color:var(--fg);border-radius:14px;padding:2
 .fld label{font-size:13px;font-weight:600}
 .fld input,.fld select{width:100%;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:11px 12px;font-size:15px}
 .fld input:focus,.fld select:focus{border-color:var(--gold);outline:none;box-shadow:0 0 0 3px rgba(217,164,65,.25)}
-.roles{display:flex;flex-wrap:wrap;gap:8px}
-.roles label{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:999px;padding:7px 13px;font-size:14px;cursor:pointer;background:var(--bg)}
-.roles input{accent-color:var(--gold)}
+.roles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:2px}
+.roles label{display:flex;align-items:center;gap:10px;min-height:46px;border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:14.5px;line-height:1.25;cursor:pointer;background:var(--bg)}
+.fld .roles input{-webkit-appearance:none;appearance:none;flex:none;width:18px;height:18px;margin:0;padding:0;border:2px solid var(--line);border-radius:50%;background:transparent;box-shadow:none;cursor:pointer}
+.fld .roles input:checked{border-color:var(--gold);background:radial-gradient(circle,var(--gold) 0 4px,transparent 4.5px)}
+.fld .roles input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .roles label:has(input:checked){border-color:var(--gold);background:var(--gold-soft);color:var(--gold-ink);font-weight:600}
 .err{font-size:13px;color:var(--warn);min-height:1em}
 .done{display:grid;gap:12px}
@@ -470,7 +473,7 @@ form.join{background:var(--surface);color:var(--fg);border-radius:14px;padding:2
 .demo{display:grid;grid-template-columns:220px minmax(0,1fr);border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--bg);box-shadow:var(--shadow)}
 @media (max-width:860px){.demo{grid-template-columns:minmax(0,1fr)}}
 .steps{list-style:none;margin:0;padding:18px 14px;display:grid;gap:4px;align-content:start;background:var(--navy);color:var(--on-navy-muted);counter-reset:ds}
-@media (max-width:860px){.steps{grid-auto-flow:column;grid-auto-columns:max-content;overflow-x:auto;padding:10px}}
+@media (max-width:860px){.steps{grid-template-columns:repeat(5,minmax(0,1fr));gap:2px;padding:10px 6px}.steps li button{flex-direction:column;align-items:center;justify-content:flex-start;gap:6px;padding:8px 2px;font-size:12px;line-height:1.2;text-align:center}}
 .steps button{width:100%;text-align:left;border:0;background:none;color:inherit;border-radius:8px;padding:10px 12px;font-size:14px;font-weight:600;display:flex;gap:10px;align-items:center;cursor:pointer}
 .steps button::before{counter-increment:ds;content:counter(ds);width:22px;height:22px;border-radius:50%;border:1.5px solid var(--navy-line);display:grid;place-items:center;font-family:var(--mono);font-size:11px;flex:none}
 .steps button[disabled]{opacity:.45;cursor:default}
@@ -999,8 +1002,8 @@ footer nav a:hover{color:var(--on-navy)}
       <h2>Built by people who have sold on every side of this market.</h2>
     </div>
     <div class="team">
-      <div class="person"><img class="av" src="img/ethan.jpg" alt="Ethan Brown" width="104" height="104" loading="lazy"><div><span class="role">Founder &amp; CEO</span><b>Ethan Brown</b><p>Six years of high-trust, relationship-led sales across ACMI and VIP charter brokerage at Chapman Freeborn, property sales leadership at The Boros Collection, and freight forwarding. Leads brokers, partnerships and growth.</p></div></div>
-      <div class="person"><img class="av" src="img/antonio.jpg" alt="Antonio Senatore" width="104" height="104" loading="lazy"><div><span class="role">CTO</span><b>Antonio Senatore</b><p>25+ years across SME startups and web and app development. Leads equire’s technology: the web and mobile app, listing verification and secure data rooms.</p></div></div>
+      <div class="person"><img class="av" src="img/ethan.jpg" alt="Ethan Brown" width="104" height="104" loading="lazy"><div><span class="role">Founder &amp; CEO</span><b>Ethan Brown</b><p>6+ years of luxury sales experience across ACMI and private aviation, real estate and hospitality. Leads brokers, partnerships and growth.</p></div></div>
+      <div class="person"><img class="av" src="img/antonio.jpg" alt="Antonio Senatore" width="104" height="104" loading="lazy"><div><span class="role">CTO</span><b>Antonio Senatore</b><p>An entrepreneur with multiple business ventures under his name, and 25+ years across SME startups and web and app development. Leads equire’s technology: the web and mobile app, listing verification and secure data rooms.</p></div></div>
     </div>
     <blockquote class="quote">“Mobile has made almost everything instant, finding a flight, a flat, a driver, but not the search for your next business or investment. equire is what happens when it finally does.”<cite>Ethan Brown, Founder</cite></blockquote>
   </div>
