@@ -413,6 +413,80 @@ img.av{width:96px;height:96px;border-radius:50%;object-fit:cover;background:#F7F
 @media (max-width:520px){.person{grid-template-columns:64px minmax(0,1fr);gap:14px;padding:16px}img.av{width:64px;height:64px}}
 @media (hover:hover) and (min-width:721px){.person:hover{transform:translateY(-3px);box-shadow:var(--sh-2)}}
 
+/* listing detail (opens on the site, like the app) */
+html.lopen{overflow:hidden}
+.ld{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:28px;background:rgba(6,12,22,.62);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);animation:ldfade .25s ease}
+.ld[hidden]{display:none}
+@keyframes ldfade{from{opacity:0}}
+@keyframes ldup{from{transform:translateY(40px);opacity:.4}}
+.ld-box{position:relative;width:min(1080px,100%);max-height:calc(100vh - 56px);overflow:auto;background:var(--bg);color:var(--fg);border-radius:18px;box-shadow:0 30px 90px rgba(0,0,0,.45);animation:ldup .35s var(--ease-out);overscroll-behavior:contain}
+.ld-hero{position:relative;height:340px;background-size:cover;background-position:center}
+.ld-hero .row{position:absolute;left:20px;right:20px;bottom:18px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.ld-hero .tag{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(10,20,36,.6);color:#fff;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);padding:6px 10px;border-radius:6px}
+.ld-hero .tag.distress{background:var(--warn)}.ld-hero .tag.equity{background:#F3F0E8;color:#13233C}
+.ld-x,.ld-sv{position:absolute;top:14px;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:rgba(255,253,248,.92);color:#13233C;border:0;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25);z-index:2}
+.ld-x{right:14px}.ld-sv{right:64px}
+.ld-x svg,.ld-sv svg{width:20px;height:20px}
+.ld-sv[aria-pressed="true"]{color:#C2402F}.ld-sv[aria-pressed="true"] path{fill:currentColor}
+.ld-body{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:32px;padding:28px 32px 36px;align-items:start}
+.ld-main{display:grid;gap:22px;min-width:0}
+.ld-main h2{font-size:clamp(26px,3vw,34px);line-height:1.08;margin-top:8px}
+.ld-meta{color:var(--muted);font-size:14px;margin-top:8px}
+.ld-meta .mono{font-family:var(--mono);font-size:12.5px}
+.ld-figs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0}
+.ld-figs div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;box-shadow:var(--sh-1)}
+.ld-figs dt{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.ld-figs dd{margin:6px 0 0;font:600 clamp(17px,2vw,21px) var(--mono);white-space:nowrap}
+.ld-figs dd small{font-size:11px;color:var(--muted);margin-right:3px}
+.ld-figs dd.neg{color:var(--warn)}
+.ld-desc{margin:0;font-size:16.5px;line-height:1.6;text-wrap:pretty}
+.ld-box2{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--sh-1)}
+.ld-box2 h4{margin:0 0 10px;font:700 15px var(--display);display:flex;justify-content:space-between;gap:10px}
+.ld-box2 h4 span+span{color:var(--good);font-family:var(--body);font-size:13px}
+.ld-chk{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-top:1px solid var(--line);font-size:14.5px}
+.ld-chk:first-of-type{border-top:0}
+.ld-chk b{font-weight:500;display:flex;gap:9px;align-items:center}
+.ld-chk i{width:20px;height:20px;border-radius:50%;background:var(--good);color:#fff;display:grid;place-items:center;flex:none}
+.ld-chk i svg{width:12px;height:12px}
+.ld-chk span{color:var(--muted);font-size:13px;white-space:nowrap}
+.ld-kv{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0}
+.ld-kv dt{font-size:12px;color:var(--muted)}.ld-kv dd{margin:3px 0 0;font-weight:600}
+.ld-by{display:flex;gap:12px;align-items:center}
+.ld-by i{width:44px;height:44px;border-radius:50%;background:var(--navy);color:var(--gold);display:grid;place-items:center;font:700 14px var(--display);font-style:normal;flex:none}
+.ld-by b{display:block}.ld-by span{font-size:13.5px;color:var(--muted)}
+.ld-lock{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;color:var(--muted)}
+.ld-note{font-size:12.5px;color:var(--muted);margin:0}
+.ld-side{position:sticky;top:0}
+form.ld-form{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;display:grid;gap:14px;box-shadow:var(--sh-2)}
+.ld-form h3{font-size:21px}
+.ld-form>p{margin:-6px 0 0;color:var(--muted);font-size:14px}
+.ld-form textarea{width:100%;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:11px 12px;font:inherit;font-size:15px;min-height:96px;resize:vertical;color:inherit}
+.ld-form .fld input,.ld-form .fld select{color:inherit}
+.ld-form textarea:focus{border-color:var(--gold);outline:none;box-shadow:0 0 0 3px rgba(217,164,65,.25)}
+.ld-form .btn{width:100%}
+.ld-form .err{color:var(--warn);font-size:13.5px;margin:0;min-height:0}
+.ld-done{display:grid;gap:12px;text-align:left}
+.ld-done .ok{width:46px;height:46px;border-radius:50%;background:var(--good);color:#fff;display:grid;place-items:center}
+.ld-done .ok svg{width:22px;height:22px}
+.ld-done pre{margin:0;white-space:pre-wrap;font:13px/1.5 var(--mono);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;max-height:150px;overflow:auto}
+.ld-alt{display:block;text-align:center;font-size:13.5px;color:var(--muted);margin-top:12px}
+.ld-alt a{color:inherit;font-weight:600}
+.ld-bar{display:none}
+@media (max-width:860px){
+  .ld{padding:0;place-items:stretch;background:var(--bg)}
+  .ld-box{width:100%;max-height:none;height:100%;border-radius:0;box-shadow:none;padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+  .ld-hero{height:min(48vh,320px)}
+  .ld-body{grid-template-columns:minmax(0,1fr);gap:24px;padding:22px 18px 28px}
+  .ld-side{position:static}
+  .ld-figs dd{font-size:16px}
+  .ld-figs div{padding:12px 10px}
+  .ld-kv{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ld-bar{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:3;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -10px 30px rgba(19,35,60,.12)}
+  .ld-bar .btn{width:100%;padding:13px 10px}
+  .ld-bar .btn svg{width:18px;height:18px;flex:none}
+  .ld-bar .btn-line{border-color:var(--line);color:var(--fg)}
+}
+@media (prefers-reduced-motion:reduce){.ld,.ld-box{animation:none}}
 /* join / form */
 #join{background:var(--navy);color:var(--on-navy);position:relative}
 #join .eyebrow,#join .lede{color:var(--on-navy-muted)}
@@ -815,7 +889,7 @@ footer nav a:hover{color:var(--on-navy)}
     var tagCls=x.t==="distress"?" distress":x.t==="equity"?" equity":"", by=BY[i%BY.length];
     var price=x.t==="equity"?'<small>Raising</small>AED '+vals[0]:'AED '+vals[0];
     var spec=labels.slice(1).map(function(l,k){var v=vals[k+1];return l+' <b'+(String(v).charAt(0)==="−"?' class="neg"':'')+'>'+v+'</b>';}).join(' · ');
-    return '<article class="card'+(i>=4?' extra':'')+'" data-t="'+x.t+'" data-i="'+i+'" tabindex="0" role="link" aria-label="View '+x.title+' in the app preview (opens in a new tab)">'+
+    return '<article class="card'+(i>=4?' extra':'')+'" data-t="'+x.t+'" data-i="'+i+'" tabindex="0" role="link" aria-label="View details: '+x.title+'">'+
       '<div class="ph" style="background:'+bg(x,900)+'">'+
         '<div class="row"><span class="who-chip"><i>'+by[0]+'</i>'+by[1]+'</span><span class="tag'+tagCls+'">'+typeName[x.t]+'</span></div>'+
         '<div class="row"><span class="ago">'+AGO[i%AGO.length]+'</span><span class="badge">'+tick+'Verified</span></div>'+
@@ -826,15 +900,97 @@ footer nav a:hover{color:var(--on-navy)}
         '<div class="acts"><span>'+ico.chat+'Enquire</span><span>'+ico.eye+'View details</span></div>'+
       '</div></article>';
   }
-  function openApp(){var w=window.open(APP,"_blank","noopener");if(w)try{w.opener=null;}catch(e){}}
   var grid=document.getElementById("grid");
   grid.innerHTML=L.map(card).join("");
-  grid.addEventListener("click",function(e){var h=e.target.closest(".heart");if(h){e.stopPropagation();h.setAttribute("aria-pressed",String(h.getAttribute("aria-pressed")!=="true"));return;}if(e.target.closest(".card"))openApp();});
+
+  // ---- listing detail: opens on the site, with an enquiry form ----
+  var MORE={"EQ-DXB-00388":["Dubai","2017","24","Specialty roastery supplying 40 wholesale accounts across Dubai, plus two cafés in JLT. Roasting equipment is owned outright. The founder is relocating and will support a 3-month handover."],
+    "EQ-AUH-00121":["Abu Dhabi","2015","9","Four-chair clinic with a DOH licence, two resident dentists and a hygienist. 62% of revenue comes from insured patients, with 3,100 active patient files."],
+    "EQ-DXB-00402":["Dubai","2021","14","Three delivery brands running from one 1,800 sq ft kitchen. Sales are steady but rent has pushed it into a loss. Brands, recipes and equipment sell as one package."],
+    "EQ-DXB-00297":["Dubai","2012","31","120-seat nursery rated Good by KHDA, running at 92% occupancy with a waiting list for FS1. Purpose-built villa on a 9-year lease."],
+    "EQ-DXB-00415":["Dubai","2022","12","Route and fleet software used by 38 GCC logistics firms, growing ARR 9% a month. Raising a seed extension to open Riyadh."],
+    "EQ-SHJ-00057":["Sharjah","2019","8","Fully fitted 6,000 sq ft gym with 210 active members. Equipment is under three years old. The owner is exiting to focus on another venture."],
+    "EQ-SHJ-00061":["Sharjah","2009","42","Licensed freight forwarder with 12 owned trucks and a bonded warehouse lease in SAIF Zone. 70% of revenue is from repeat customers."],
+    "EQ-DXB-00421":["Dubai","2020","11","Clean skincare brand sold online and in 22 retail doors across the GCC. Raising growth capital for the Saudi launch."],
+    "EQ-DXB-00430":["Dubai","2016","11","Nine-station ladies’ salon with 1,900 regular clients and a stable team of 11. Fit-out completed in 2023."]};
+  var ld=document.createElement("div");ld.className="ld";ld.hidden=true;ld.setAttribute("role","dialog");ld.setAttribute("aria-modal","true");ld.setAttribute("aria-labelledby","ldT");document.body.appendChild(ld);
+  var ldCur=-1, ldPushed=false, ldFrom=null, saved={};
+  var xIco='<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
+  var lockIco='<svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true" style="flex:none;margin-top:2px;color:var(--gold-ink)"><rect x="3" y="7" width="10" height="7.5" rx="1.5" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M5.5 7V5a2.5 2.5 0 015 0v2" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>';
+  function chk(t,d){return '<div class="ld-chk"><b><i>'+tick+'</i>'+t+'</b><span>'+d+'</span></div>';}
+  function ldHTML(i){
+    var x=L[i], m=MORE[x.ref]||["UAE","–","–",""], by=BY[i%BY.length], tc=x.t==="distress"?" distress":x.t==="equity"?" equity":"";
+    var labels=x.labels||["Asking","Turnover","Profit"], vals=x.vals||[x.ask,x.to,x.pr];
+    var askT=x.t==="equity"?"I would like to discuss investing in ":"I am interested in ";
+    return '<div class="ld-box" tabindex="-1">'+
+      '<div class="ld-hero" style="background:'+bg(x,1400)+'">'+
+        '<button type="button" class="ld-sv" data-ld="save" aria-pressed="'+!!saved[i]+'" aria-label="Save listing">'+ico.heart+'</button>'+
+        '<button type="button" class="ld-x" data-ld="close" aria-label="Close listing">'+xIco+'</button>'+
+        '<div class="row"><span class="tag'+tc+'">'+typeName[x.t]+'</span><span class="badge">'+tick+'Verified by equire</span></div></div>'+
+      '<div class="ld-body"><div class="ld-main">'+
+        '<div><div class="eyebrow">'+x.sec+'</div><h2 id="ldT">'+x.title+'</h2><div class="ld-meta">'+x.loc+' · '+x.zone+' · <span class="mono">'+x.ref+'</span></div></div>'+
+        '<dl class="ld-figs">'+labels.map(function(l,j){var v=vals[j];return '<div><dt>'+l+'</dt><dd'+(String(v).charAt(0)==="−"?' class="neg"':'')+'>'+(j<2&&/\d/.test(v)&&!/%/.test(v)?'<small>AED</small>':'')+v+'</dd></div>';}).join("")+'</dl>'+
+        '<p class="ld-desc">'+m[3]+'</p>'+
+        '<div class="ld-box2"><h4><span>Verified by equire</span><span>3 of 3 checks</span></h4>'+
+          chk("Trade licence matched to the registry","02 Oct 2026")+chk("Financials, last 2 years","03 Oct 2026")+
+          (x.t==="equity"?chk("Cap table and MoA","03 Oct 2026"):chk("Lease, "+x.lease+" remaining","03 Oct 2026"))+'</div>'+
+        '<div class="ld-box2"><h4><span>Key facts</span></h4><dl class="ld-kv"><div><dt>Established</dt><dd>'+m[1]+'</dd></div><div><dt>Staff</dt><dd>'+m[2]+'</dd></div><div><dt>Licence</dt><dd>'+x.zone+'</dd></div><div><dt>Emirate</dt><dd>'+m[0]+'</dd></div></dl></div>'+
+        '<div class="ld-box2"><h4><span>Data room</span></h4><div class="ld-lock">'+lockIco+'<span>Audited accounts, the '+(x.t==="equity"?'cap table':'tenancy contract')+', the trade licence and 3 more documents. Opened to serious buyers once they sign an NDA.</span></div></div>'+
+        '<div class="ld-box2"><h4><span>Listed by</span></h4><div class="ld-by"><i>'+by[0]+'</i><div><b>'+by[1]+'</b><span>'+(by[0]==="OW"?'Business owner · identity verified':'Verified broker')+'</span></div></div></div>'+
+        '<p class="ld-note">Illustrative listing created to show the product.</p>'+
+      '</div>'+
+      '<aside class="ld-side"><form class="ld-form" id="ldForm" novalidate>'+
+        '<div id="ldFields" style="display:grid;gap:14px">'+
+        '<h3>Enquire about this business</h3><p>Your enquiry goes to '+(by[0]==="OW"?'the owner':by[1])+' through equire.</p>'+
+        '<div class="fld"><label for="ld-role">I am a</label><select id="ld-role" name="role"><option>Buyer</option><option>Investor or fund</option><option>Broker</option><option>Other</option></select></div>'+
+        '<div class="fld"><label for="ld-name">Full name</label><input id="ld-name" name="name" autocomplete="name" required></div>'+
+        '<div class="fld"><label for="ld-email">Email</label><input id="ld-email" name="email" type="email" autocomplete="email" required></div>'+
+        '<div class="fld"><label for="ld-phone">Mobile</label><input id="ld-phone" name="phone" type="tel" autocomplete="tel" placeholder="+971"></div>'+
+        '<div class="fld"><label for="ld-msg">Message</label><textarea id="ld-msg" name="msg">'+askT+x.title+' ('+x.ref+'). Please share more details.</textarea></div>'+
+        '<p class="err" id="ldErr" role="alert"></p>'+
+        '<button class="btn btn-gold" type="submit">Send enquiry</button></div>'+
+        '<div class="ld-done" id="ldDone" hidden><span class="ok">'+tick+'</span><h3>Your enquiry is ready</h3><p style="margin:0;color:var(--muted);font-size:14.5px">During the pilot, enquiries are sent by email to <b>contact.us@equire.ae</b>. Tap below to send it and we will connect you with the '+(by[0]==="OW"?'owner':'broker')+'.</p><pre id="ldBody"></pre><a class="btn btn-gold" id="ldMail" href="#">Send by email</a></div>'+
+      '</form><span class="ld-alt">Prefer the app? <a href="'+APP+'" target="_blank" rel="noopener">Open in the equire app</a></span></aside></div>'+
+      '<div class="ld-bar"><button type="button" class="btn btn-line" data-ld="save" aria-pressed="'+!!saved[i]+'">'+(saved[i]?'Saved':'Save')+'</button><button type="button" class="btn btn-gold" data-ld="enquire">'+ico.chat+'Enquire</button></div>'+
+    '</div>';
+  }
+  function openListing(i,fromHash){
+    ldCur=i;ldFrom=document.activeElement;ld.innerHTML=ldHTML(i);ld.hidden=false;docEl.classList.add("lopen");
+    if(!fromHash){try{history.pushState({ld:L[i].ref},"","#"+L[i].ref);ldPushed=true;}catch(e){}}
+    var b=ld.querySelector(".ld-box");b.scrollTop=0;b.focus({preventScroll:true});
+    var f=ld.querySelector("#ldForm");f.addEventListener("submit",function(e){e.preventDefault();
+      var d=new FormData(f),name=(d.get("name")||"").trim(),email=(d.get("email")||"").trim(),er=f.querySelector("#ldErr");
+      if(!name){er.textContent="Add your name so the seller knows who to reply to.";return;}
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){er.textContent="Enter a valid email, like name@company.com.";return;}
+      er.textContent="";var x=L[ldCur];
+      var body="Listing: "+x.title+" ("+x.ref+")\nI am a: "+d.get("role")+"\nName: "+name+"\nEmail: "+email+"\nMobile: "+(d.get("phone")||"")+"\n\n"+(d.get("msg")||"");
+      f.querySelector("#ldBody").textContent=body;
+      f.querySelector("#ldMail").href="mailto:contact.us@equire.ae?subject="+encodeURIComponent("Enquiry: "+x.title+" ("+x.ref+")")+"&body="+encodeURIComponent(body);
+      f.querySelector("#ldFields").hidden=true;f.querySelector("#ldDone").hidden=false;f.scrollIntoView({behavior:"smooth",block:"nearest"});});
+  }
+  var docEl=document.documentElement;
+  function closeListing(viaPop){if(ld.hidden)return;ld.hidden=true;ld.innerHTML="";docEl.classList.remove("lopen");ldCur=-1;
+    if(!viaPop){if(ldPushed){ldPushed=false;history.back();}else{try{history.replaceState(null,"",location.pathname+location.search);}catch(e){}}}
+    else ldPushed=false;
+    if(ldFrom&&ldFrom.focus)try{ldFrom.focus({preventScroll:true});}catch(e){}}
+  ld.addEventListener("click",function(e){
+    if(e.target===ld){closeListing();return;}
+    var a=e.target.closest("[data-ld]");if(!a)return;
+    if(a.dataset.ld==="close")closeListing();
+    else if(a.dataset.ld==="save"){saved[ldCur]=!saved[ldCur];ld.querySelectorAll('[data-ld="save"]').forEach(function(b){b.setAttribute("aria-pressed",String(!!saved[ldCur]));if(b.classList.contains("btn"))b.textContent=saved[ldCur]?"Saved":"Save";});
+      var h=grid.querySelector('.card[data-i="'+ldCur+'"] .heart');if(h)h.setAttribute("aria-pressed",String(!!saved[ldCur]));}
+    else if(a.dataset.ld==="enquire"){var f=ld.querySelector("#ldForm");f.scrollIntoView({behavior:"smooth",block:"start"});setTimeout(function(){var n=ld.querySelector("#ld-name");if(n&&!ld.querySelector("#ldFields").hidden)n.focus({preventScroll:true});},450);}
+  });
+  document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!ld.hidden)closeListing();});
+  window.addEventListener("popstate",function(){var r=location.hash.slice(1),k=L.map(function(x){return x.ref;}).indexOf(r);
+    if(k>-1){if(ldCur!==k)openListing(k,true);}else closeListing(true);});
+  (function(){var r=location.hash.slice(1),k=L.map(function(x){return x.ref;}).indexOf(r);if(k>-1)openListing(k,true);})();
+  grid.addEventListener("click",function(e){var h=e.target.closest(".heart");if(h){e.stopPropagation();var on=h.getAttribute("aria-pressed")!=="true";h.setAttribute("aria-pressed",String(on));saved[+h.closest(".card").dataset.i]=on;return;}var c=e.target.closest(".card");if(c)openListing(+c.dataset.i);});
   var lMore=document.getElementById("lMore"), lcN=document.getElementById("lcN");
   lMore.querySelector("button").addEventListener("click",function(){grid.classList.remove("clip");lMore.hidden=true;});
   function syncFeed(){var vis=Array.prototype.filter.call(grid.children,function(c){return !c.hidden;});lcN.textContent=vis.length;
     vis.forEach(function(c,k){c.classList.toggle("extra",k>=4);});lMore.hidden=!grid.classList.contains("clip")||vis.length<=4||grid.hidden;}
-  grid.addEventListener("keydown",function(e){if(e.target.closest(".card")&&(e.key==="Enter"||e.key===" ")){e.preventDefault();openApp();}});
+  grid.addEventListener("keydown",function(e){var c=e.target.closest(".card");if(c&&e.target===c&&(e.key==="Enter"||e.key===" ")){e.preventDefault();openListing(+c.dataset.i);}});
 
   var tabs=document.querySelectorAll(".tabs button"), curF="all";
   var fActive=false, fLive=null;
@@ -891,7 +1047,7 @@ footer nav a:hover{color:var(--on-navy)}
     var labels=x.labels||["Asking","Turnover","Profit"], vals=x.vals||[x.ask,x.to,x.pr];
     side.innerHTML='<div class="mph" style="background:'+bg(x,600)+'"></div><span class="sec">'+x.sec+' · '+x.loc+'</span><h3>'+x.title+'</h3>'+
       '<dl class="figs">'+labels.map(function(l,j){return '<div><dt>'+l+'</dt><dd>'+vals[j]+'</dd></div>';}).join("")+'</dl>'+
-      '<span class="pill p-live">Verified · '+typeName[x.t]+'</span><a class="btn btn-gold" href="'+APP+'" target="_blank" rel="noopener">View in app</a>';}
+      '<span class="pill p-live">Verified · '+typeName[x.t]+'</span><button type="button" class="btn btn-gold" data-open="'+i+'">View details and enquire</button>';side.querySelector("[data-open]").addEventListener("click",function(){openListing(i);});}
   document.querySelectorAll(".mapctl button").forEach(function(b){b.addEventListener("click",function(){setView(b.dataset.z);});});
   var vG=document.getElementById("vGrid"), vM=document.getElementById("vMap"), mapView=document.getElementById("mapView");
   function showMap(on){mapView.hidden=!on;grid.hidden=on;if(on){loadLeaflet();if(LM)setTimeout(function(){LM.invalidateSize();},50);}var lc=document.querySelector(".lcount");if(lc)lc.hidden=on;vG.setAttribute("aria-pressed",String(!on));vM.setAttribute("aria-pressed",String(on));if(window.__cGrid)window.__cGrid.rebuild();}
