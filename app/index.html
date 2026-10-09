@@ -208,6 +208,14 @@ button{cursor:pointer;background:none;border:0;padding:0}
 .cta{position:absolute;z-index:5;left:0;right:0;bottom:0;display:flex;gap:10px;padding:12px 16px calc(var(--bot) + 12px);background:rgba(255,253,248,.7);-webkit-backdrop-filter:blur(20px) saturate(1.8);backdrop-filter:blur(20px) saturate(1.8);border-top:1px solid rgba(255,255,255,.7);box-shadow:0 -1px 0 rgba(221,214,198,.6),0 -10px 30px rgba(19,35,60,.12)}
 .cta .btn{flex:1}
 .cta .btn.sq{flex:none;width:50px;padding:0}
+.cta .btn{padding-left:10px;padding-right:10px;white-space:nowrap}
+.routes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.routes>div{display:grid;gap:5px;align-content:start;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px;box-shadow:var(--sh-1,0 1px 2px rgba(19,35,60,.08))}
+.routes b{font:750 14.5px/1.2 var(--display)}
+.routes span{font-size:12.5px;color:var(--muted);line-height:1.35}
+.routes .btn{margin-top:4px;padding:9px 8px;font-size:13.5px;align-self:end}
+.ndanudge{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 16px 8px;padding:8px 8px 8px 14px;border-radius:14px;background:var(--surface);border:1px solid var(--line);font-size:13.5px;font-weight:600}
+.ndanudge .btn{padding:8px 12px;font-size:13px;flex:none}
 .note{font-size:12.5px;color:var(--muted);margin:0}
 
 /* sheets */
@@ -833,6 +841,7 @@ function pListing(p){
     '<div class="det lift"><div><span class="eyebrow">'+esc(x.sec)+'</span><h1>'+esc(x.title)+'</h1><div class="meta">'+esc(x.loc)+' · '+x.zone+' · '+x.ref+'</div></div>'+
       '<dl class="big-figs">'+f.map(function(a,j){return '<div><dt>'+a[0]+'</dt><dd'+(String(a[1]).charAt(0)==="−"?' class="neg"':'')+'>'+(j===0&&x.t!=="equity"?'<small style="font-size:11px;color:var(--muted)">AED </small>':'')+a[1]+'</dd></div>';}).join("")+'</dl>'+
       '<p style="margin:0">'+esc(x.desc)+'</p>'+
+      (broker_||signed?'':'<div class="routes"><div><b>Enquire now</b><span>Ask a question or register interest. No NDA needed.</span><button type="button" class="btn btn-line" data-act="chat" data-i="'+i+'">'+SV.chat+'Enquire</button></div><div><b>See full details first</b><span>Sign a short NDA to open the financials, then enquire.</span><button type="button" class="btn btn-gold" data-act="nda" data-i="'+i+'">'+SV.lock+'Sign NDA</button></div></div>')+
       '<div class="box"><h4><span>Verified by equire</span><span style="color:var(--good)">3 of 3</span></h4>'+
         chk("Trade licence matched to registry","02 Oct 2026")+chk("Financials, last 2 years","03 Oct 2026")+
         (x.t==="equity"?chk("Cap table and MoA","03 Oct 2026"):chk("Lease, "+x.lease+" remaining","03 Oct 2026"))+'</div>'+
@@ -844,7 +853,7 @@ function pListing(p){
     '</div></div>'+
     (broker_?'<div class="cta"><button type="button" class="btn btn-line" data-act="back">Back to dashboard</button><button type="button" class="btn btn-gold" data-act="toast" data-v="Listing boosted to Featured for 30 days">Feature · AED 250</button></div>':
     signed?'<div class="cta"><button type="button" class="btn btn-line" data-act="chat" data-i="'+i+'">'+SV.chat+'Message</button><button type="button" class="btn btn-gold" data-act="room" data-i="'+i+'">Open data room</button></div>':
-    '<div class="cta"><button type="button" class="btn btn-line sq" data-act="save" data-i="'+i+'" aria-pressed="'+isSaved(i)+'" aria-label="Save listing">'+SV.heart+'</button><button type="button" class="btn btn-gold" data-act="nda" data-i="'+i+'">'+SV.lock+'Sign NDA to unlock</button></div>');
+    '<div class="cta"><button type="button" class="btn btn-line sq" data-act="save" data-i="'+i+'" aria-pressed="'+isSaved(i)+'" aria-label="Save listing">'+SV.heart+'</button><button type="button" class="btn btn-line" data-act="chat" data-i="'+i+'">'+SV.chat+'Enquire</button><button type="button" class="btn btn-gold" data-act="nda" data-i="'+i+'">'+SV.lock+'Sign NDA</button></div>');
 }
 function chk(t,d){return '<div class="check"><span><span class="ok">'+SV.tick+'</span>'+t+'</span><span class="when">'+d+'</span></div>';}
 function roomFiles(x){return [["PDF","Trade licence","Verified against the registry","lic"],["XLS","Audited accounts FY2024","Verified by equire","pl"],["XLS","Management accounts FY2025","Year to date, uploaded by broker","pl25"],
@@ -877,13 +886,15 @@ function pDoc(p){
   }
   return phead(esc(f[1]),'Page 1 of '+(f[3]==="lic"?1:4))+'<div class="pbody"><div class="det"><div class="doc">'+wm+body+'</div><p class="note">Downloads are disabled for this room. Screenshots are watermarked.</p></div></div>';
 }
+var QUICK0=["Is it still available?","Why is the owner selling?","Can I see the financials?","Can we book a site visit?"];
 var QUICK=["Can we book a site visit?","Why is the owner selling?","Is the price negotiable?","Can I speak to the accountant?"];
 var REPLIES=["Thanks for the question. The owner is open to a site visit on Tuesday or Wednesday after 4pm. Which suits you?","Good question. I’ve added a note to the data room and will call you this afternoon to walk through it.","The owner has some flexibility for a buyer who can close within 60 days. Happy to discuss on a call."];
 function pChat(p){
   var i=p.i,x=L[i],b=broker(i),t=S.threads[i]||[];
-  return phead(b[0],x.title+' · '+x.ref)+'<div class="pbody"><div class="chat"><span class="sysline">NDA signed · identity checked · '+esc(S.signed[i]?S.signed[i].at:today())+'</span>'+
+  return phead(b[0],x.title+' · '+x.ref)+'<div class="pbody"><div class="chat"><span class="sysline">'+(S.signed[i]?'NDA signed · identity checked · '+esc(S.signed[i].at):'Enquiry · NDA not signed yet')+'</span>'+
     t.map(function(m){return '<div class="msg '+m[0]+'">'+m[1]+'<small>'+(m[0]==="me"?"You":esc(first(b[0])))+(m[2]?' · '+m[2]:'')+'</small></div>';}).join("")+(p.typing?'<div class="typing" aria-label="Typing"><i></i><i></i><i></i></div>':'')+'</div></div>'+
-    '<div class="quick">'+QUICK.map(function(q){return '<button type="button" class="chip" data-act="quick" data-v="'+esc(q)+'">'+esc(q)+'</button>';}).join("")+'</div>'+
+    (S.signed[i]?'':'<div class="ndanudge"><span>Want the financials first?</span><button type="button" class="btn btn-gold" data-act="nda" data-i="'+i+'">'+SV.lock+'Sign NDA</button></div>')+
+    '<div class="quick">'+(S.signed[i]?QUICK:QUICK0).map(function(q){return '<button type="button" class="chip" data-act="quick" data-v="'+esc(q)+'">'+esc(q)+'</button>';}).join("")+'</div>'+
     '<form class="compose" data-form="chat"><label class="sr" for="msgIn">Message</label><input id="msgIn" autocomplete="off" placeholder="Ask about the lease, staff or a visit"><button type="submit" aria-label="Send">'+SV.send+'</button></form>';
 }
 function pBchat(p){
@@ -974,7 +985,9 @@ function onboarding(){
 
 /* ---------- actions ---------- */
 function startChat(i){
-  if(!S.threads[i]){var b=broker(i);S.threads[i]=[["them","Hi"+(S.name?" "+esc(first(S.name)):"")+", thanks for signing the NDA for "+esc(L[i].title)+". I’m "+first(b[0])+", the listing broker. Happy to answer anything in the data room or arrange a site visit.",now()]];S.seen[i+":1"]=1;save();}
+  if(!S.threads[i]){var b=broker(i),hi="Hi"+(S.name?" "+esc(first(S.name)):"");
+    S.threads[i]=[["them",S.signed[i]?hi+", thanks for signing the NDA for "+esc(L[i].title)+". I’m "+first(b[0])+", the listing broker. Happy to answer anything in the data room or arrange a site visit.":
+      hi+", thanks for your interest in "+esc(L[i].title)+". I’m "+first(b[0])+", the listing broker. Happy to answer general questions. For the financials and documents, sign the NDA and the data room opens straight away.",now()]];S.seen[i+":1"]=1;save();}
   push({kind:"chat",i:i});
 }
 function sendChat(text){

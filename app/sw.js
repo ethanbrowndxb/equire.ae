@@ -1,5 +1,5 @@
 // Offline support for the equire app prototype: cache the app shell, fetch everything else from the network first.
-var CACHE = "equire-app-v4";
+var CACHE = "equire-app-v5";
 var SHELL = ["./", "index.html", "manifest.webmanifest", "icons/icon-192.png", "icons/icon-512.png", "icons/apple-touch-icon.png"];
 self.addEventListener("install", function (e) {
   e.waitUntil(caches.open(CACHE).then(function (c) { return c.addAll(SHELL); }).then(function () { return self.skipWaiting(); }));
