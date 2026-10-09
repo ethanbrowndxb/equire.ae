@@ -880,12 +880,12 @@ footer nav a:hover{color:var(--on-navy)}
   function initLeaflet(){var Lf=window.L;if(!Lf||!Lf.map)return;
     lmapEl.hidden=false;stage.classList.add("live");
     LM=Lf.map(lmapEl,{zoomControl:true,scrollWheelZoom:false,attributionControl:true});LM.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>');
-    Lf.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",{maxZoom:19,subdomains:"abcd",attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'}).addTo(LM);
-    LM.on("click",function(){LM.scrollWheelZoom.enable();});
+    Lf.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(LM);
+    LM.on("click",function(){LM.scrollWheelZoom.enable();});LM.on("zoomend",drawLeafletPins);
     LM.fitBounds(BOUNDS[curV]);drawPins();}
-  function drawLeafletPins(){if(!LM)return;var Lf=window.L;LMk.forEach(function(m){LM.removeLayer(m);});LMk=[];
+  function drawLeafletPins(){if(!LM)return;var Lf=window.L,z=LM.getZoom(),sz=Math.max(18,Math.min(46,Math.round(18+(z-6)*4))),bw=Math.max(3,Math.round(sz/7));LMk.forEach(function(m){LM.removeLayer(m);});LMk=[];
     L.forEach(function(x,i){if(!x.ll||!(curF==="all"||x.t===curF)||(fActive&&fLive&&fLive.indexOf(i)<0))return;
-      var m=Lf.marker([x.ll[1],x.ll[0]],{icon:Lf.divIcon({className:"",html:'<span class="lpin '+x.t+(i===sel?' on':'')+'"></span>',iconSize:[22,22],iconAnchor:[11,22]}),title:x.title,keyboard:true});
+      var m=Lf.marker([x.ll[1],x.ll[0]],{icon:Lf.divIcon({className:"",html:'<span class="lpin '+x.t+(i===sel?' on':'')+'" style="width:'+sz+'px;height:'+sz+'px;border-width:'+bw+'px"></span>',iconSize:[sz,sz],iconAnchor:[sz/2,sz]}),title:x.title,keyboard:true,zIndexOffset:i===sel?1000:0});
       m.on("click",function(){pick(i);});m.addTo(LM);LMk.push(m);});}
   function pick(i){sel=i;drawPins();var x=L[i], side=document.getElementById("mapSide");
     var labels=x.labels||["Asking","Turnover","Profit"], vals=x.vals||[x.ask,x.to,x.pr];

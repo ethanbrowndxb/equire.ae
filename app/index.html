@@ -294,7 +294,19 @@ button{cursor:pointer;background:none;border:0;padding:0}
 
 /* map */
 .mapwrap{position:relative;flex:1;margin-top:-26px;background:radial-gradient(120% 90% at 35% 25%,#E8EEF3,#C3D0DC);overflow:hidden}
-.mapwrap svg{width:100%;height:100%;display:block}
+.mapwrap #uae{width:100%;height:100%;display:block}
+.lmap{position:absolute;inset:0;display:none;background:#E8EEF3;z-index:0}
+.mapwrap.live .lmap{display:block}.mapwrap.live #uae{display:none}
+.mapwrap.live .mapctl{z-index:500}
+.mapwrap .leaflet-top.leaflet-left{top:86px}
+.mapwrap .leaflet-bottom.leaflet-right{bottom:auto;top:86px}
+.mapwrap .leaflet-control-attribution{font-size:10px;border-radius:6px 0 0 6px}
+.mapwrap.live .mapcard{z-index:500}
+.apin{display:block;border-radius:50%;border:2px solid #fff;background:var(--navy);box-shadow:0 3px 8px rgba(12,24,40,.45);position:relative;cursor:pointer}
+.apin.distress{background:var(--warn)}.apin.equity{background:var(--equity)}
+.apin.on{background:var(--gold);border-color:var(--navy)}
+.apin::after{content:"";position:absolute;inset:-2px;border-radius:50%;border:2px solid currentColor;color:inherit;opacity:0;animation:ring 3.2s cubic-bezier(.2,.6,.3,1) infinite;animation-delay:var(--d,0s);pointer-events:none}
+.apin.sale::after{border-color:var(--navy)}.apin.distress::after{border-color:var(--warn)}.apin.equity::after{border-color:var(--equity)}.apin.on::after{border-color:var(--gold)}
 .land{fill:url(#landG);stroke:#BCB096;stroke-width:1.2}
 .city{fill:var(--muted);font-family:var(--body);font-weight:600;paint-order:stroke;stroke:rgba(251,248,241,.85);stroke-linejoin:round}
 .pin{cursor:pointer}
@@ -419,7 +431,7 @@ input[type=range]{width:100%;accent-color:var(--navy)}
 /* empty-state illustrations */
 .empty .illo{width:210px;height:158px;filter:drop-shadow(0 14px 18px rgba(19,35,60,.16));animation:floaty 5s ease-in-out infinite}
 @keyframes floaty{50%{transform:translateY(-6px)}}
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;animation-delay:0s!important;transition-duration:.01ms!important}.shim::before,.pin .ring{display:none}.empty .illo{animation:none}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;animation-delay:0s!important;transition-duration:.01ms!important}.shim::before,.pin .ring,.apin::after{display:none}.empty .illo{animation:none}}
 </style>
 </head>
 <body>
@@ -672,7 +684,7 @@ function vDiscover(){
 
 /* ---------- investor: map ---------- */
 function vMap(){
-  return mast("","",'')+'<div class="mapwrap" id="mapwrap"><svg id="uae" viewBox="0 0 480 400" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Map of the UAE with listing pins"></svg>'+
+  return mast("","",'')+'<div class="mapwrap" id="mapwrap"><div id="lmap" class="lmap"></div><svg id="uae" viewBox="0 0 480 400" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Map of the UAE with listing pins"></svg>'+
    '<div class="mapctl"><div class="zoom" role="group" aria-label="Map area"><button type="button" data-act="zoom" data-v="uae" aria-pressed="'+(UI.mapView==="uae")+'">UAE</button><button type="button" data-act="zoom" data-v="dxb" aria-pressed="'+(UI.mapView==="dxb")+'">Dubai</button></div>'+
    '<div class="legend"><span><i style="background:var(--navy)"></i>Sale</span><span><i style="background:var(--equity)"></i>Equity</span><span><i style="background:var(--warn)"></i>Distressed</span></div></div>'+
    '<div id="mapcard"></div></div>';
@@ -682,8 +694,31 @@ function P(lon,lat){return [(lon-51.4)*91,(26.3-lat)*100];}
 var OUT=[[51.58,24.12],[51.78,24.02],[52.2,23.97],[52.6,24.2],[53.1,24.15],[53.6,24.05],[54.1,24.2],[54.4,24.45],[54.65,24.75],[55.05,25.0],[55.13,25.06],[55.2,25.14],[55.27,25.23],[55.33,25.28],[55.4,25.34],[55.5,25.45],[55.75,25.65],[55.95,25.8],[56.08,26.05],[56.12,25.7],[56.27,25.62],[56.36,25.35],[56.37,25.12],[56.35,24.95],[56.1,24.8],[55.9,24.6],[55.8,24.25],[55.98,24.05],[55.5,23.95],[55.2,23.1],[55.5,22.7],[55.15,22.63],[52.58,22.94],[51.58,24.12]];
 var CITIES=[["Abu Dhabi",54.37,24.45,-8,22],["Dubai",55.27,25.2,-58,6],["Sharjah",55.42,25.35,10,-8],["Ras Al Khaimah",55.94,25.79,-118,-4],["Fujairah",56.33,25.12,-60,4],["Al Ain",55.76,24.2,-10,18]];
 var VIEWS={uae:[20,20,440,340],dxb:[305,50,100,100]};
+/* real, zoomable map (Leaflet + OpenStreetMap), loaded on first visit to the map; the drawn SVG map stays as the offline fallback */
+var AM=null,AMk=[],AMview=null,AMstate=null,AMloading=false;
+var BOUNDS={uae:[[22.7,51.6],[26.1,56.4]],dxb:[[24.98,55.05],[25.42,55.62]]};
+function loadLeaflet(){if(window.L&&window.L.map){drawLeaflet();return;}if(AMloading)return;AMloading=true;
+  var css=document.createElement("link");css.rel="stylesheet";css.href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css";document.head.appendChild(css);
+  var js=document.createElement("script");js.src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js";js.onload=function(){if(UI.tab==="map")drawMap();};js.onerror=function(){AMloading=false;};document.head.appendChild(js);}
+function drawLeaflet(){
+  var Lf=window.L,el=$("#lmap");if(!el||!Lf||!Lf.map)return false;
+  if(AM&&AM.getContainer()!==el){AMstate={c:AM.getCenter(),z:AM.getZoom()};AM.remove();AM=null;}
+  if(!AM){$("#mapwrap").classList.add("live");
+    AM=Lf.map(el,{zoomControl:true,attributionControl:true,zoomSnap:.5});AM.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>');
+    Lf.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(AM);
+    AM.on("zoomend",drawAMPins);
+    if(AMstate&&AMview===UI.mapView)AM.setView(AMstate.c,AMstate.z,{animate:false});else AM.fitBounds(BOUNDS[UI.mapView]);AMview=UI.mapView;
+    setTimeout(function(){if(AM)AM.invalidateSize();},60);}
+  else if(AMview!==UI.mapView){AMview=UI.mapView;AM.flyToBounds(BOUNDS[UI.mapView],{duration:.8});}
+  drawAMPins();return true;
+}
+function drawAMPins(){if(!AM)return;var Lf=window.L,z=AM.getZoom(),sz=Math.max(16,Math.min(44,Math.round(16+(z-6)*4))),bw=Math.max(2,Math.round(sz/8));
+  AMk.forEach(function(m){AM.removeLayer(m);});AMk=[];
+  L.forEach(function(x,i){var on=i===UI.mapSel,s2=on?Math.round(sz*1.25):sz;
+    var m=Lf.marker([x.ll[1],x.ll[0]],{icon:Lf.divIcon({className:"",html:'<span class="apin '+x.t+(on?' on':'')+'" style="width:'+s2+'px;height:'+s2+'px;border-width:'+bw+'px;--d:'+((i*.53)%3.2).toFixed(2)+'s"></span>',iconSize:[s2,s2],iconAnchor:[s2/2,s2/2]}),title:x.title,keyboard:true,zIndexOffset:on?1000:0});
+    m.on("click",function(){UI.mapSel=i;haptic();drawMap();});m.addTo(AM);AMk.push(m);});}
 function drawMap(){
-  var svg=$("#uae");if(!svg)return;var v=VIEWS[UI.mapView],k=v[2]/440;svg.setAttribute("viewBox",v.join(" "));
+  var svg=$("#uae");if(!svg)return;loadLeaflet();var v=VIEWS[UI.mapView],k=v[2]/440;svg.setAttribute("viewBox",v.join(" "));
   var d='M'+OUT.map(function(q){return P(q[0],q[1]).map(function(n){return n.toFixed(1);}).join(" ");}).join("L")+'Z';
   var s='<defs><radialGradient id="seaG" cx="35%" cy="25%" r="85%"><stop offset="0" stop-color="#E9EFF4"/><stop offset="1" stop-color="#BFCCD9"/></radialGradient>'+
     '<linearGradient id="landG" x1="0" y1="0" x2=".35" y2="1"><stop offset="0" stop-color="#FCFAF4"/><stop offset="1" stop-color="#E6DDCA"/></linearGradient>'+
