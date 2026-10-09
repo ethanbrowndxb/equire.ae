@@ -14,6 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<script>(function(d){d.classList.add("js");try{if(window.IntersectionObserver&&!matchMedia("(prefers-reduced-motion: reduce)").matches){d.classList.add("rv-on");setTimeout(function(){if(!window.__eqFx)d.classList.remove("rv-on");},3000);}}catch(e){}})(document.documentElement);</script>
 <style>
 /* Layout: an institutional "deal ledger" — navy masthead with a live verification card, cream body set in ruled columns, figures always in mono, gold reserved for verification and money */
 :root{
@@ -353,6 +354,8 @@ section{padding-block:clamp(72px,9vw,120px)}
 .mstats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:32px}
 .mstats div{background:var(--bg);padding:18px 20px;display:grid;gap:4px}
 .mstats b{font-family:var(--display);font-stretch:110%;font-weight:800;font-size:28px;letter-spacing:-.02em}
+.mstats b{white-space:nowrap}
+@media (max-width:480px){.mstats div{padding:16px 14px}.mstats b{font-size:clamp(20px,6.4vw,28px)}}
 .mstats span{font-size:13.5px;color:var(--muted)}
 .src{margin-top:18px;font-size:12px;color:var(--muted)}
 
@@ -547,6 +550,119 @@ footer nav{display:flex;flex-wrap:wrap;gap:12px 24px}
 footer nav a{text-decoration:none}
 footer nav a:hover{color:var(--on-navy)}
 .legal{margin-top:36px;padding-top:20px;border-top:1px solid var(--navy-line);display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:12.5px}
+
+/* ===== polish pass: depth, motion, flow ===== */
+:root{
+  --sh-1:0 1px 2px rgba(19,35,60,.06),0 10px 30px rgba(19,35,60,.08);
+  --sh-2:0 2px 4px rgba(19,35,60,.08),0 18px 44px rgba(19,35,60,.15);
+  --sh-navy:0 1px 0 rgba(255,255,255,.04) inset,0 14px 36px rgba(4,10,20,.32);
+  --ease-out:cubic-bezier(.2,.7,.2,1);
+  --edge:clamp(18px,3.4vw,46px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--sh-1:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.28);--sh-2:0 2px 4px rgba(0,0,0,.35),0 18px 44px rgba(0,0,0,.4)}}
+:root[data-theme="dark"]{--sh-1:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.28);--sh-2:0 2px 4px rgba(0,0,0,.35),0 18px 44px rgba(0,0,0,.4)}
+section{scroll-margin-top:56px}
+
+/* sticky header: slims after scroll, without shifting the page */
+.top{background:transparent;border-bottom:0;pointer-events:none}
+.top::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--navy);border-bottom:1px solid var(--navy-line);transition:bottom .3s var(--ease-out),background-color .3s,box-shadow .3s}
+.top .nav{pointer-events:none;transition:transform .3s var(--ease-out)}
+.top .nav>*{pointer-events:auto}
+.top .brand{transform-origin:left center;transition:transform .3s var(--ease-out)}
+.top.slim::before{bottom:14px;background:color-mix(in srgb,var(--navy) 92%,transparent);-webkit-backdrop-filter:saturate(1.4) blur(12px);backdrop-filter:saturate(1.4) blur(12px);box-shadow:0 8px 28px rgba(8,16,30,.28)}
+.top.slim .nav{transform:translateY(-7px)}
+.top.slim .brand{transform:scale(.9)}
+
+/* buttons get a little body */
+.btn-gold{box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 1px 2px rgba(26,20,5,.12),0 6px 18px rgba(217,164,65,.28);transition:transform .15s ease,background-color .15s ease,box-shadow .2s ease}
+.btn-gold:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 2px 4px rgba(26,20,5,.14),0 10px 26px rgba(217,164,65,.36)}
+
+/* hero: slow drifting light, card with depth */
+.hero::after{content:"";position:absolute;z-index:0;width:70vmax;height:70vmax;right:-28vmax;top:-30vmax;border-radius:50%;background:radial-gradient(closest-side,rgba(217,164,65,.16),rgba(217,164,65,.05) 55%,transparent);animation:drift 22s ease-in-out infinite alternate;pointer-events:none}
+.hero-grid{z-index:1}
+@keyframes drift{to{transform:translate(-14vmax,10vmax) scale(1.12)}}
+.vcard{box-shadow:0 2px 4px rgba(0,0,0,.12),0 24px 48px rgba(4,10,20,.35),0 60px 120px rgba(4,10,20,.25)}
+@media (min-width:961px) and (hover:hover){
+  .vcard{transform:perspective(1400px) rotateY(-5deg) rotateX(1.5deg);transition:transform .6s var(--ease-out)}
+  .vcard:hover{transform:perspective(1400px) rotateY(-2deg) rotateX(0deg) translateY(-4px)}
+}
+
+/* layered shadows on cards */
+.card,.person,.plan,.dash,.addons,.room,.mapview,.demo{box-shadow:var(--sh-1)}
+.plan{background:linear-gradient(180deg,var(--surface),var(--bg) 70%)}
+.plan.feat{background:linear-gradient(165deg,var(--navy-2),var(--navy) 55%);box-shadow:0 2px 4px rgba(19,35,60,.12),0 24px 56px rgba(19,35,60,.3)}
+.person{background:linear-gradient(180deg,var(--surface),color-mix(in srgb,var(--surface) 70%,var(--bg)))}
+.filter,.shoot,.room{box-shadow:var(--sh-navy)}
+form.join{box-shadow:0 2px 4px rgba(0,0,0,.14),0 30px 70px rgba(4,10,20,.4)}
+.mstats{box-shadow:var(--sh-1)}
+.card,.person,.plan,.dash{transition:transform .25s var(--ease-out),box-shadow .25s var(--ease-out),border-color .2s}
+.card:hover{transform:none;box-shadow:var(--sh-1)}
+@media (hover:hover) and (min-width:721px){
+  .card:hover,.person:hover,.plan:hover,.dash:hover{transform:translateY(-3px);box-shadow:var(--sh-2)}
+  .plan.feat:hover{box-shadow:0 4px 8px rgba(19,35,60,.14),0 30px 64px rgba(19,35,60,.36)}
+  .vgrid article{transition:background-color .25s}
+  .vgrid article:hover{background:var(--navy-2)}
+}
+.vgrid{box-shadow:var(--sh-navy)}
+.fbar .bar{box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 6px 16px rgba(19,35,60,.14)}
+
+/* soft edges where navy meets cream */
+.strip,#verify,#app,#join,#team{position:relative}
+#app{overflow:visible;clip-path:inset(calc(var(--edge) * -1) 0 0 0)}
+.strip::after,#verify::before,#verify::after,#app::before,#team::before,#join::before{content:"";position:absolute;left:0;right:0;height:var(--edge);pointer-events:none;-webkit-mask:var(--m) center/100% 100% no-repeat;mask:var(--m) center/100% 100% no-repeat}
+#verify::before,#app::before,#join::before{bottom:calc(100% - 1px);background:var(--navy);--m:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 48' preserveAspectRatio='none'%3E%3Cpath d='M0 48V34C300 6 760-6 1080 14c150 10 270 16 360 8v26z'/%3E%3C/svg%3E")}
+#app::before{background:var(--navy-3)}
+.strip::after,#verify::after{top:calc(100% - 1px);z-index:1;background:var(--navy);--m:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 48' preserveAspectRatio='none'%3E%3Cpath d='M0 0h1440v16C1160 44 700 52 380 30 220 19 90 18 0 24z'/%3E%3C/svg%3E")}
+.strip::after{background:var(--navy-3)}
+#team::before{bottom:calc(100% - 1px);z-index:1;background:var(--bg);--m:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 48' preserveAspectRatio='none'%3E%3Cpath d='M0 22C90 17 220 18 380 28 700 46 1160 40 1440 16V48H0z'/%3E%3C/svg%3E")}
+#verify{padding-bottom:calc(clamp(72px,9vw,120px) + 6px)}
+
+/* scroll reveal (only when JS + motion allowed) */
+.rv-on :is(.sec-head,.problems>article,.split>*,.flow>li,.types,#grid,.mapview,.illus,.vgrid>article,.room,.demo,.sect-wrap,.sect-note,.plan,.addons,.shoot,.launch-note,.mkt .copy>*,.fbar,.src,.road>li,.app-grid>*,.person,.quote,.join-grid>*){transition:opacity .8s ease var(--rvd,0s),translate .8s var(--ease-out) var(--rvd,0s),transform .25s var(--ease-out),box-shadow .25s var(--ease-out),border-color .2s,background-color .25s}
+.rv-on :is(.sec-head,.problems>article,.split>*,.flow>li,.types,#grid,.mapview,.illus,.vgrid>article,.room,.demo,.sect-wrap,.sect-note,.plan,.addons,.shoot,.launch-note,.mkt .copy>*,.fbar,.src,.road>li,.app-grid>*,.person,.quote,.join-grid>*):not(.in){opacity:0;translate:0 20px}
+.rv-on .fbar .bar{clip-path:inset(0 100% 0 0 round 6px);transition:clip-path 1.3s var(--ease-out) calc(var(--rvd,0s) + .2s)}
+.rv-on .fbar.in .bar{clip-path:inset(0 0 0 0 round 6px)}
+
+/* app preview: the live app inside the phone frame */
+.phone{position:relative;width:290px;box-shadow:0 2px 0 #2A3242 inset,0 0 0 2px #2A3242 inset,0 30px 60px rgba(0,0,0,.45),0 80px 120px rgba(0,0,0,.3)}
+.phone .screen{--sc:calc(266/390);position:relative;width:266px;height:576px;background:#13233C}
+.phone iframe{position:absolute;top:0;left:0;width:390px;height:844px;border:0;transform:scale(var(--sc));transform-origin:0 0;background:#F3F0E8}
+.phone-tap{display:none}
+@media (hover:none){.phone iframe{pointer-events:none}.phone-tap{display:block;position:absolute;inset:0;border-radius:40px;z-index:2}}
+@media (max-width:340px){.phone{width:260px}.phone .screen{--sc:calc(236/390);width:236px;height:511px}}
+
+/* small fixes */
+.ph .open{color:#F3F0E8}
+.mstats div{align-content:start}
+@media (min-width:521px){#app .copy .btn{justify-self:start}}
+@media (max-width:860px){.app-grid .phone{justify-self:center}}
+
+/* mobile: swipeable rows instead of long stacks */
+.cdots{display:none}
+@media (max-width:720px){
+  #grid,.vgrid,.sect tbody{display:flex;gap:14px;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gutter);margin-inline:calc(var(--gutter) * -1);padding:8px var(--gutter) 30px;margin-bottom:-18px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  #grid::-webkit-scrollbar,.vgrid::-webkit-scrollbar,.sect tbody::-webkit-scrollbar{display:none}
+  #grid>.card,.vgrid>article,.sect tbody>tr{flex:0 0 min(84%,340px);scroll-snap-align:start}
+  .vgrid{background:none;border:0;border-radius:0;box-shadow:none}
+  .vgrid>article{border:1px solid var(--navy-line);border-radius:14px;background:linear-gradient(170deg,var(--navy-2),var(--navy) 70%);box-shadow:0 12px 30px rgba(4,10,20,.32);padding:24px 22px}
+  .sect-wrap{overflow:visible;border-top:0}
+  .sect,.sect tr,.sect td{display:block}
+  .sect{min-width:0}
+  .sect thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .sect tbody>tr{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 20px 22px;box-shadow:var(--sh-1)}
+  .sect td{border:0;padding:0;width:auto!important}
+  .sect td:first-child{font-family:var(--display);font-size:20px;line-height:1.2;letter-spacing:-.015em;padding-bottom:14px;margin-bottom:14px;border-bottom:1px solid var(--line);position:relative}
+  .sect td:first-child::after{content:"";position:absolute;left:0;bottom:-1px;width:36px;height:3px;background:var(--gold)}
+  .sect td:first-child small{font-family:var(--body);letter-spacing:0}
+  .sect td+td+td{margin-top:14px}
+  .sect td[data-label]::before{content:attr(data-label);display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-ink);font-weight:600;margin-bottom:4px}
+  .cdots{display:flex;justify-content:center;gap:6px;margin-top:2px;height:6px}
+  .cdots i{width:6px;height:6px;border-radius:99px;background:var(--line);transition:width .3s var(--ease-out),background-color .3s}
+  .cdots i.on{width:22px;background:var(--gold)}
+  #verify .cdots i{background:var(--navy-line)}
+  #verify .cdots i.on{background:var(--gold)}
+  .vgrid+.cdots{margin-bottom:6px}
+}
 </style>
 <!--ARTIFACT-HEAD-END-->
 </head>
@@ -850,12 +966,12 @@ footer nav a:hover{color:var(--on-navy)}
       <table class="sect">
         <thead><tr><th>Business area</th><th>What buyers look for</th><th>How it changes hands</th></tr></thead>
         <tbody>
-          <tr><td>F&amp;B<small>Restaurants, cafés, cloud kitchens</small></td><td>Footfall, lease term, fit-out, monthly covers</td><td>Landlord NOC and new Ejari, food permit re-issued by Dubai Municipality, DET licence amendment</td></tr>
-          <tr><td>Beauty &amp; wellness<small>Salons, spas, gyms</small></td><td>Repeat clients, staff retention, location</td><td>Share or asset sale, municipality health permit, staff visa transfers</td></tr>
-          <tr><td>Healthcare<small>Clinics, pharmacies</small></td><td>Licences, patient base, medical staff</td><td>DHA facility licence updated to the new owner, licensed medical director in place</td></tr>
-          <tr><td>Education &amp; childcare<small>Nurseries, training centres</small></td><td>Enrolment, ratings, premises approval</td><td>KHDA approval of the new owner before the licence is amended</td></tr>
-          <tr><td>Retail, trading &amp; logistics<small>Shops, distributors, fleets</small></td><td>Stock, supplier contracts, fleet, margins</td><td>Share or asset sale with inventory valuation, customs and RTA records updated</td></tr>
-          <tr><td>Startups &amp; distressed SMEs<small>Growth and turnaround</small></td><td>Traction for VCs, undervalued assets for PE</td><td>Equity stake issued to investors (licensed, Phase 2) or fast asset purchase with creditor settlement</td></tr>
+          <tr><td>F&amp;B<small>Restaurants, cafés, cloud kitchens</small></td><td data-label="What buyers look for">Footfall, lease term, fit-out, monthly covers</td><td data-label="How it changes hands">Landlord NOC and new Ejari, food permit re-issued by Dubai Municipality, DET licence amendment</td></tr>
+          <tr><td>Beauty &amp; wellness<small>Salons, spas, gyms</small></td><td data-label="What buyers look for">Repeat clients, staff retention, location</td><td data-label="How it changes hands">Share or asset sale, municipality health permit, staff visa transfers</td></tr>
+          <tr><td>Healthcare<small>Clinics, pharmacies</small></td><td data-label="What buyers look for">Licences, patient base, medical staff</td><td data-label="How it changes hands">DHA facility licence updated to the new owner, licensed medical director in place</td></tr>
+          <tr><td>Education &amp; childcare<small>Nurseries, training centres</small></td><td data-label="What buyers look for">Enrolment, ratings, premises approval</td><td data-label="How it changes hands">KHDA approval of the new owner before the licence is amended</td></tr>
+          <tr><td>Retail, trading &amp; logistics<small>Shops, distributors, fleets</small></td><td data-label="What buyers look for">Stock, supplier contracts, fleet, margins</td><td data-label="How it changes hands">Share or asset sale with inventory valuation, customs and RTA records updated</td></tr>
+          <tr><td>Startups &amp; distressed SMEs<small>Growth and turnaround</small></td><td data-label="What buyers look for">Traction for VCs, undervalued assets for PE</td><td data-label="How it changes hands">Equity stake issued to investors (licensed, Phase 2) or fast asset purchase with creditor settlement</td></tr>
         </tbody>
       </table>
     </div>
@@ -978,19 +1094,11 @@ footer nav a:hover{color:var(--on-navy)}
       </div>
       <a class="btn btn-gold" href="app/" style="margin-top:22px">Try the app preview</a>
     </div>
-    <div class="phone" aria-label="equire app preview">
+    <div class="phone">
       <div class="screen">
-        <div class="s-top">
-          <div class="bar0"><span>9:41</span><span>equire</span></div>
-          <div class="s-search">Clinics in Dubai under AED 4m</div>
-          <div class="s-chips"><span class="on">Healthcare</span><span class="on">Dubai</span><span>Full sale</span><span>Free zone</span></div>
-        </div>
-        <div class="s-list">
-          <div class="s-card"><div class="sp"><span class="badge">Verified</span></div><div class="sb"><b>Dental clinic, 4 chairs</b><span>AED 3.2m · profit 780k</span></div></div>
-          <div class="s-card"><div class="sp" style="background:linear-gradient(135deg,#6E5A2E,#13233C)"><span class="badge">Verified</span></div><div class="sb"><b>Physiotherapy centre, Jumeirah</b><span>AED 1.4m · profit 310k</span></div></div>
-        </div>
-        <div class="s-nav"><span class="on">Search</span><span>Saved</span><span>Data rooms</span><span>Messages</span></div>
+        <iframe src="app/" loading="lazy" title="equire app preview"></iframe>
       </div>
+      <a class="phone-tap" href="app/" aria-label="Open the equire app preview"></a>
     </div>
   </div>
 </section>
@@ -1087,7 +1195,7 @@ footer nav a:hover{color:var(--on-navy)}
     {t:"distress",sec:"F&B · Cloud kitchen",title:"Cloud kitchen running 3 brands",loc:"Al Quoz, Dubai",zone:"Mainland",ask:"420k",to:"1.1m",pr:"−90k",lease:"2 yrs",ref:"EQ-DXB-00402",img:"photo-1790156591731-09dbf6aee75a",ll:[55.23,25.14],g:["#7A3A22","#2A1A14"],ico:"flame"},
     {t:"sale",sec:"Education · Nursery",title:"Nursery, 120 seats, KHDA rated Good",loc:"Mirdif, Dubai",zone:"Mainland",ask:"6.5m",to:"4.1m",pr:"1.2m",lease:"9 yrs",ref:"EQ-DXB-00297",img:"photo-1567746455504-cb3213f8f5b8",ll:[55.42,25.22],g:["#3E6B4F","#13233C"],ico:"star"},
     {t:"equity",sec:"Tech · B2B logistics SaaS",title:"Raising AED 2m for a 15% stake",loc:"DIFC, Dubai",zone:"Free zone",ask:"2.0m",to:"1.6m",pr:"ARR",lease:"–",ref:"EQ-DXB-00415",img:"photo-1606857521015-7f9fcf423740",ll:[55.28,25.21],g:["#4A3F7A","#13233C"],ico:"chart",labels:["Raising","ARR","Stake"],vals:["2.0m","1.6m","15%"]},
-    {t:"distress",sec:"Beauty · Fitness",title:"Boutique gym, fully fitted",loc:"Al Majaz, Sharjah",zone:"Mainland",ask:"350k",to:"880k",pr:"−40k",lease:"3 yrs",ref:"EQ-SHJ-00057",img:"photo-1623874106686-5be2b325c8f1",ll:[55.39,25.33],g:["#6B2F45","#1F1420"],ico:"bolt"},
+    {t:"distress",sec:"Beauty · Fitness",title:"Boutique gym, fully fitted",loc:"Al Majaz, Sharjah",zone:"Mainland",ask:"350k",to:"880k",pr:"−40k",lease:"3 yrs",ref:"EQ-SHJ-00057",img:"photo-1534438327276-14e5300c3a48",ll:[55.39,25.33],g:["#6B2F45","#1F1420"],ico:"bolt"},
     {t:"sale",sec:"Logistics · Freight",title:"Freight forwarder with 12-truck fleet",loc:"SAIF Zone, Sharjah",zone:"Free zone",ask:"4.8m",to:"9.3m",pr:"1.05m",lease:"5 yrs",ref:"EQ-SHJ-00061",img:"photo-1492168732976-2676c584c675",ll:[55.51,25.33],g:["#55606E","#13233C"],ico:"truck"},
     {t:"equity",sec:"Beauty · Clean skincare",title:"D2C skincare brand, 30% stake",loc:"Dubai Design District",zone:"Free zone",ref:"EQ-DXB-00421",img:"photo-1598440947619-2c35fc9aa908",ll:[55.3,25.19],g:["#8A6A3A","#2A2016"],ico:"leaf",labels:["Raising","Revenue","Stake"],vals:["1.2m","3.4m","30%"]},
     {t:"sale",sec:"Beauty · Salon",title:"Ladies’ salon, 9 stations",loc:"Al Barsha, Dubai",zone:"Mainland",ask:"690k",to:"1.3m",pr:"240k",lease:"3 yrs",ref:"EQ-DXB-00430",img:"photo-1600948836101-f9ffda59d250",ll:[55.2,25.1],g:["#7A4A5A","#13233C"],ico:"spark"}
@@ -1290,6 +1398,61 @@ footer nav a:hover{color:var(--on-navy)}
     function sel(){var r=document.createRange();r.selectNodeContents(document.getElementById("mailBody"));var s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent="Selected, press copy";}
     try{navigator.clipboard.writeText(t).then(function(){btn.textContent="Copied";},sel);}catch(x){sel();}
   });
+
+  // ---- polish: header, carousels, reveal, counters ----
+  var docEl=document.documentElement;
+  var hdr=document.querySelector(".top"), ticking=false;
+  function onScroll(){ticking=false;var y=window.scrollY||docEl.scrollTop;
+    if(y>40)hdr.classList.add("slim");else if(y<20)hdr.classList.remove("slim");}
+  window.addEventListener("scroll",function(){if(!ticking){ticking=true;requestAnimationFrame(onScroll);}},{passive:true});
+  onScroll();
+
+  var mqSmall=window.matchMedia("(max-width:720px)");
+  function carousel(sc,after){
+    var dots=document.createElement("div");dots.className="cdots";dots.setAttribute("aria-hidden","true");
+    after.parentNode.insertBefore(dots,after.nextSibling);
+    function items(){return Array.prototype.filter.call(sc.children,function(c){return !c.hidden;});}
+    function build(){var n=items().length;dots.innerHTML=new Array(n+1).join("<i></i>");dots.hidden=sc.hidden||n<2;mark();}
+    function mark(){var it=items(), max=sc.scrollWidth-sc.clientWidth, idx=0;
+      if(max>2&&sc.scrollLeft>=max-4)idx=it.length-1;
+      else{var x0=sc.getBoundingClientRect().left, best=1e9;
+        it.forEach(function(c,k){var d=Math.abs(c.getBoundingClientRect().left-x0-parseFloat(getComputedStyle(sc).paddingLeft));if(d<best){best=d;idx=k;}});}
+      Array.prototype.forEach.call(dots.children,function(d,k){d.classList.toggle("on",k===idx);});}
+    var raf=0;sc.addEventListener("scroll",function(){if(!raf)raf=requestAnimationFrame(function(){raf=0;mark();});},{passive:true});
+    build();return {rebuild:function(){sc.scrollLeft=0;build();}};
+  }
+  var cGrid=carousel(grid,grid.parentNode.querySelector("#mapView"));
+  tabs.forEach(function(b){b.addEventListener("click",function(){cGrid.rebuild();});});
+  [vG,vM].forEach(function(b){b.addEventListener("click",function(){cGrid.rebuild();});});
+  var vg=document.querySelector(".vgrid");carousel(vg,vg);
+  var sw=document.querySelector(".sect-wrap");carousel(sw.querySelector("tbody"),sw);
+
+  // count-up figures: always end on the exact original text
+  var NUM=/\d[\d,]*(?:\.\d+)?/g;
+  function fmtLike(v,tpl){var dec=(tpl.split(".")[1]||"").length, s=v.toFixed(dec);
+    if(tpl.indexOf(",")>-1){var pr=s.split(".");pr[0]=pr[0].replace(/\B(?=(\d{3})+(?!\d))/g,",");s=pr.join(".");}return s;}
+  function frameText(orig,k){return orig.replace(NUM,function(m){return fmtLike(parseFloat(m.replace(/,/g,""))*k,m);});}
+  var counters=Array.prototype.slice.call(document.querySelectorAll(".strip b.num,.mstats b.num,.fbar .lbl b"));
+  function runCount(el){if(el.__done)return;el.__done=true;var orig=el.__orig,t0=null,dur=1500;
+    function f(t){if(t0===null)t0=t;var p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,3);
+      el.textContent=p<1?frameText(orig,e):orig;if(p<1)requestAnimationFrame(f);}
+    requestAnimationFrame(f);}
+
+  // scroll reveal
+  if(docEl.classList.contains("rv-on")){
+    window.__eqFx=true;
+    var SEL=".sec-head,.problems>article,.split>*,.flow>li,.types,#grid,.mapview,.illus,.vgrid>article,.room,.demo,.sect-wrap,.sect-note,.plan,.addons,.shoot,.launch-note,.mkt .copy>*,.fbar,.src,.road>li,.app-grid>*,.person,.quote,.join-grid>*";
+    var els=Array.prototype.slice.call(document.querySelectorAll(SEL));
+    els.forEach(function(el){var sib=Array.prototype.filter.call(el.parentNode.children,function(c){return els.indexOf(c)>-1;});
+      el.style.setProperty("--rvd",Math.min(sib.indexOf(el),5)*0.09+"s");});
+    function show(el){el.classList.add("in");
+      var p=el.parentNode;if(p&&p.scrollWidth>p.clientWidth+4)Array.prototype.forEach.call(p.children,function(c){c.classList.add("in");});}
+    var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){show(e.target);io.unobserve(e.target);}});},{rootMargin:"0px 0px -8% 0px",threshold:0.08});
+    els.forEach(function(el){io.observe(el);});
+    counters.forEach(function(el){el.__orig=el.textContent;el.textContent=frameText(el.__orig,0);});
+    var io2=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){runCount(e.target);io2.unobserve(e.target);}});},{threshold:0.6});
+    counters.forEach(function(el){io2.observe(el);});
+  }
 })();
 </script>
 <!--ARTIFACT-END-->
