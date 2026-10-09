@@ -412,6 +412,9 @@ form.join{background:var(--surface);color:var(--fg);border-radius:14px;padding:2
 .mailbox button{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:6px 10px;font-size:13px;cursor:pointer}
 .done pre{margin:0;white-space:pre-wrap;font-family:var(--mono);font-size:12.5px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px;max-height:180px;overflow:auto;user-select:all}
 
+/* preview bar */
+.preview-bar{background:var(--gold);color:#1A1405;font-size:13px;font-weight:600;text-align:center;padding-block:8px}
+
 /* footer */
 footer{background:var(--navy-3);color:var(--on-navy-muted);padding-block:48px 40px;font-size:14px}
 .foot-grid{display:flex;flex-wrap:wrap;justify-content:space-between;gap:28px;align-items:flex-start}
@@ -424,6 +427,7 @@ footer nav a:hover{color:var(--on-navy)}
 <!--ARTIFACT-HEAD-END-->
 </head>
 <body>
+<div class="preview-bar"><div class="wrap">Product preview · equire is in development and launching in 2027. Listings shown are examples.</div></div>
 <header class="top">
   <div class="wrap nav">
     <a class="brand" href="#top" aria-label="equire home">
@@ -885,8 +889,8 @@ footer nav a:hover{color:var(--on-navy)}
       </nav>
     </div>
     <div class="legal">
-      <span>© 2026 equire · equire.ae · Dubai, United Arab Emirates</span>
-      <span>Equity placements launch in Phase 2, subject to licensing.</span>
+      <span>© 2026 equire · equire.ae</span>
+      <span>Product preview. equire is not yet trading and does not offer brokerage or investment services. Equity placements are planned for Phase 2, subject to licensing.</span>
     </div>
   </div>
 </footer>
