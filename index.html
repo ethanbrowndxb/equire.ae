@@ -28,17 +28,18 @@
   --body:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
   --gutter:clamp(16px,4vw,32px);
+  --map-sea:#E4EBF1; --map-land:#FBF8F1; --map-edge:#C9BFA8;
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0A1424; --surface:#111F36; --fg:#ECE7DB; --muted:#9DA8BE; --line:#22355A; --chip:#182A48;
+  --bg:#0A1424; --map-sea:#0C1A2E; --map-land:#1A2B48; --map-edge:#2E4570; --surface:#111F36; --fg:#ECE7DB; --muted:#9DA8BE; --line:#22355A; --chip:#182A48;
   --gold:#E2B256; --gold-soft:#3A3120; --gold-ink:#EBC678;
   --good:#5CC490; --warn:#EC8B55;
   --navy:#0E1A2E; --navy-2:#16294A; --navy-3:#070F1C; --navy-line:#22355A;
   --shadow:0 1px 2px rgba(0,0,0,.35),0 14px 36px rgba(0,0,0,.3);
   color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0A1424; --surface:#111F36; --fg:#ECE7DB; --muted:#9DA8BE; --line:#22355A; --chip:#182A48;
+  --bg:#0A1424; --map-sea:#0C1A2E; --map-land:#1A2B48; --map-edge:#2E4570; --surface:#111F36; --fg:#ECE7DB; --muted:#9DA8BE; --line:#22355A; --chip:#182A48;
   --gold:#E2B256; --gold-soft:#3A3120; --gold-ink:#EBC678;
   --good:#5CC490; --warn:#EC8B55;
   --navy:#0E1A2E; --navy-2:#16294A; --navy-3:#070F1C; --navy-line:#22355A;
@@ -46,6 +47,7 @@
   color-scheme:dark}
 
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
 body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
@@ -89,7 +91,7 @@ p{margin:0}
 @media (max-width:420px){.nav .btn{padding:9px 12px;font-size:13px}.brand small{display:none}}
 
 /* hero */
-.hero{background:var(--navy);color:var(--on-navy);position:relative;overflow:hidden}
+.hero{background:linear-gradient(100deg,rgba(19,35,60,.97) 28%,rgba(19,35,60,.86) 58%,rgba(19,35,60,.6)),url("https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1800&q=70") center 35%/cover,var(--navy);color:var(--on-navy);position:relative;overflow:hidden}
 .hero::before{content:"";position:absolute;inset:0;background:
   linear-gradient(90deg,transparent 0 calc(100% - 1px),rgba(255,255,255,.035) 0) 0 0/80px 80px,
   linear-gradient(transparent 0 calc(100% - 1px),rgba(255,255,255,.035) 0) 0 0/80px 80px;
@@ -108,8 +110,9 @@ p{margin:0}
 /* verification card (hero) */
 .vcard{background:var(--surface);color:var(--fg);border-radius:14px;box-shadow:0 30px 60px rgba(0,0,0,.35);overflow:hidden;max-width:460px;justify-self:end;width:100%}
 @media (max-width:960px){.vcard{justify-self:start}}
-.vphoto{height:132px;position:relative;background:
-  radial-gradient(120% 90% at 85% 10%,rgba(217,164,65,.55),transparent 55%),
+.vphoto{height:150px;position:relative;background:
+  linear-gradient(180deg,rgba(10,20,36,.05),rgba(10,20,36,.65)),
+  url("https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=900&q=70") center/cover,
   linear-gradient(135deg,#2B4470,#13233C 70%);display:flex;align-items:flex-end;justify-content:space-between;padding:14px 16px;color:#F3F0E8}
 .vphoto .ref{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;opacity:.8}
 .badge{display:inline-flex;align-items:center;gap:6px;background:var(--gold);color:#1A1405;font-weight:700;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;border-radius:6px;padding:5px 9px}
@@ -412,6 +415,105 @@ form.join{background:var(--surface);color:var(--fg);border-radius:14px;padding:2
 .mailbox button{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:6px 10px;font-size:13px;cursor:pointer}
 .done pre{margin:0;white-space:pre-wrap;font-family:var(--mono);font-size:12.5px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px;max-height:180px;overflow:auto;user-select:all}
 
+/* listing view toggle + map */
+.viewtog{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--surface)}
+.viewtog button{border:0;background:none;border-radius:999px;padding:6px 14px;font-size:13.5px;font-weight:600;color:var(--muted);cursor:pointer}
+.viewtog button[aria-pressed="true"]{background:var(--navy);color:var(--on-navy)}
+.lb-right{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.card{cursor:pointer}
+.card .open{color:var(--fg);font-weight:600;font-size:12.5px;text-decoration:underline;text-underline-offset:3px}
+.mapview{display:grid;grid-template-columns:minmax(0,1fr) 330px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface)}
+@media (max-width:860px){.mapview{grid-template-columns:minmax(0,1fr)}}
+.mapstage{position:relative;background:var(--map-sea);min-height:360px}
+.mapstage svg{display:block;width:100%;height:auto}
+.mapstage .land{fill:var(--map-land);stroke:var(--map-edge);stroke-width:1.2;vector-effect:non-scaling-stroke}
+.mapstage .city{fill:var(--muted);font-family:var(--body);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.mapstage .pin{cursor:pointer}
+.mapstage .pin circle.dot{fill:var(--navy);stroke:var(--gold);stroke-width:2.5;vector-effect:non-scaling-stroke;transition:fill .15s}
+.mapstage .pin.distress circle.dot{fill:var(--warn)}
+.mapstage .pin.equity circle.dot{fill:#5B4FA0}
+.mapstage .pin.on circle.dot,.mapstage .pin:hover circle.dot,.mapstage .pin:focus circle.dot{fill:var(--gold);stroke:var(--navy)}
+.mapstage .pin:focus{outline:none}
+.mapctl{position:absolute;top:12px;left:12px;display:flex;gap:6px;flex-wrap:wrap}
+.mapctl button{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;box-shadow:var(--shadow)}
+.mapctl button[aria-pressed="true"]{background:var(--navy);color:var(--on-navy);border-color:var(--navy)}
+.maplegend{position:absolute;bottom:12px;left:12px;display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 10px}
+.maplegend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px;border:2px solid var(--gold)}
+.mapside{border-left:1px solid var(--line);padding:18px;display:grid;gap:12px;align-content:start}
+@media (max-width:860px){.mapside{border-left:0;border-top:1px solid var(--line)}}
+.mapside .mph{height:150px;border-radius:10px;background-size:cover;background-position:center}
+.mapside h3{font-size:18px}
+.mapside .sec{font-size:12px;color:var(--muted)}
+.mapside .hint{color:var(--muted);font-size:14px}
+
+/* demo */
+#demo{background:var(--surface);border-block:1px solid var(--line)}
+.demo{display:grid;grid-template-columns:220px minmax(0,1fr);border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--bg);box-shadow:var(--shadow)}
+@media (max-width:860px){.demo{grid-template-columns:minmax(0,1fr)}}
+.steps{list-style:none;margin:0;padding:18px 14px;display:grid;gap:4px;align-content:start;background:var(--navy);color:var(--on-navy-muted);counter-reset:ds}
+@media (max-width:860px){.steps{grid-auto-flow:column;grid-auto-columns:max-content;overflow-x:auto;padding:10px}}
+.steps button{width:100%;text-align:left;border:0;background:none;color:inherit;border-radius:8px;padding:10px 12px;font-size:14px;font-weight:600;display:flex;gap:10px;align-items:center;cursor:pointer}
+.steps button::before{counter-increment:ds;content:counter(ds);width:22px;height:22px;border-radius:50%;border:1.5px solid var(--navy-line);display:grid;place-items:center;font-family:var(--mono);font-size:11px;flex:none}
+.steps button[disabled]{opacity:.45;cursor:default}
+.steps button.done::before{content:"✓";background:var(--good);border-color:var(--good);color:#fff}
+.steps button[aria-current="step"]{background:var(--navy-2);color:var(--on-navy)}
+.steps button[aria-current="step"]::before{background:var(--gold);border-color:var(--gold);color:#1A1405}
+.stage{padding:24px;min-height:520px;display:grid;align-content:start;gap:16px;min-width:0}
+.stage h3{font-size:22px}
+.stage .sub{color:var(--muted);font-size:14.5px}
+.d-search{display:flex;gap:8px;flex-wrap:wrap}
+.d-search input{flex:1;min-width:0;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:11px 12px;font-size:15px}
+.d-chips{display:flex;gap:6px;flex-wrap:wrap}
+.d-chips button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer}
+.d-chips button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.d-list{display:grid;gap:8px}
+.d-row{display:grid;grid-template-columns:84px minmax(0,1fr) auto;gap:14px;align-items:center;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px;cursor:pointer;text-align:left;width:100%}
+.d-row:hover{border-color:var(--gold)}
+.d-row .th{width:84px;height:60px;border-radius:7px;background-size:cover;background-position:center}
+.d-row b{display:block;font-size:15px}
+.d-row span{font-size:13px;color:var(--muted)}
+.d-row .px{font-family:var(--mono);font-weight:600;font-size:14px;text-align:right;padding-right:6px}
+@media (max-width:520px){.d-row{grid-template-columns:64px minmax(0,1fr)}.d-row .th{width:64px;height:52px}.d-row .px{grid-column:2;text-align:left}}
+.d-hero{height:220px;border-radius:12px;background-size:cover;background-position:center;position:relative}
+.d-hero .badge{position:absolute;left:14px;bottom:14px}
+.d-grid2{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px}
+@media (max-width:760px){.d-grid2{grid-template-columns:minmax(0,1fr)}}
+.d-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.d-facts div{background:var(--surface);padding:10px 12px}
+.d-facts dt{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.d-facts dd{margin:3px 0 0;font-family:var(--mono);font-weight:600;font-size:14.5px}
+.d-box{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:14px;display:grid;gap:10px;align-content:start}
+.d-box h4{margin:0;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.d-check{display:flex;justify-content:space-between;gap:10px;font-size:14px}
+.d-check span:first-child::before{content:"✓";color:var(--good);font-weight:700;margin-right:8px}
+.d-check span:last-child{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.d-locked{display:grid;gap:6px}
+.d-locked div{height:12px;border-radius:4px;background:var(--chip);filter:blur(.5px)}
+.d-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.d-nda{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:16px;font-size:14px;color:var(--muted);display:grid;gap:8px;max-height:200px;overflow:auto}
+.d-nda b{color:var(--fg)}
+.d-sign{display:grid;gap:12px;max-width:440px}
+.d-sign label{font-size:13px;font-weight:600;display:grid;gap:6px}
+.d-sign input[type=text]{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:11px 12px;font-size:15px}
+.d-sign .sig{font-family:"Brush Script MT","Segoe Script",cursive;font-size:28px;color:var(--fg);min-height:40px;border-bottom:1px solid var(--line)}
+.d-agree{display:flex;gap:8px;align-items:flex-start;font-size:14px;font-weight:500!important}
+.d-agree input{accent-color:var(--gold);margin-top:3px}
+.d-files{list-style:none;margin:0;padding:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface)}
+.d-files li{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:12px;align-items:center;padding:11px 14px;border-bottom:1px solid var(--line);font-size:14px}
+.d-files li:last-child{border-bottom:0}
+.d-files .fi{width:34px;height:34px;border-radius:7px;background:var(--gold-soft);color:var(--gold-ink);display:grid;place-items:center;font-family:var(--mono);font-size:10px;font-weight:600}
+.d-files small{display:block;color:var(--muted);font-size:12px}
+.d-files .ok{font-size:12px;color:var(--good);font-weight:600;white-space:nowrap}
+.d-note{font-size:13px;color:var(--muted)}
+.d-chat{display:grid;gap:10px;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:14px;max-height:300px;overflow:auto}
+.msg{max-width:80%;padding:10px 12px;border-radius:12px;font-size:14px;line-height:1.45}
+.msg.them{background:var(--chip);border-bottom-left-radius:4px}
+.msg.me{background:var(--navy);color:var(--on-navy);margin-left:auto;border-bottom-right-radius:4px}
+.msg small{display:block;font-size:11px;opacity:.7;margin-top:4px}
+.d-compose{display:flex;gap:8px}
+.d-compose input{flex:1;min-width:0;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:11px 12px;font-size:15px}
+.demo-tag{font-size:12px;color:var(--muted)}
+
 /* preview bar */
 .preview-bar{background:var(--gold);color:#1A1405;font-size:13px;font-weight:600;text-align:center;padding-block:8px}
 
@@ -439,6 +541,7 @@ footer nav a:hover{color:var(--on-navy)}
       <a href="#investors">For PE &amp; VC</a>
       <a href="#verify">Verification</a>
       <a href="#listings">Listings</a>
+      <a href="#demo">Demo</a>
       <a href="#pricing">Pricing</a>
     </nav>
     <a class="btn btn-gold" href="#join">Join the broker pilot</a>
@@ -620,15 +723,32 @@ footer nav a:hover{color:var(--on-navy)}
         <div class="eyebrow">Inside the marketplace</div>
         <h2>What a verified listing looks like.</h2>
       </div>
+      <div class="lb-right">
+      <div class="viewtog" role="group" aria-label="View">
+        <button type="button" id="vGrid" aria-pressed="true">Grid</button>
+        <button type="button" id="vMap" aria-pressed="false">Map</button>
+      </div>
       <div class="tabs" role="group" aria-label="Filter listings">
         <button type="button" data-f="all" aria-pressed="true">All</button>
         <button type="button" data-f="sale" aria-pressed="false">Full sale</button>
         <button type="button" data-f="distress" aria-pressed="false">Distressed</button>
         <button type="button" data-f="equity" aria-pressed="false">Equity stake</button>
       </div>
+      </div>
     </div>
     <div class="grid" id="grid"></div>
-    <p class="illus">These are illustrative listings, created to show the product. Live listings open to the broker pilot in Q1 2027.</p>
+    <div class="mapview" id="mapView" hidden>
+      <div class="mapstage">
+        <svg id="uae" viewBox="0 0 480 400" role="img" aria-label="Map of the UAE with listing pins"></svg>
+        <div class="mapctl" role="group" aria-label="Map area">
+          <button type="button" data-z="uae" aria-pressed="true">All UAE</button>
+          <button type="button" data-z="dxb" aria-pressed="false">Dubai &amp; Sharjah</button>
+        </div>
+        <div class="maplegend"><span><i style="background:var(--navy)"></i>Full sale</span><span><i style="background:var(--warn)"></i>Distressed</span><span><i style="background:#5B4FA0"></i>Equity stake</span></div>
+      </div>
+      <aside class="mapside" id="mapSide"><p class="hint">Select a pin to preview the listing.</p></aside>
+    </div>
+    <p class="illus">These are illustrative listings, created to show the product, with photos from Unsplash. Select any listing to open it in the demo below. Live listings open to the broker pilot in Q1 2027.</p>
   </div>
 </section>
 
@@ -665,6 +785,28 @@ footer nav a:hover{color:var(--on-navy)}
       <div><b>NDA-gated data rooms</b><p>Buyers sign a DocuSign NDA in the app to unlock full financials, contracts and the lease. Owners and brokers see exactly who opened what.</p></div>
       <span class="num">AED 1,500 per listing</span>
     </div>
+  </div>
+</section>
+
+<!-- DEMO -->
+<section id="demo">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Try it</div>
+      <h2>Walk through a deal, start to finish.</h2>
+      <p class="lede">Search, open a verified listing, sign the NDA, open the data room and message the broker. This is the flow every buyer follows on equire.</p>
+    </div>
+    <div class="demo">
+      <ol class="steps" id="dSteps">
+        <li><button type="button" data-s="0">Search</button></li>
+        <li><button type="button" data-s="1" disabled>Listing</button></li>
+        <li><button type="button" data-s="2" disabled>Sign NDA</button></li>
+        <li><button type="button" data-s="3" disabled>Data room</button></li>
+        <li><button type="button" data-s="4" disabled>Message</button></li>
+      </ol>
+      <div class="stage" id="dStage" aria-live="polite"></div>
+    </div>
+    <p class="illus">Interactive demo with example data. No documents are signed and no messages are sent.</p>
   </div>
 </section>
 
@@ -889,7 +1031,7 @@ footer nav a:hover{color:var(--on-navy)}
       </nav>
     </div>
     <div class="legal">
-      <span>© 2026 equire · equire.ae</span>
+      <span>© 2026 equire · equire.ae · Photos: Unsplash</span>
       <span>Product preview. equire is not yet trading and does not offer brokerage or investment services. Equity placements are planned for Phase 2, subject to licensing.</span>
     </div>
   </div>
@@ -898,15 +1040,15 @@ footer nav a:hover{color:var(--on-navy)}
 <script>
 (function(){
   var L=[
-    {t:"sale",sec:"F&B · Specialty coffee",title:"Coffee roastery with 2 cafés",loc:"JLT, Dubai",zone:"Free zone",ask:"1.85m",to:"2.4m",pr:"520k",lease:"4 yrs",ref:"EQ-DXB-00388",g:["#7A5A30","#2A1E14"],ico:"cup"},
-    {t:"sale",sec:"Healthcare · Dental",title:"Dental clinic, 4 chairs",loc:"Al Reem, Abu Dhabi",zone:"Mainland",ask:"3.2m",to:"2.9m",pr:"780k",lease:"6 yrs",ref:"EQ-AUH-00121",g:["#2B5C70","#13233C"],ico:"plus"},
-    {t:"distress",sec:"F&B · Cloud kitchen",title:"Cloud kitchen running 3 brands",loc:"Al Quoz, Dubai",zone:"Mainland",ask:"420k",to:"1.1m",pr:"−90k",lease:"2 yrs",ref:"EQ-DXB-00402",g:["#7A3A22","#2A1A14"],ico:"flame"},
-    {t:"sale",sec:"Education · Nursery",title:"Nursery, 120 seats, KHDA rated Good",loc:"Mirdif, Dubai",zone:"Mainland",ask:"6.5m",to:"4.1m",pr:"1.2m",lease:"9 yrs",ref:"EQ-DXB-00297",g:["#3E6B4F","#13233C"],ico:"star"},
-    {t:"equity",sec:"Tech · B2B logistics SaaS",title:"Raising AED 2m for a 15% stake",loc:"DIFC, Dubai",zone:"Free zone",ask:"2.0m",to:"1.6m",pr:"ARR",lease:"–",ref:"EQ-DXB-00415",g:["#4A3F7A","#13233C"],ico:"chart",labels:["Raising","ARR","Stake"],vals:["2.0m","1.6m","15%"]},
-    {t:"distress",sec:"Beauty · Fitness",title:"Boutique gym, fully fitted",loc:"Al Majaz, Sharjah",zone:"Mainland",ask:"350k",to:"880k",pr:"−40k",lease:"3 yrs",ref:"EQ-SHJ-00057",g:["#6B2F45","#1F1420"],ico:"bolt"},
-    {t:"sale",sec:"Logistics · Freight",title:"Freight forwarder with 12-truck fleet",loc:"SAIF Zone, Sharjah",zone:"Free zone",ask:"4.8m",to:"9.3m",pr:"1.05m",lease:"5 yrs",ref:"EQ-SHJ-00061",g:["#55606E","#13233C"],ico:"truck"},
-    {t:"equity",sec:"Beauty · Clean skincare",title:"D2C skincare brand, 30% stake",loc:"Dubai Design District",zone:"Free zone",ref:"EQ-DXB-00421",g:["#8A6A3A","#2A2016"],ico:"leaf",labels:["Raising","Revenue","Stake"],vals:["1.2m","3.4m","30%"]},
-    {t:"sale",sec:"Beauty · Salon",title:"Ladies’ salon, 9 stations",loc:"Al Barsha, Dubai",zone:"Mainland",ask:"690k",to:"1.3m",pr:"240k",lease:"3 yrs",ref:"EQ-DXB-00430",g:["#7A4A5A","#13233C"],ico:"spark"}
+    {t:"sale",sec:"F&B · Specialty coffee",title:"Coffee roastery with 2 cafés",loc:"JLT, Dubai",zone:"Free zone",ask:"1.85m",to:"2.4m",pr:"520k",lease:"4 yrs",ref:"EQ-DXB-00388",img:"photo-1736592506202-7c15372c1df2",ll:[55.14,25.07],g:["#7A5A30","#2A1E14"],ico:"cup"},
+    {t:"sale",sec:"Healthcare · Dental",title:"Dental clinic, 4 chairs",loc:"Al Reem, Abu Dhabi",zone:"Mainland",ask:"3.2m",to:"2.9m",pr:"780k",lease:"6 yrs",ref:"EQ-AUH-00121",img:"photo-1629909613654-28e377c37b09",ll:[54.4,24.5],g:["#2B5C70","#13233C"],ico:"plus"},
+    {t:"distress",sec:"F&B · Cloud kitchen",title:"Cloud kitchen running 3 brands",loc:"Al Quoz, Dubai",zone:"Mainland",ask:"420k",to:"1.1m",pr:"−90k",lease:"2 yrs",ref:"EQ-DXB-00402",img:"photo-1790156591731-09dbf6aee75a",ll:[55.23,25.14],g:["#7A3A22","#2A1A14"],ico:"flame"},
+    {t:"sale",sec:"Education · Nursery",title:"Nursery, 120 seats, KHDA rated Good",loc:"Mirdif, Dubai",zone:"Mainland",ask:"6.5m",to:"4.1m",pr:"1.2m",lease:"9 yrs",ref:"EQ-DXB-00297",img:"photo-1567746455504-cb3213f8f5b8",ll:[55.42,25.22],g:["#3E6B4F","#13233C"],ico:"star"},
+    {t:"equity",sec:"Tech · B2B logistics SaaS",title:"Raising AED 2m for a 15% stake",loc:"DIFC, Dubai",zone:"Free zone",ask:"2.0m",to:"1.6m",pr:"ARR",lease:"–",ref:"EQ-DXB-00415",img:"photo-1606857521015-7f9fcf423740",ll:[55.28,25.21],g:["#4A3F7A","#13233C"],ico:"chart",labels:["Raising","ARR","Stake"],vals:["2.0m","1.6m","15%"]},
+    {t:"distress",sec:"Beauty · Fitness",title:"Boutique gym, fully fitted",loc:"Al Majaz, Sharjah",zone:"Mainland",ask:"350k",to:"880k",pr:"−40k",lease:"3 yrs",ref:"EQ-SHJ-00057",img:"photo-1623874106686-5be2b325c8f1",ll:[55.39,25.33],g:["#6B2F45","#1F1420"],ico:"bolt"},
+    {t:"sale",sec:"Logistics · Freight",title:"Freight forwarder with 12-truck fleet",loc:"SAIF Zone, Sharjah",zone:"Free zone",ask:"4.8m",to:"9.3m",pr:"1.05m",lease:"5 yrs",ref:"EQ-SHJ-00061",img:"photo-1492168732976-2676c584c675",ll:[55.51,25.33],g:["#55606E","#13233C"],ico:"truck"},
+    {t:"equity",sec:"Beauty · Clean skincare",title:"D2C skincare brand, 30% stake",loc:"Dubai Design District",zone:"Free zone",ref:"EQ-DXB-00421",img:"photo-1598440947619-2c35fc9aa908",ll:[55.3,25.19],g:["#8A6A3A","#2A2016"],ico:"leaf",labels:["Raising","Revenue","Stake"],vals:["1.2m","3.4m","30%"]},
+    {t:"sale",sec:"Beauty · Salon",title:"Ladies’ salon, 9 stations",loc:"Al Barsha, Dubai",zone:"Mainland",ask:"690k",to:"1.3m",pr:"240k",lease:"3 yrs",ref:"EQ-DXB-00430",img:"photo-1600948836101-f9ffda59d250",ll:[55.2,25.1],g:["#7A4A5A","#13233C"],ico:"spark"}
   ];
   var I={
     cup:'<path d="M10 18h20v10a8 8 0 01-8 8h-4a8 8 0 01-8-8zM30 21h3a4 4 0 010 8h-3" stroke="currentColor" stroke-width="2.5" fill="none"/><path d="M16 8c0 3 3 3 3 6M22 8c0 3 3 3 3 6" stroke="currentColor" stroke-width="2.5" fill="none"/>',
@@ -921,14 +1063,16 @@ footer nav a:hover{color:var(--on-navy)}
   };
   var tick='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg>';
   var typeName={sale:"Full sale",distress:"Distressed",equity:"Equity stake"};
+  function U(id,w){return "https://images.unsplash.com/"+id+"?auto=format&fit=crop&w="+w+"&q=70";}
+  function bg(x,w){return 'linear-gradient(180deg,rgba(10,20,36,.35),rgba(10,20,36,.05) 40%,rgba(10,20,36,.72)),'+(x.img?'url('+U(x.img,w)+') center/cover,':'')+'linear-gradient(135deg,'+x.g[0]+','+x.g[1]+')';}
   function card(x){
     var labels=x.labels||["Asking","Turnover","Profit"], vals=x.vals||[x.ask,x.to,x.pr];
     var figs=labels.map(function(l,i){var v=vals[i];return '<div><dt>'+l+'</dt><dd'+(String(v).charAt(0)==="−"?' class="neg"':'')+'>'+v+'</dd></div>';}).join("");
     var tagCls=x.t==="distress"?" distress":x.t==="equity"?" equity":"";
-    return '<article class="card" data-t="'+x.t+'">'+
-      '<div class="ph" style="background:radial-gradient(110% 90% at 90% 0%,rgba(217,164,65,.35),transparent 55%),linear-gradient(135deg,'+x.g[0]+','+x.g[1]+')">'+
+    return '<article class="card" data-t="'+x.t+'" data-i="'+L.indexOf(x)+'" tabindex="0" aria-label="Open '+x.title+' in the demo">'+
+      '<div class="ph" style="background:'+bg(x,800)+'">'+
         '<div class="row"><span class="tag'+tagCls+'">'+typeName[x.t]+'</span><span class="badge">'+tick+'Verified</span></div>'+
-        '<div class="row"><span class="loc">'+x.loc+'</span><svg class="glyph" viewBox="0 0 44 44" aria-hidden="true">'+I[x.ico]+'</svg></div>'+
+        '<div class="row"><span class="loc">'+x.loc+'</span><span class="open">Open listing</span></div>'+
       '</div>'+
       '<div class="cb"><span class="sec">'+x.sec+'</span><h3>'+x.title+'</h3>'+
         '<dl class="figs">'+figs+'</dl>'+
@@ -942,7 +1086,134 @@ footer nav a:hover{color:var(--on-navy)}
     tabs.forEach(function(o){o.setAttribute("aria-pressed",String(o===b));});
     var f=b.dataset.f;
     grid.querySelectorAll(".card").forEach(function(c){c.hidden=!(f==="all"||c.dataset.t===f);});
+    curF=f; drawPins();
   });});
+  var curF="all";
+  grid.addEventListener("click",function(e){var c=e.target.closest(".card");if(c)openListing(+c.dataset.i);});
+  grid.addEventListener("keydown",function(e){var c=e.target.closest(".card");if(c&&(e.key==="Enter"||e.key===" ")){e.preventDefault();openListing(+c.dataset.i);}});
+
+  // ---- map ----
+  var NS="http://www.w3.org/2000/svg", svg=document.getElementById("uae");
+  function P(lon,lat){return [(lon-51.4)*91,(26.3-lat)*100];}
+  var OUT=[[51.58,24.12],[51.78,24.02],[52.2,23.97],[52.6,24.2],[53.1,24.15],[53.6,24.05],[54.1,24.2],[54.4,24.45],[54.65,24.75],[55.05,25.0],[55.13,25.06],[55.2,25.14],[55.27,25.23],[55.33,25.28],[55.4,25.34],[55.5,25.45],[55.75,25.65],[55.95,25.8],[56.08,26.05],[56.12,25.7],[56.27,25.62],[56.36,25.35],[56.37,25.12],[56.35,24.95],[56.1,24.8],[55.9,24.6],[55.8,24.25],[55.98,24.05],[55.5,23.95],[55.2,23.1],[55.5,22.7],[55.15,22.63],[52.58,22.94],[51.58,24.12]];
+  var land=document.createElementNS(NS,"path");
+  land.setAttribute("d","M"+OUT.map(function(q){return P(q[0],q[1]).map(function(n){return n.toFixed(1);}).join(" ");}).join("L")+"Z");
+  land.setAttribute("class","land"); svg.appendChild(land);
+  var CITIES=[["Abu Dhabi",54.37,24.45,-8,22],["Dubai",55.27,25.2,-58,6],["Sharjah",55.42,25.35,10,-8],["Ras Al Khaimah",55.94,25.79,-118,-4],["Fujairah",56.33,25.12,-60,4],["Al Ain",55.76,24.2,-10,18]];
+  var cityG=document.createElementNS(NS,"g"); svg.appendChild(cityG);
+  var pinG=document.createElementNS(NS,"g"); svg.appendChild(pinG);
+  var VIEWS={uae:[0,0,480,400],dxb:[310,55,90,80]}, curV="uae", sel=-1;
+  function scale(){var v=VIEWS[curV];return v[2]/480;}
+  function drawCities(){
+    cityG.innerHTML=""; var k=scale();
+    CITIES.forEach(function(c){var p=P(c[1],c[2]);var t=document.createElementNS(NS,"text");
+      t.setAttribute("x",p[0]+c[3]*k);t.setAttribute("y",p[1]+c[4]*k);t.setAttribute("font-size",11*k);t.setAttribute("class","city");t.textContent=c[0];cityG.appendChild(t);});
+  }
+  function drawPins(){
+    pinG.innerHTML=""; var k=scale();
+    L.forEach(function(x,i){ if(!x.ll||!(curF==="all"||x.t===curF))return;
+      var p=P(x.ll[0],x.ll[1]), g=document.createElementNS(NS,"g");
+      g.setAttribute("class","pin "+x.t+(i===sel?" on":"")); g.setAttribute("tabindex","0"); g.setAttribute("role","button");
+      g.setAttribute("aria-label",x.title+", "+x.loc);
+      var c=document.createElementNS(NS,"circle"); c.setAttribute("class","dot"); c.setAttribute("cx",p[0]); c.setAttribute("cy",p[1]); c.setAttribute("r",(i===sel?9:7)*k);
+      g.appendChild(c);
+      g.addEventListener("click",function(){pick(i);}); g.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();pick(i);}});
+      pinG.appendChild(g);});
+  }
+  function setView(v){curV=v;svg.setAttribute("viewBox",VIEWS[v].join(" "));
+    document.querySelectorAll(".mapctl button").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.z===v));});
+    drawCities();drawPins();}
+  function pick(i){sel=i;drawPins();var x=L[i], side=document.getElementById("mapSide");
+    var labels=x.labels||["Asking","Turnover","Profit"], vals=x.vals||[x.ask,x.to,x.pr];
+    side.innerHTML='<div class="mph" style="background:'+bg(x,600)+'"></div><span class="sec">'+x.sec+' · '+x.loc+'</span><h3>'+x.title+'</h3>'+
+      '<dl class="figs">'+labels.map(function(l,j){return '<div><dt>'+l+'</dt><dd>'+vals[j]+'</dd></div>';}).join("")+'</dl>'+
+      '<span class="pill p-live">Verified · '+typeName[x.t]+'</span><button type="button" class="btn btn-gold" id="mapOpen">Open listing</button>';
+    document.getElementById("mapOpen").addEventListener("click",function(){openListing(i);});}
+  document.querySelectorAll(".mapctl button").forEach(function(b){b.addEventListener("click",function(){setView(b.dataset.z);});});
+  var vG=document.getElementById("vGrid"), vM=document.getElementById("vMap"), mapView=document.getElementById("mapView");
+  function showMap(on){mapView.hidden=!on;grid.hidden=on;vG.setAttribute("aria-pressed",String(!on));vM.setAttribute("aria-pressed",String(on));}
+  vG.addEventListener("click",function(){showMap(false);}); vM.addEventListener("click",function(){showMap(true);});
+  setView("uae");
+
+  // ---- demo ----
+  var stage=document.getElementById("dStage"), stepBtns=document.querySelectorAll("#dSteps button");
+  var D={step:0,i:1,q:"",sector:"All",reached:0,name:"",signed:false,msgs:null};
+  function fig(x){var labels=x.labels||["Asking","Turnover","Profit"], vals=x.vals||[x.ask,x.to,x.pr];
+    return labels.map(function(l,j){return '<div><dt>'+l+(x.t==="equity"||j?'':' (AED)')+'</dt><dd>'+vals[j]+'</dd></div>';}).join("");}
+  function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  function go(n){D.step=n;D.reached=Math.max(D.reached,n);render();}
+  function render(){
+    stepBtns.forEach(function(b,k){b.disabled=k>D.reached;b.classList.toggle("done",k<D.reached&&k!==D.step);
+      if(k===D.step)b.setAttribute("aria-current","step");else b.removeAttribute("aria-current");});
+    var x=L[D.i];
+    if(D.step===0){
+      var secs=["All","F&B","Healthcare","Education","Beauty","Logistics","Tech"];
+      var q=D.q.toLowerCase();
+      var res=L.filter(function(y){return (D.sector==="All"||y.sec.indexOf(D.sector)===0)&&(!q||(y.title+" "+y.loc+" "+y.sec).toLowerCase().indexOf(q)>-1);});
+      stage.innerHTML='<div><h3>Find a business</h3><p class="sub">Every result has been licence-checked. Try “clinic”, “Dubai” or “kitchen”.</p></div>'+
+        '<div class="d-search"><label class="sr" for="dQ">Search listings</label><input id="dQ" type="search" placeholder="Search by business, area or sector" value="'+esc(D.q)+'"></div>'+
+        '<div class="d-chips">'+secs.map(function(s){return '<button type="button" data-sec="'+s+'" aria-pressed="'+(s===D.sector)+'">'+s.replace("&","&amp;")+'</button>';}).join("")+'</div>'+
+        '<div class="d-list">'+(res.length?res.map(function(y){var v=y.vals||[y.ask];return '<button type="button" class="d-row" data-i="'+L.indexOf(y)+'"><span class="th" style="background:'+bg(y,240)+'"></span><span><b>'+y.title+'</b><span>'+y.sec+' · '+y.loc+'</span></span><span class="px">AED '+v[0]+'</span></button>';}).join(""):'<p class="sub">No verified listings match that search yet. Try another area or sector.</p>')+'</div>';
+      var inp=document.getElementById("dQ");
+      inp.addEventListener("input",function(){D.q=inp.value;var pos=inp.selectionStart;render();var n=document.getElementById("dQ");n.focus();n.setSelectionRange(pos,pos);});
+      stage.querySelectorAll("[data-sec]").forEach(function(b){b.addEventListener("click",function(){D.sector=b.dataset.sec;render();});});
+      stage.querySelectorAll(".d-row").forEach(function(b){b.addEventListener("click",function(){D.i=+b.dataset.i;D.signed=false;D.msgs=null;D.reached=1;go(1);});});
+    }
+    if(D.step===1){
+      stage.innerHTML='<div class="d-hero" style="background:'+bg(x,1200)+'"><span class="badge">'+tick+'Verified</span></div>'+
+        '<div><span class="sub">'+x.sec+' · '+x.loc+' · '+x.zone+' · '+x.ref+'</span><h3>'+x.title+'</h3></div>'+
+        '<div class="d-grid2"><div style="display:grid;gap:12px"><dl class="d-facts">'+fig(x)+'</dl>'+
+        '<div class="d-box"><h4>Verified by equire</h4>'+
+          '<div class="d-check"><span>Trade licence matched</span><span>02 Oct 2026</span></div>'+
+          '<div class="d-check"><span>Financials, last 2 years</span><span>03 Oct 2026</span></div>'+
+          (x.lease&&x.lease!=="–"?'<div class="d-check"><span>Lease, '+x.lease+' remaining</span><span>03 Oct 2026</span></div>':'<div class="d-check"><span>Cap table and MoA</span><span>03 Oct 2026</span></div>')+
+        '</div></div>'+
+        '<div class="d-box"><h4>Data room · locked</h4><div class="d-locked"><div style="width:90%"></div><div style="width:70%"></div><div style="width:82%"></div><div style="width:60%"></div><div style="width:76%"></div></div>'+
+          '<p class="d-note">6 documents including audited accounts, the '+(x.t==="equity"?'cap table':'tenancy contract')+' and the trade licence.</p>'+
+          '<button type="button" class="btn btn-gold" id="dToNda">Sign NDA to unlock</button></div></div>';
+      document.getElementById("dToNda").addEventListener("click",function(){go(2);});
+    }
+    if(D.step===2){
+      stage.innerHTML='<div><h3>Non-disclosure agreement</h3><p class="sub">'+x.title+' · '+x.ref+'</p></div>'+
+        '<div class="d-nda"><p><b>1. Confidential information.</b> Everything in the data room for this listing, including financial statements, contracts and the lease.</p><p><b>2. Use.</b> Only to evaluate a possible acquisition of or investment in the business.</p><p><b>3. No approach.</b> You will not contact staff, landlords or suppliers of the business without the seller’s consent.</p><p><b>4. Term.</b> Two years from signing.</p><p><b>5. Law.</b> Laws of the United Arab Emirates.</p></div>'+
+        '<form class="d-sign" id="dSign"><label for="dName">Full legal name<input type="text" id="dName" autocomplete="name" value="'+esc(D.name)+'" placeholder="e.g. Sara Al Mansoori"></label>'+
+        '<div class="sig" id="dSig" aria-hidden="true">'+esc(D.name)+'</div>'+
+        '<label class="d-agree"><input type="checkbox" id="dAgree">I agree to the terms of this NDA</label>'+
+        '<p class="err" id="dErr" role="alert"></p>'+
+        '<div class="d-actions"><button class="btn btn-gold" type="submit">Sign with DocuSign</button><span class="demo-tag">Demo only, nothing is signed</span></div></form>';
+      var nm=document.getElementById("dName"), sg=document.getElementById("dSig");
+      nm.addEventListener("input",function(){D.name=nm.value;sg.textContent=nm.value;});
+      document.getElementById("dSign").addEventListener("submit",function(e){e.preventDefault();var er=document.getElementById("dErr");
+        if(!D.name.trim()){er.textContent="Type your full name to sign.";return;}
+        if(!document.getElementById("dAgree").checked){er.textContent="Tick the box to agree to the terms.";return;}
+        er.textContent="";var btn=e.target.querySelector("button");btn.textContent="Signing…";btn.disabled=true;
+        setTimeout(function(){D.signed=true;go(3);},700);});
+    }
+    if(D.step===3){
+      var files=[["PDF","Trade licence","Verified against the registry"],["XLS","Audited accounts FY2024","Verified"],["XLS","Management accounts FY2025","Year to date"],
+        x.t==="equity"?["PDF","Cap table and MoA","Verified"]:["PDF","Tenancy contract and Ejari","Verified"],["PDF","Staff and visa list","Uploaded by broker"],["XLS","Equipment and fit-out register","Uploaded by broker"]];
+      stage.innerHTML='<div><h3>Data room unlocked</h3><p class="sub">'+x.title+' · NDA signed by '+esc(D.name||"you")+'</p></div>'+
+        '<ul class="d-files">'+files.map(function(f){return '<li><span class="fi">'+f[0]+'</span><span>'+f[1]+'<small>'+f[2]+'</small></span><span class="ok">'+(f[2].indexOf("Verified")===0?"✓ Checked":"Shared")+'</span></li>';}).join("")+'</ul>'+
+        '<p class="d-note">Your access is logged. The broker can see which documents you opened.</p>'+
+        '<div class="d-actions"><button type="button" class="btn btn-gold" id="dToMsg">Message the broker</button></div>';
+      document.getElementById("dToMsg").addEventListener("click",function(){go(4);});
+    }
+    if(D.step===4){
+      if(!D.msgs)D.msgs=[["them","Hi"+(D.name?" "+esc(D.name.split(" ")[0]):"")+", thanks for signing the NDA for "+x.title+". Happy to answer anything in the data room or arrange a site visit."]];
+      stage.innerHTML='<div><h3>Messages</h3><p class="sub">With the listing broker · '+x.ref+'</p></div>'+
+        '<div class="d-chat" id="dChat">'+D.msgs.map(function(m){return '<div class="msg '+m[0]+'">'+m[1]+'<small>'+(m[0]==="me"?"You":"Broker")+'</small></div>';}).join("")+'</div>'+
+        '<form class="d-compose" id="dComp"><label class="sr" for="dMsg">Message</label><input id="dMsg" autocomplete="off" placeholder="Ask about the lease, staff or a site visit"><button class="btn btn-ink" type="submit">Send</button></form>'+
+        '<p class="d-note">Every conversation stays attached to the listing, so nothing gets lost in WhatsApp.</p>';
+      var ch=document.getElementById("dChat");ch.scrollTop=ch.scrollHeight;
+      document.getElementById("dComp").addEventListener("submit",function(e){e.preventDefault();var v=document.getElementById("dMsg").value.trim();if(!v)return;
+        D.msgs.push(["me",esc(v)]);var first=D.msgs.filter(function(m){return m[0]==="me";}).length===1;render();
+        if(first)setTimeout(function(){D.msgs.push(["them","Thanks, I’ll come back to you on that shortly. Would Tuesday or Wednesday suit you for a site visit?"]);if(D.step===4)render();},900);
+        document.getElementById("dMsg").focus();});
+    }
+  }
+  stepBtns.forEach(function(b){b.addEventListener("click",function(){if(!b.disabled)go(+b.dataset.s);});});
+  function openListing(i){D.i=i;D.signed=false;D.msgs=null;D.reached=1;go(1);document.getElementById("demo").scrollIntoView({behavior:"smooth",block:"start"});}
+  render();
 
   // investor filter mock: toggling chips changes the illustrative match count
   var mc=document.getElementById("matchCount");
