@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <!--APP-HEAD-START-->
 <meta name="description" content="The equire app: verified UAE businesses for sale and investment, NDA-gated data rooms and broker messaging in one place.">
 <meta name="theme-color" content="#13233C">
@@ -300,10 +300,12 @@ button{cursor:pointer;background:none;border:0;padding:0}
 .unread{width:9px;height:9px;border-radius:50%;background:var(--gold)}
 .sect{font:600 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:4px 2px -6px}
 
+/* app feel: only the map zooms, never the page */
+html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 /* map */
 .mapwrap{position:relative;flex:1;margin-top:-26px;background:radial-gradient(120% 90% at 35% 25%,#E8EEF3,#C3D0DC);overflow:hidden}
 .mapwrap #uae{width:100%;height:100%;display:block}
-.lmap{position:absolute;inset:0;display:none;background:#E8EEF3;z-index:0}
+.lmap{touch-action:none;position:absolute;inset:0;display:none;background:#E8EEF3;z-index:0}
 .mapwrap.live .lmap{display:block}.mapwrap.live #uae{display:none}
 .mapwrap.live .mapctl{z-index:500}
 .mapwrap .leaflet-top.leaflet-left{top:86px}
@@ -458,6 +460,12 @@ input[type=range]{width:100%;accent-color:var(--navy)}
 <script>
 (function(){
 "use strict";
+/* only the map zooms: block page pinch-zoom (iOS ignores user-scalable=no) everywhere except inside the map */
+(function(){function inMap(t){return t&&t.closest&&t.closest(".lmap,.leaflet-container");}
+  ["gesturestart","gesturechange","gestureend"].forEach(function(n){document.addEventListener(n,function(e){e.preventDefault();},{passive:false});});
+  document.addEventListener("touchmove",function(e){if(e.touches&&e.touches.length>1&&!inMap(e.target))e.preventDefault();},{passive:false});
+  var lastT=0;document.addEventListener("touchend",function(e){var n=Date.now();if(n-lastT<300&&!inMap(e.target)&&!(e.target.closest&&e.target.closest("input,textarea,select,button,a,label,[data-act]")))e.preventDefault();lastT=n;},{passive:false});})();
+
 /* ---------- data (illustrative examples, matching equire.ae) ---------- */
 var L=[
   {t:"sale",sec:"F&B · Specialty coffee",title:"Coffee roastery with 2 cafés",loc:"JLT, Dubai",em:"Dubai",zone:"Free zone",ask:"1.85m",askN:1.85,to:"2.4m",pr:"520k",lease:"4 yrs",ref:"EQ-DXB-00388",img:"photo-1736592506202-7c15372c1df2",ll:[55.14,25.07],g:["#7A5A30","#2A1E14"],ico:"cup",est:"2017",staff:"24",

@@ -276,6 +276,7 @@ html:not(.js) .fbtn{display:none}
 .mapstage.live #uae{display:none}
 .mapstage.live .mapctl{z-index:500;top:12px;left:auto;right:12px;justify-content:flex-end}
 .mapstage.live .maplegend{z-index:500;bottom:26px}
+.lmap{touch-action:none}
 .lpin{display:block;width:22px;height:22px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--navy);border:3px solid var(--gold);box-shadow:0 4px 10px rgba(19,35,60,.4)}
 .lpin.distress{background:var(--warn)}.lpin.equity{background:#5B4FA0}
 .lpin.on{background:var(--gold);border-color:var(--navy);transform:rotate(-45deg) scale(1.25)}
@@ -1098,6 +1099,7 @@ footer nav a:hover{color:var(--on-navy)}
   function loadLeaflet(){if(LM||lLoading)return;lLoading=true;
     var css=document.createElement("link");css.rel="stylesheet";css.href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css";document.head.appendChild(css);
     var js=document.createElement("script");js.src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js";js.onload=initLeaflet;js.onerror=function(){lLoading=false;};document.head.appendChild(js);}
+  ["gesturestart","gesturechange"].forEach(function(n){lmapEl.addEventListener(n,function(e){e.preventDefault();},{passive:false});});
   function initLeaflet(){var Lf=window.L;if(!Lf||!Lf.map)return;
     lmapEl.hidden=false;stage.classList.add("live");
     LM=Lf.map(lmapEl,{zoomControl:true,scrollWheelZoom:false,attributionControl:true});LM.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>');
