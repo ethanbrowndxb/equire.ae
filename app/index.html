@@ -74,7 +74,7 @@ button{cursor:pointer;background:none;border:0;padding:0}
 .brand{display:flex;align-items:center;gap:9px}
 .brand b{font:800 23px/1 var(--display);letter-spacing:-.04em}
 .av{width:36px;height:36px;border-radius:50%;background:linear-gradient(160deg,#2A4670,var(--navy-2));border:1px solid var(--navy-line);box-shadow:0 4px 10px rgba(5,10,20,.3),inset 0 1px 0 rgba(255,255,255,.1);display:grid;place-items:center;font:600 13px var(--mono);color:var(--gold)}
-.mast h1{font:800 27px/1.05 var(--display);letter-spacing:-.025em;margin:0;text-wrap:balance}
+.mast h1{font:800 24px/1.05 var(--display);letter-spacing:-.025em;margin:0;text-wrap:balance}
 .mast .sub{color:var(--on-navy-muted);font-size:13.5px;margin:0}
 .search{display:flex;align-items:center;gap:10px;background:var(--surface);color:var(--fg);border-radius:14px;padding:0 14px;height:48px;box-shadow:inset 0 -1px 0 rgba(19,35,60,.06),0 8px 22px rgba(5,10,20,.28)}
 .search svg{flex:none;color:var(--muted)}
@@ -176,7 +176,7 @@ button{cursor:pointer;background:none;border:0;padding:0}
 .pbar.solid .glass{background:rgba(255,255,255,.1);box-shadow:none}
 .det{padding:18px 16px 24px;display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
 .det.lift{position:relative;z-index:1;margin-top:-26px;border-radius:26px 26px 0 0;background:var(--bg);padding:24px 16px calc(var(--bot) + 108px);box-shadow:0 -12px 30px rgba(12,24,40,.18)}
-.det h1{font:800 26px/1.08 var(--display);letter-spacing:-.025em;margin:4px 0 0;text-wrap:balance}
+.det h1{font:800 23px/1.08 var(--display);letter-spacing:-.025em;margin:4px 0 0;text-wrap:balance}
 .meta{font:500 12px var(--mono);color:var(--muted)}
 .box{background:var(--surface);border:1px solid rgba(221,214,198,.65);border-radius:18px;box-shadow:var(--sh-1);padding:14px;display:grid;gap:10px}
 .box h4{margin:0;font:600 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;gap:8px}
@@ -213,7 +213,7 @@ button{cursor:pointer;background:none;border:0;padding:0}
 .routes>div{display:grid;gap:5px;align-content:start;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px;box-shadow:var(--sh-1,0 1px 2px rgba(19,35,60,.08))}
 .routes b{font:750 14.5px/1.2 var(--display)}
 .routes span{font-size:12.5px;color:var(--muted);line-height:1.35}
-.routes .btn{margin-top:4px;padding:9px 8px;font-size:13.5px;align-self:end}
+.routes .btn{margin-top:4px;padding:9px 8px;font-size:13.5px;align-self:end;white-space:nowrap}
 .ndanudge{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 16px 8px;padding:8px 8px 8px 14px;border-radius:14px;background:var(--surface);border:1px solid var(--line);font-size:13.5px;font-weight:600}
 .ndanudge .btn{padding:8px 12px;font-size:13px;flex:none}
 .note{font-size:12.5px;color:var(--muted);margin:0}
@@ -380,7 +380,7 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%;text-size-adjus
 .onb .logo{display:flex;align-items:center;gap:10px}
 .onb .logo b{font:800 30px var(--display);letter-spacing:-.04em}
 .onb .mid{flex:1;display:grid;align-content:center;gap:18px;padding:28px 0}
-.onb h1{font:850 40px/1 var(--display);letter-spacing:-.03em;margin:0;font-stretch:92%;text-wrap:balance}
+.onb h1{font:850 35px/1 var(--display);letter-spacing:-.03em;margin:0;font-stretch:92%;text-wrap:balance}
 .onb h1 em{font-style:normal;color:var(--gold)}
 .onb p{margin:0;color:var(--on-navy-muted);font-size:15.5px}
 .onb ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
@@ -449,7 +449,7 @@ input[type=range]{width:100%;accent-color:var(--navy)}
   <div class="device"><div class="app" id="app"></div></div>
   <div class="aside">
     <h1>equire, in your pocket.</h1>
-    <p>Search verified UAE businesses, sign the NDA, open the data room and message the broker from one app.</p>
+    <p>Search verified UAE businesses, sign the NDA, open the data room and message the broker or owner from one app.</p>
     <div class="qr" id="qr" aria-label="QR code to open the app on your phone"></div>
     <div><div class="url">equire.ae/app</div><p class="small">Scan with your phone camera, then use Add to Home Screen to install it like an app.</p></div>
     <p class="small">Prototype · launching 2027 · all listings, people and figures are examples.</p>
@@ -494,7 +494,12 @@ var L=[
    desc:"80-cover restaurant with a terrace near the Al Hamra marina. Strong winter season and steady delivery sales year round."}
 ];
 var BROKERS=[["Omar Rahman","OR"],["Layla Haddad","LH"],["Daniel Pereira","DP"],["Mariam Al Suwaidi","MA"]];
-function broker(i){return BROKERS[i%BROKERS.length];}
+var OWNERS=[["Khalid Al Marri","KM"],["Priya Nair","PN"],["Hassan Youssef","HY"],["Elena Rossi","ER"]];
+var FIRMS=["Al Noor Business Advisory","Gulf Bridge Brokers"];
+/* who listed each listing (matches equire.ae): every third one is listed directly by its owner */
+function broker(i){if(i%3===1){var o=OWNERS[Math.floor(i/3)%OWNERS.length];return [o[0],o[1],"owner","Business owner · identity verified"];}
+  var b=BROKERS[i%BROKERS.length];return [b[0],b[1],"broker",FIRMS[i%3===0?0:1]+" · verified broker"];}
+function who(i){return broker(i)[2];}
 var FIRM="Al Noor Business Advisory";
 var ICON={
   cup:'<path d="M10 18h20v10a8 8 0 01-8 8h-4a8 8 0 01-8-8zM30 21h3a4 4 0 010 8h-3" stroke="currentColor" stroke-width="2.5" fill="none"/><path d="M16 8c0 3 3 3 3 6M22 8c0 3 3 3 3 6" stroke="currentColor" stroke-width="2.5" fill="none"/>',
@@ -849,30 +854,30 @@ function pListing(p){
     '<div class="det lift"><div><span class="eyebrow">'+esc(x.sec)+'</span><h1>'+esc(x.title)+'</h1><div class="meta">'+esc(x.loc)+' · '+x.zone+' · '+x.ref+'</div></div>'+
       '<dl class="big-figs">'+f.map(function(a,j){return '<div><dt>'+a[0]+'</dt><dd'+(String(a[1]).charAt(0)==="−"?' class="neg"':'')+'>'+(j===0&&x.t!=="equity"?'<small style="font-size:11px;color:var(--muted)">AED </small>':'')+a[1]+'</dd></div>';}).join("")+'</dl>'+
       '<p style="margin:0">'+esc(x.desc)+'</p>'+
-      (broker_||signed?'':'<div class="routes"><div><b>Enquire now</b><span>Ask a question or register interest. No NDA needed.</span><button type="button" class="btn btn-line" data-act="chat" data-i="'+i+'">'+SV.chat+'Enquire</button></div><div><b>See full details first</b><span>Sign a short NDA to open the financials, then enquire.</span><button type="button" class="btn btn-gold" data-act="nda" data-i="'+i+'">'+SV.lock+'Sign NDA</button></div></div>')+
+      (broker_||signed?'':'<div class="routes"><div><b>Enquire now</b><span>Ask the '+b[2]+' a question or register interest. No NDA needed.</span><button type="button" class="btn btn-line" data-act="chat" data-i="'+i+'">Message '+b[2]+'</button></div><div><b>See full details first</b><span>Sign a short NDA to open the financials, then enquire.</span><button type="button" class="btn btn-gold" data-act="nda" data-i="'+i+'">'+SV.lock+'Sign NDA</button></div></div>')+
       '<div class="box"><h4><span>Verified by equire</span><span style="color:var(--good)">3 of 3</span></h4>'+
         chk("Trade licence matched to registry","02 Oct 2026")+chk("Financials, last 2 years","03 Oct 2026")+
         (x.t==="equity"?chk("Cap table and MoA","03 Oct 2026"):chk("Lease, "+x.lease+" remaining","03 Oct 2026"))+'</div>'+
       '<div class="box"><h4><span>Key facts</span></h4><dl class="kv"><div><dt>Established</dt><dd class="mono">'+x.est+'</dd></div><div><dt>Staff</dt><dd class="mono">'+x.staff+'</dd></div><div><dt>Licence</dt><dd>'+x.zone+'</dd></div><div><dt>Emirate</dt><dd>'+x.em+'</dd></div></dl></div>'+
       '<div class="box"><h4><span>Data room</span><span style="display:flex;gap:5px;align-items:center;color:'+(signed?'var(--good)':'var(--gold-ink)')+'">'+(signed?'Unlocked':SV.lock+'Locked')+'</span></h4>'+
         (signed?'<p style="font-size:14px">You signed the NDA on '+esc(S.signed[i].at)+'. 6 documents are open to you.</p>':'<div class="locked"><div style="width:90%"></div><div style="width:70%"></div><div style="width:82%"></div><div style="width:60%"></div></div><p class="note">6 documents including audited accounts, the '+(x.t==="equity"?'cap table':'tenancy contract')+' and the trade licence. Sign the NDA to unlock them.</p>')+'</div>'+
-      '<div class="box"><h4><span>Listed by</span></h4><div class="person"><span class="pa">'+b[1]+'</span><div><b>'+b[0]+'</b><span>'+FIRM+' · verified broker</span></div></div></div>'+
+      '<div class="box"><h4><span>Listed by '+(b[2]==="owner"?'the owner':'a broker')+'</span></h4><div class="person"><span class="pa">'+b[1]+'</span><div><b>'+b[0]+'</b><span>'+b[3]+'</span></div></div></div>'+
       '<p class="note">Illustrative listing created to show the product.</p>'+
     '</div></div>'+
     (broker_?'<div class="cta"><button type="button" class="btn btn-line" data-act="back">Back to dashboard</button><button type="button" class="btn btn-gold" data-act="toast" data-v="Listing boosted to Featured for 30 days">Feature · AED 250</button></div>':
-    signed?'<div class="cta"><button type="button" class="btn btn-line" data-act="chat" data-i="'+i+'">'+SV.chat+'Message</button><button type="button" class="btn btn-gold" data-act="room" data-i="'+i+'">Open data room</button></div>':
-    '<div class="cta"><button type="button" class="btn btn-line sq" data-act="save" data-i="'+i+'" aria-pressed="'+isSaved(i)+'" aria-label="Save listing">'+SV.heart+'</button><button type="button" class="btn btn-line" data-act="chat" data-i="'+i+'">'+SV.chat+'Enquire</button><button type="button" class="btn btn-gold" data-act="nda" data-i="'+i+'">'+SV.lock+'Sign NDA</button></div>');
+    signed?'<div class="cta"><button type="button" class="btn btn-line" data-act="chat" data-i="'+i+'">'+SV.chat+'Message '+b[2]+'</button><button type="button" class="btn btn-gold" data-act="room" data-i="'+i+'">Open data room</button></div>':
+    '<div class="cta"><button type="button" class="btn btn-line sq" data-act="save" data-i="'+i+'" aria-pressed="'+isSaved(i)+'" aria-label="Save listing">'+SV.heart+'</button><button type="button" class="btn btn-line" data-act="chat" data-i="'+i+'">Message '+b[2]+'</button><button type="button" class="btn btn-gold" data-act="nda" data-i="'+i+'">'+SV.lock+'Sign NDA</button></div>');
 }
 function chk(t,d){return '<div class="check"><span><span class="ok">'+SV.tick+'</span>'+t+'</span><span class="when">'+d+'</span></div>';}
 function roomFiles(x){return [["PDF","Trade licence","Verified against the registry","lic"],["XLS","Audited accounts FY2024","Verified by equire","pl"],["XLS","Management accounts FY2025","Year to date, uploaded by broker","pl25"],
-  x.t==="equity"?["PDF","Cap table and MoA","Verified by equire","gen"]:["PDF","Tenancy contract and Ejari","Verified by equire","lease"],["PDF","Staff and visa list","Uploaded by broker","gen"],["XLS","Equipment and fit-out register","Uploaded by broker","gen"]];}
+  x.t==="equity"?["PDF","Cap table and MoA","Verified by equire","gen"]:["PDF","Tenancy contract and Ejari","Verified by equire","lease"],["PDF","Staff and visa list","Uploaded by the seller","gen"],["XLS","Equipment and fit-out register","Uploaded by the seller","gen"]];}
 function pRoom(p){
   var x=L[p.i],s=S.signed[p.i]||{name:S.name,at:today()};
   return phead("Data room",x.ref+' · '+x.title)+'<div class="pbody"><div class="det">'+
     '<div class="unlocked"><span class="ok" style="width:30px;height:30px;border-radius:50%;background:var(--good);color:#fff;display:grid;place-items:center;flex:none">'+SV.tick+'</span><span><b>Unlocked for '+esc(s.name||"you")+'</b>NDA signed '+esc(s.at)+' · 6 documents</span></div>'+
     '<ul class="files">'+roomFiles(x).map(function(f,k){return '<li><button type="button" class="file" data-act="doc" data-i="'+p.i+'" data-f="'+k+'"><span class="fi'+(f[0]==="XLS"?" x":"")+'">'+f[0]+'</span><span class="t"><b>'+f[1]+'</b><small>'+f[2]+'</small></span><span class="st">'+(f[2].indexOf("Verified")===0?"✓ Checked":"Shared")+'</span></button></li>';}).join("")+'</ul>'+
-    '<p class="note">Your access is logged and every page carries your name as a watermark. The broker can see which documents you opened.</p>'+
-    '<button type="button" class="btn btn-ink btn-block" data-act="chat" data-i="'+p.i+'">'+SV.chat+'Message the broker</button></div></div>';
+    '<p class="note">Your access is logged and every page carries your name as a watermark. The '+who(p.i)+' can see which documents you opened.</p>'+
+    '<button type="button" class="btn btn-ink btn-block" data-act="chat" data-i="'+p.i+'">'+SV.chat+'Message the '+who(p.i)+'</button></div></div>';
 }
 function parseM(s){s=String(s);var n=parseFloat(s.replace(/[^\d.]/g,""));if(/m$/.test(s))return n*1e6;if(/k$/.test(s))return n*1e3;return n;}
 function fmt(n){return Math.round(n/1000).toLocaleString("en-US");}
@@ -886,11 +891,11 @@ function pDoc(p){
       '<table class="ptable"><thead><tr><th>Line</th><th>'+(f[3]==="pl"?"FY2023":"FY2024")+'</th><th>'+(f[3]==="pl"?"FY2024":"FY2025 YTD")+'</th></tr></thead><tbody>'+
       [["Revenue",rev*py,rev],["Cost of sales",-cogs*py,-cogs],["Gross profit",(rev-cogs)*py,rev-cogs],["Operating costs",-opex*py*1.02,-opex]].map(function(r){return '<tr><td>'+r[0]+'</td><td>'+fmt(r[1])+'</td><td>'+fmt(r[2])+'</td></tr>';}).join("")+
       '<tr class="tot"><td>Net profit</td><td'+(prof<0?' class="neg"':'')+'>'+fmt(prof*py*(prof<0?1.2:.9))+'</td><td'+(prof<0?' class="neg"':'')+'>'+fmt(prof)+'</td></tr></tbody></table>'+
-      (f[3]==="pl"?'<span class="stamp">✓ VERIFIED BY EQUIRE · 03 OCT 2026</span>':'<p class="note">Unaudited. Prepared by the business and shared by the broker.</p>');
+      (f[3]==="pl"?'<span class="stamp">✓ VERIFIED BY EQUIRE · 03 OCT 2026</span>':'<p class="note">Unaudited. Prepared by the business and shared by the seller.</p>');
   }else{
     var heads={lic:["Trade licence","Licence matched to the issuing authority’s registry. Activity, legal form and expiry date checked."],lease:["Tenancy contract and Ejari","Registered lease, "+x.lease+" remaining. Landlord consent to assignment requested."],gen:[f[1],f[2]]}[f[3]];
     body='<h3>'+esc(heads[0])+'</h3><div class="meta">'+esc(x.title)+' · '+x.ref+'</div><p style="margin:0;font-size:14px">'+esc(heads[1])+'</p><div class="lines">'+[96,88,92,70,84,90,62,80,94,58].map(function(w){return '<i style="width:'+w+'%"></i>';}).join("")+'</div>'+
-      (f[2].indexOf("Verified")===0?'<span class="stamp">✓ VERIFIED BY EQUIRE · 02 OCT 2026</span>':'<p class="note">Shared by the broker. Not checked by equire.</p>');
+      (f[2].indexOf("Verified")===0?'<span class="stamp">✓ VERIFIED BY EQUIRE · 02 OCT 2026</span>':'<p class="note">Shared by the seller. Not checked by equire.</p>');
   }
   return phead(esc(f[1]),'Page 1 of '+(f[3]==="lic"?1:4))+'<div class="pbody"><div class="det"><div class="doc">'+wm+body+'</div><p class="note">Downloads are disabled for this room. Screenshots are watermarked.</p></div></div>';
 }
@@ -994,8 +999,8 @@ function onboarding(){
 /* ---------- actions ---------- */
 function startChat(i){
   if(!S.threads[i]){var b=broker(i),hi="Hi"+(S.name?" "+esc(first(S.name)):"");
-    S.threads[i]=[["them",S.signed[i]?hi+", thanks for signing the NDA for "+esc(L[i].title)+". I’m "+first(b[0])+", the listing broker. Happy to answer anything in the data room or arrange a site visit.":
-      hi+", thanks for your interest in "+esc(L[i].title)+". I’m "+first(b[0])+", the listing broker. Happy to answer general questions. For the financials and documents, sign the NDA and the data room opens straight away.",now()]];S.seen[i+":1"]=1;save();}
+    S.threads[i]=[["them",S.signed[i]?hi+", thanks for signing the NDA for "+esc(L[i].title)+". I’m "+first(b[0])+(b[2]==="owner"?", the owner. Happy to answer anything in the data room or show you around the business.":", the listing broker. Happy to answer anything in the data room or arrange a site visit."):
+      hi+", thanks for your interest in "+esc(L[i].title)+". I’m "+first(b[0])+(b[2]==="owner"?", the owner.":", the listing broker.")+" Happy to answer general questions. For the financials and documents, sign the NDA and the data room opens straight away.",now()]];S.seen[i+":1"]=1;save();}
   push({kind:"chat",i:i});
 }
 function sendChat(text){
@@ -1062,7 +1067,7 @@ app.addEventListener("submit",function(e){
     if(!$("#ndaAgree").checked){er.textContent="Tick the box to agree to the terms.";return;}
     er.textContent="";var b=$("#ndaBtn");b.disabled=true;b.textContent="Signing…";S.name=name;
     setTimeout(function(){S.signed[i]={name:name,at:today()};save();haptic();
-      var sh=$(".sheet");sh.innerHTML='<div class="grab"></div><div class="success"><div class="tick-big">'+SV.tick.replace('aria-hidden','width="36" height="36" aria-hidden')+'</div><h3>NDA signed. Data room unlocked.</h3><p>A signed copy is on its way to your email. '+esc(first(broker(i)[0]))+', the listing broker, has been told you are reviewing.</p><button type="button" class="btn btn-gold btn-block" data-act="ndadone" data-i="'+i+'">Open the data room</button></div>';
+      var sh=$(".sheet");sh.innerHTML='<div class="grab"></div><div class="success"><div class="tick-big">'+SV.tick.replace('aria-hidden','width="36" height="36" aria-hidden')+'</div><h3>NDA signed. Data room unlocked.</h3><p>A signed copy is on its way to your email. '+esc(first(broker(i)[0]))+(who(i)==="owner"?', the owner':', the listing broker')+', has been told you are reviewing.</p><button type="button" class="btn btn-gold btn-block" data-act="ndadone" data-i="'+i+'">Open the data room</button></div>';
     },900);}
   if(k==="nl0"){var T=$("#nlT").value.trim(),A=$("#nlA").value.trim();if(!T||!A){$("#nlErr").textContent="Add a title and an asking price to continue.";return;}
     NL.title=T;NL.ask=A;NL.sector=$("#nlS").value;NL.em=$("#nlE").value;NL.step=1;fillPage(topPage(),{kind:"newlisting"});}
