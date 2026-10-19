@@ -847,7 +847,7 @@ function fillPage(el,p,keep){
 }
 function phead(title,sub,right){return '<header class="phead"><button type="button" class="iconbtn" data-act="back" aria-label="Back">'+SV.back+'</button><h2>'+title+(sub?'<small>'+sub+'</small>':'')+'</h2>'+(right||'<span style="width:40px"></span>')+'</header>';}
 function pListing(p){
-  var i=p.i,x=L[i],b=broker(i),signed=!!S.signed[i],broker_=S.role==="broker",f=figs(x),tc=x.t==="distress"?" distress":x.t==="equity"?" equity":"";
+  var i=p.i,x=L[i],nl=!x.lease||x.lease==="–",b=broker(i),signed=!!S.signed[i],broker_=S.role==="broker",f=figs(x),tc=x.t==="distress"?" distress":x.t==="equity"?" equity":"";
   return '<div class="pbar"><button type="button" class="iconbtn glass" data-act="back" aria-label="Back">'+SV.back+'</button><span class="pbt" aria-hidden="true">'+esc(x.title)+'</span><button type="button" class="iconbtn glass" data-act="share" aria-label="Share listing">'+SV.share+'</button><button type="button" class="iconbtn glass heart" data-act="save" data-i="'+i+'" aria-pressed="'+isSaved(i)+'" aria-label="Save listing">'+SV.heart+'</button></div>'+
     '<div class="pbody"><div class="hero"><div class="hbg'+shimC(x)+'" style="background:'+grad(x)+'">'+icoSvg(x,"ico")+pimg(x,1000)+'</div>'+
       '<div class="hcap"><span class="tag'+tc+'">'+typeName[x.t]+'</span><span class="badge">'+SV.tick+'Verified by equire</span></div></div>'+
@@ -855,9 +855,9 @@ function pListing(p){
       '<dl class="big-figs">'+f.map(function(a,j){return '<div><dt>'+a[0]+'</dt><dd'+(String(a[1]).charAt(0)==="−"?' class="neg"':'')+'>'+(j===0&&x.t!=="equity"?'<small style="font-size:11px;color:var(--muted)">AED </small>':'')+a[1]+'</dd></div>';}).join("")+'</dl>'+
       '<p style="margin:0">'+esc(x.desc)+'</p>'+
       (broker_||signed?'':'<div class="routes"><div><b>Enquire now</b><span>Ask the '+b[2]+' a question or register interest. No NDA needed.</span><button type="button" class="btn btn-line" data-act="chat" data-i="'+i+'">Message '+b[2]+'</button></div><div><b>See full details first</b><span>Sign a short NDA to open the financials, then enquire.</span><button type="button" class="btn btn-gold" data-act="nda" data-i="'+i+'">'+SV.lock+'Sign NDA</button></div></div>')+
-      '<div class="box"><h4><span>Verified by equire</span><span style="color:var(--good)">3 of 3</span></h4>'+
+      '<div class="box"><h4><span>Verified by equire</span><span style="color:var(--good)">'+(nl?(x.t==="equity"?5:4):3)+' of '+(nl?(x.t==="equity"?5:4):3)+'</span></h4>'+
         chk("Trade licence matched to registry","02 Oct 2026")+chk("Financials, last 2 years","03 Oct 2026")+
-        (x.t==="equity"?chk("Cap table and MoA","03 Oct 2026"):chk("Lease, "+x.lease+" remaining","03 Oct 2026"))+'</div>'+
+        (x.t==="equity"?chk("Cap table and MoA","03 Oct 2026"):"")+(nl?chk("Bank statements match the accounts","03 Oct 2026")+chk("VAT registration confirmed with the FTA","04 Oct 2026")+'<p class="note" style="margin:6px 0 0">No premises lease: this business works remotely, so it is verified through its licence, accounts, bank statements and VAT records.</p>':chk("Lease, "+x.lease+" remaining","03 Oct 2026"))+'</div>'+
       '<div class="box"><h4><span>Key facts</span></h4><dl class="kv"><div><dt>Established</dt><dd class="mono">'+x.est+'</dd></div><div><dt>Staff</dt><dd class="mono">'+x.staff+'</dd></div><div><dt>Licence</dt><dd>'+x.zone+'</dd></div><div><dt>Emirate</dt><dd>'+x.em+'</dd></div></dl></div>'+
       '<div class="box"><h4><span>Data room</span><span style="display:flex;gap:5px;align-items:center;color:'+(signed?'var(--good)':'var(--gold-ink)')+'">'+(signed?'Unlocked':SV.lock+'Locked')+'</span></h4>'+
         (signed?'<p style="font-size:14px">You signed the NDA on '+esc(S.signed[i].at)+'. 6 documents are open to you.</p>':'<div class="locked"><div style="width:90%"></div><div style="width:70%"></div><div style="width:82%"></div><div style="width:60%"></div></div><p class="note">6 documents including audited accounts, the '+(x.t==="equity"?'cap table':'tenancy contract')+' and the trade licence. Sign the NDA to unlock them.</p>')+'</div>'+
@@ -869,8 +869,8 @@ function pListing(p){
     '<div class="cta"><button type="button" class="btn btn-line sq" data-act="save" data-i="'+i+'" aria-pressed="'+isSaved(i)+'" aria-label="Save listing">'+SV.heart+'</button><button type="button" class="btn btn-line" data-act="chat" data-i="'+i+'">Message '+b[2]+'</button><button type="button" class="btn btn-gold" data-act="nda" data-i="'+i+'">'+SV.lock+'Sign NDA</button></div>');
 }
 function chk(t,d){return '<div class="check"><span><span class="ok">'+SV.tick+'</span>'+t+'</span><span class="when">'+d+'</span></div>';}
-function roomFiles(x){return [["PDF","Trade licence","Verified against the registry","lic"],["XLS","Audited accounts FY2024","Verified by equire","pl"],["XLS","Management accounts FY2025","Year to date, uploaded by broker","pl25"],
-  x.t==="equity"?["PDF","Cap table and MoA","Verified by equire","gen"]:["PDF","Tenancy contract and Ejari","Verified by equire","lease"],["PDF","Staff and visa list","Uploaded by the seller","gen"],["XLS","Equipment and fit-out register","Uploaded by the seller","gen"]];}
+function roomFiles(x){return [["PDF","Trade licence","Verified against the registry","lic"],["XLS","Audited accounts FY2024","Verified by equire","pl"],["XLS","Management accounts FY2025","Year to date, uploaded by the seller","pl25"],
+  x.t==="equity"?["PDF","Cap table and MoA","Verified by equire","gen"]:["PDF","Tenancy contract and Ejari","Verified by equire","lease"],["PDF","Staff and visa list","Uploaded by the seller","gen"],(!x.lease||x.lease==="–")?["PDF","Bank statements, last 12 months","Verified by equire","gen"]:["XLS","Equipment and fit-out register","Uploaded by the seller","gen"]];}
 function pRoom(p){
   var x=L[p.i],s=S.signed[p.i]||{name:S.name,at:today()};
   return phead("Data room",x.ref+' · '+x.title)+'<div class="pbody"><div class="det">'+

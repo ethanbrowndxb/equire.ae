@@ -502,6 +502,45 @@ form.ld-form{background:var(--surface);border:1px solid var(--line);border-radiu
 .btn-line2{border:1px solid var(--line);color:var(--fg);background:transparent}
 .ld-nda-btn svg{width:16px;height:16px;flex:none}
 @media (max-width:520px){.ld-routes{grid-template-columns:minmax(0,1fr)}}
+.ld-files li{padding:0}
+.ld-files li button{all:unset;box-sizing:border-box;display:flex;gap:10px;align-items:center;width:100%;padding:9px 10px;cursor:pointer;border-radius:10px}
+.ld-files li button:hover{background:var(--chip)}
+.ld-files li button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.ld-files .ft{flex:1;min-width:0}
+.ld-files .fo{font-size:13px;font-weight:600;color:var(--gold-ink);white-space:nowrap}
+/* document viewer */
+.dv{position:fixed;inset:0;z-index:260;display:grid;place-items:center;padding:24px;background:rgba(6,12,22,.72);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);animation:ldfade .2s ease}
+.dv[hidden]{display:none}
+.dv-box{width:min(760px,100%);max-height:calc(100vh - 48px);display:grid;grid-template-rows:auto minmax(0,1fr) auto;background:#3A4250;border-radius:16px;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.5);animation:ldup .3s var(--ease-out)}
+.dv-head{display:flex;align-items:center;gap:12px;padding:12px 14px 12px 18px;background:#13233C;color:#F3F0E8}
+.dv-head b{flex:1;min-width:0;font:700 16px var(--display);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dv-head small{display:block;font:500 12px var(--mono);color:#B8C0CF}
+.dv-head button{width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.12);color:#fff;display:grid;place-items:center;cursor:pointer;flex:none}
+.dv-head button svg{width:18px;height:18px}
+.dv-scroll{overflow:auto;padding:22px;overscroll-behavior:contain}
+.paper{position:relative;background:#fff;color:#1B2433;border-radius:4px;padding:34px 34px 30px;box-shadow:0 8px 30px rgba(0,0,0,.35);font-size:14px;line-height:1.5;overflow:hidden;font-family:var(--body)}
+.paper .wm{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;z-index:2}
+.paper .wm span{transform:rotate(-28deg);font:700 22px/1.7 var(--mono);color:rgba(19,35,60,.09);text-align:center;letter-spacing:.08em;white-space:nowrap}
+.paper .ph1{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;border-bottom:2px solid #13233C;padding-bottom:12px;margin-bottom:16px}
+.paper .ph1 b{display:block;font:800 19px/1.2 var(--display);color:#13233C}
+.paper .ph1 span{font:500 12px var(--mono);color:#5A6475;text-align:right}
+.paper h5{font:700 13px var(--display);letter-spacing:.08em;text-transform:uppercase;color:#13233C;margin:18px 0 8px}
+.paper table{width:100%;border-collapse:collapse;font-size:13.5px}
+.paper th,.paper td{text-align:left;padding:7px 8px;border-bottom:1px solid #E3E6EB;vertical-align:top}
+.paper th{font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:#5A6475;font-weight:600;background:#F5F6F8}
+.paper td.n,.paper th.n{text-align:right;font-family:var(--mono);white-space:nowrap}
+.paper tr.tot td{font-weight:700;border-top:2px solid #13233C}
+.paper .neg{color:#B4541F}
+.paper .kv{display:grid;grid-template-columns:minmax(120px,40%) 1fr;gap:0;border:1px solid #E3E6EB;border-radius:6px;overflow:hidden}
+.paper .kv div{padding:8px 10px;border-bottom:1px solid #E3E6EB}
+.paper .kv div:nth-child(odd){background:#F5F6F8;color:#5A6475;font-size:12.5px;font-weight:600}
+.paper .kv div:nth-last-child(-n+2){border-bottom:0}
+.paper .stamp{display:inline-block;margin-top:18px;border:2px solid #1E7A4F;color:#1E7A4F;border-radius:8px;padding:6px 10px;font:600 11.5px var(--mono);letter-spacing:.06em;transform:rotate(-3deg)}
+.paper .fine{font-size:12px;color:#5A6475;margin-top:14px}
+.paper .sigs{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:22px}
+.paper .sigs div{border-top:1px solid #1B2433;padding-top:6px;font-size:12px;color:#5A6475}
+.dv-foot{padding:10px 16px;background:#13233C;color:#B8C0CF;font-size:12.5px;text-align:center}
+@media (max-width:640px){.dv{padding:0}.dv-box{width:100%;height:100%;max-height:none;border-radius:0}.dv-scroll{padding:12px}.paper{padding:22px 16px 20px;font-size:13.5px}.paper .ph1 b{font-size:17px}.paper table{font-size:12.5px}.paper th,.paper td{padding:6px 5px}.paper .wm span{font-size:16px}}
 .ld-bar{display:none}
 @media (max-width:860px){
   .ld{padding:0;place-items:stretch;background:var(--bg)}
@@ -956,11 +995,20 @@ footer nav a:hover{color:var(--on-navy)}
   var lockIco='<svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true" style="flex:none;margin-top:2px;color:var(--gold-ink)"><rect x="3" y="7" width="10" height="7.5" rx="1.5" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M5.5 7V5a2.5 2.5 0 015 0v2" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>';
   function chk(t,d){return '<div class="ld-chk"><b><i>'+tick+'</i>'+t+'</b><span>'+d+'</span></div>';}
   var signedNda={};
+  function noLease(x){return !x.lease||x.lease==="–";}
+  function roomFiles(x){var eq=x.t==="equity",nl=noLease(x),bank=["PDF","Bank statements, last 12 months","Verified by equire","bank"];
+    return [["PDF","Trade licence","Verified against the registry","lic"],["XLS","Audited accounts FY2024","Verified by equire","pl"],["XLS","Management accounts FY2025","Year to date","mgmt"],
+      eq?["PDF","Cap table and MoA","Verified by equire","cap"]:nl?bank:["PDF","Tenancy contract and Ejari","Verified by equire","lease"],
+      ["PDF","Staff and visa list","Uploaded by the seller","staff"],
+      nl?(eq?bank:["PDF","VAT and corporate tax registration","Verified with the FTA","vat"]):["XLS","Equipment and fit-out register","Uploaded by the seller","equip"]];}
+  function checks(x){var c=[["Trade licence matched to the registry","02 Oct 2026"],["Financials, last 2 years","03 Oct 2026"]];
+    if(x.t==="equity")c.push(["Cap table and MoA","03 Oct 2026"]);
+    if(noLease(x)){c.push(["Bank statements match the accounts","03 Oct 2026"]);c.push(["VAT registration confirmed with the FTA","04 Oct 2026"]);}
+    else c.push(["Lease, "+x.lease+" remaining","03 Oct 2026"]);return c;}
   function roomHTML(i){var x=L[i];
-    if(signedNda[i]){var files=[["PDF","Trade licence","Verified against the registry"],["XLS","Audited accounts FY2024","Verified by equire"],["XLS","Management accounts FY2025","Year to date"],
-      x.t==="equity"?["PDF","Cap table and MoA","Verified by equire"]:["PDF","Tenancy contract and Ejari","Verified by equire"],["PDF","Staff and visa list","Uploaded by the seller"],["XLS","Equipment and fit-out register","Uploaded by the seller"]];
+    if(signedNda[i]){var files=roomFiles(x);
       return '<h4><span>Data room</span><span>Unlocked</span></h4><div class="ld-open"><span class="okd">'+tick+'</span>NDA signed by '+signedNda[i]+' · 6 documents</div>'+
-        '<ul class="ld-files">'+files.map(function(f){return '<li><span class="fi'+(f[0]==="XLS"?" x":"")+'">'+f[0]+'</span><span><b style="font-weight:600">'+f[1]+'</b><small>'+f[2]+'</small></span></li>';}).join("")+'</ul>'+
+        '<ul class="ld-files">'+files.map(function(f,k){return '<li><button type="button" data-ld="doc" data-f="'+f[3]+'"><span class="fi'+(f[0]==="XLS"?" x":"")+'">'+f[0]+'</span><span class="ft"><b style="font-weight:600">'+f[1]+'</b><small>'+f[2]+'</small></span><span class="fo">Open ›</span></button></li>';}).join("")+'</ul>'+
         '<p class="ld-note" style="margin-top:10px">Demo data room: in the live product each document opens with your name watermarked on every page.</p>'+
         '<button type="button" class="btn btn-gold ld-nda-btn" data-ld="enquire">'+ico.chat+'Message the '+party(i)+'</button>';}
     return '<h4><span>Data room</span><span style="color:var(--gold-ink)">Locked</span></h4><div class="ld-lock">'+lockIco+'<span>6 documents including audited accounts, the '+(x.t==="equity"?'cap table':'tenancy contract')+' and the trade licence. Sign the NDA to unlock them.</span></div>'+
@@ -1005,9 +1053,9 @@ footer nav a:hover{color:var(--on-navy)}
         '<dl class="ld-figs">'+labels.map(function(l,j){var v=vals[j];return '<div><dt>'+l+'</dt><dd'+(String(v).charAt(0)==="−"?' class="neg"':'')+'>'+(j<2&&/\d/.test(v)&&!/%/.test(v)?'<small>AED</small>':'')+v+'</dd></div>';}).join("")+'</dl>'+
         '<p class="ld-desc">'+m[3]+'</p>'+
         '<div class="ld-routes" id="ldRoutes">'+routesHTML(i)+'</div>'+
-        '<div class="ld-box2"><h4><span>Verified by equire</span><span>3 of 3 checks</span></h4>'+
-          chk("Trade licence matched to the registry","02 Oct 2026")+chk("Financials, last 2 years","03 Oct 2026")+
-          (x.t==="equity"?chk("Cap table and MoA","03 Oct 2026"):chk("Lease, "+x.lease+" remaining","03 Oct 2026"))+'</div>'+
+        '<div class="ld-box2"><h4><span>Verified by equire</span><span>'+checks(x).length+' of '+checks(x).length+' checks</span></h4>'+
+          checks(x).map(function(c){return chk(c[0],c[1]);}).join("")+(noLease(x)?'<p class="ld-note" style="margin-top:8px">No premises lease: this business operates remotely, so equire verifies it through its licence, accounts, bank statements and VAT records.</p>':'')+'</div>'+
+
         '<div class="ld-box2"><h4><span>Key facts</span></h4><dl class="ld-kv"><div><dt>Established</dt><dd>'+m[1]+'</dd></div><div><dt>Staff</dt><dd>'+m[2]+'</dd></div><div><dt>Licence</dt><dd>'+x.zone+'</dd></div><div><dt>Emirate</dt><dd>'+m[0]+'</dd></div></dl></div>'+
         '<div class="ld-box2" id="ldRoom">'+roomHTML(i)+'</div>'+
         '<div class="ld-box2"><h4><span>Listed by</span></h4><div class="ld-by"><i>'+by[0]+'</i><div><b>'+by[1]+'</b><span>'+(by[0]==="OW"?'Business owner · identity verified':'Verified broker')+'</span></div></div></div>'+
@@ -1028,6 +1076,66 @@ footer nav a:hover{color:var(--on-navy)}
       '<div class="ld-bar" id="ldBar">'+barHTML(i)+'</div>'+
     '</div>';
   }
+
+  // ---- data room: sample documents open in a watermarked viewer ----
+  var dv=document.createElement("div");dv.className="dv";dv.hidden=true;dv.setAttribute("role","dialog");dv.setAttribute("aria-modal","true");dv.setAttribute("aria-label","Document");document.body.appendChild(dv);
+  function num(v){v=String(v||"");var n=parseFloat(v.replace(/[^\d.]/g,""));if(isNaN(n))return NaN;if(/m$/i.test(v))n*=1e6;else if(/k$/i.test(v))n*=1e3;return /^[−-]/.test(v)?-n:n;}
+  function k(n){var neg=n<0;n=Math.round(Math.abs(n)/1000);var t=n.toLocaleString("en-US");return neg?'<span class="neg">('+t+')</span>':t;}
+  function seed(i,j){return ((i+3)*(j+7)*9301+49297)%233280/233280;}
+  function docHTML(i,fk){
+    var x=L[i],m=MORE[x.ref]||["Dubai","2018","10",""],nm=signedNda[i]||"Investor",by=BY[i%BY.length],eq=x.t==="equity";
+    var rev=num(eq?(x.vals&&x.vals[1]):x.to),prof=eq?rev*.08:num(x.pr);if(isNaN(rev))rev=2e6;if(isNaN(prof))prof=rev*.1;
+    var auth=x.zone==="Free zone"?(/DIFC/.test(x.loc)?"Dubai International Financial Centre":/SAIF/.test(x.loc)?"Sharjah Airport International Free Zone":/Design/.test(x.loc)?"Dubai Development Authority (d3)":"DMCC Authority"):(m[0]==="Abu Dhabi"?"Abu Dhabi Department of Economic Development":m[0]==="Sharjah"?"Sharjah Economic Development Department":"Dubai Department of Economy and Tourism");
+    var lic=(x.ref.replace(/\D/g,"")*37+104221)+"";
+    var wm='<div class="wm"><span>CONFIDENTIAL · '+nm.toUpperCase()+'<br>'+x.ref+' · SAMPLE<br>CONFIDENTIAL · '+nm.toUpperCase()+'<br>'+x.ref+' · SAMPLE</span></div>';
+    var hd=function(t,sub){return '<div class="ph1"><div><b>'+t+'</b><span style="text-align:left;display:block">'+x.title+'</span></div><span>'+x.ref+'<br>'+sub+'</span></div>';};
+    var title,pages,body;
+    if(fk==="lic"){title="Trade licence";pages=1;
+      body=hd("Commercial licence","Issued "+m[1])+'<div class="kv"><div>Licence number</div><div>'+lic+'</div><div>Trade name</div><div>'+x.title.replace(/,.*$/,"")+' LLC</div><div>Legal form</div><div>Limited Liability Company</div><div>Activity</div><div>'+x.sec.replace(" · ",", ")+'</div><div>Issuing authority</div><div>'+auth+'</div><div>Location</div><div>'+x.loc+'</div><div>Issue date</div><div>'+m[1]+'</div><div>Expiry date</div><div>14 Mar 2027</div><div>Status</div><div>Active, no violations recorded</div></div>'+
+        '<span class="stamp">✓ MATCHED TO REGISTRY · VERIFIED BY EQUIRE · 02 OCT 2026</span>';}
+    else if(fk==="pl"){title="Audited accounts FY2024";pages=4;var py=.91,cogs=rev*.42,opex=rev-cogs-prof;
+      var rows=[["Revenue",rev*py,rev],["Cost of sales",-cogs*py,-cogs],["Gross profit",(rev-cogs)*py,rev-cogs],["Staff costs",-opex*.55*py,-opex*.55],["Rent and utilities",-opex*.3*py,-opex*.3],["Other operating costs",-opex*.15*py*1.04,-opex*.15]];
+      body=hd("Income statement","Year ended 31 Dec 2024 · AED '000")+'<table><thead><tr><th>Line</th><th class="n">FY2023</th><th class="n">FY2024</th></tr></thead><tbody>'+
+        rows.map(function(r){return '<tr><td>'+r[0]+'</td><td class="n">'+k(r[1])+'</td><td class="n">'+k(r[2])+'</td></tr>';}).join("")+
+        '<tr class="tot"><td>Net profit</td><td class="n">'+k(prof*(prof<0?1.2:.88))+'</td><td class="n">'+k(prof)+'</td></tr></tbody></table>'+
+        '<h5>Balance sheet summary, 31 Dec 2024</h5><table><tbody><tr><td>Cash at bank</td><td class="n">'+k(rev*.11)+'</td></tr><tr><td>Fixed assets, net</td><td class="n">'+k(rev*.24)+'</td></tr><tr><td>Receivables and inventory</td><td class="n">'+k(rev*.09)+'</td></tr><tr><td>Payables and accruals</td><td class="n">'+k(-rev*.08)+'</td></tr><tr class="tot"><td>Net assets</td><td class="n">'+k(rev*.36)+'</td></tr></tbody></table>'+
+        '<p class="fine">Auditor’s opinion: unqualified. These sample figures are illustrative and derived from the listing’s headline numbers.</p><span class="stamp">✓ VERIFIED BY EQUIRE · 03 OCT 2026</span>';}
+    else if(fk==="mgmt"){title="Management accounts FY2025";pages=2;var mo=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep"],tr=0,tp=0;
+      body=hd("Management accounts","FY2025 year to date · AED '000")+'<table><thead><tr><th>Month</th><th class="n">Revenue</th><th class="n">Net profit</th></tr></thead><tbody>'+
+        mo.map(function(n,j){var r=rev*1.06/12*(.88+seed(i,j)*.24),q=prof*1.06/12*(.8+seed(j,i)*.4);tr+=r;tp+=q;return '<tr><td>'+n+' 2025</td><td class="n">'+k(r)+'</td><td class="n">'+k(q)+'</td></tr>';}).join("")+
+        '<tr class="tot"><td>Year to date</td><td class="n">'+k(tr)+'</td><td class="n">'+k(tp)+'</td></tr></tbody></table><p class="fine">Unaudited. Prepared by the business and shared by the seller.</p>';}
+    else if(fk==="cap"){title="Cap table and MoA";pages=6;var st=parseFloat(x.vals&&x.vals[2])||15;
+      body=hd("Capitalisation table","Pre and post this round")+'<table><thead><tr><th>Shareholder</th><th class="n">Today</th><th class="n">After round</th></tr></thead><tbody>'+
+        [["Founder A",52],["Founder B",28],["Angel investors",12],["Employee option pool",8]].map(function(r){return '<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'%</td><td class="n">'+(r[1]*(100-st)/100).toFixed(1)+'%</td></tr>';}).join("")+
+        '<tr><td>New investor (this round)</td><td class="n">–</td><td class="n">'+st.toFixed(1)+'%</td></tr><tr class="tot"><td>Total</td><td class="n">100%</td><td class="n">100%</td></tr></tbody></table>'+
+        '<h5>Memorandum of Association, key terms</h5><div class="kv"><div>Share capital</div><div>AED 300,000</div><div>Pre-emption rights</div><div>Yes, all existing shareholders</div><div>Board seats</div><div>3 (one offered to the new investor)</div><div>Governing law</div><div>'+(/DIFC/.test(x.loc)?"DIFC law":"UAE law")+'</div></div><span class="stamp">✓ VERIFIED BY EQUIRE · 03 OCT 2026</span>';}
+    else if(fk==="lease"){title="Tenancy contract and Ejari";pages=5;var rent=Math.max(rev*.09,120000);
+      body=hd("Tenancy contract","Ejari registered")+'<div class="kv"><div>Ejari number</div><div>'+(lic*3+"").slice(0,10)+'</div><div>Landlord</div><div>'+m[0]+' Properties LLC</div><div>Tenant</div><div>'+x.title.replace(/,.*$/,"")+' LLC</div><div>Premises</div><div>Unit G-'+(12+i)+', '+x.loc+'</div><div>Annual rent</div><div>AED '+Math.round(rent/1000).toLocaleString("en-US")+',000, paid in 4 cheques</div><div>Term remaining</div><div>'+(x.lease||"3 yrs")+'</div><div>Assignment</div><div>Allowed with landlord consent (requested)</div><div>Security deposit</div><div>5% of annual rent</div></div>'+
+        '<div class="sigs"><div>Landlord signature</div><div>Tenant signature</div></div><span class="stamp">✓ VERIFIED BY EQUIRE · 03 OCT 2026</span>';}
+    else if(fk==="bank"){title="Bank statements, last 12 months";pages=12;var mo2=["Oct 24","Nov 24","Dec 24","Jan 25","Feb 25","Mar 25","Apr 25","May 25","Jun 25","Jul 25","Aug 25","Sep 25"],bal=rev*.08,ti=0,to2=0;
+      body=hd("Bank statement summary","Business current account ·· 4471 · AED '000")+'<table><thead><tr><th>Month</th><th class="n">Money in</th><th class="n">Money out</th><th class="n">Closing balance</th></tr></thead><tbody>'+
+        mo2.map(function(n,j){var a=rev/12*(.9+seed(i,j)*.2),b2=(rev-prof)/12*(.92+seed(j,i)*.16);ti+=a;to2+=b2;bal+=a-b2;return '<tr><td>'+n+'</td><td class="n">'+k(a)+'</td><td class="n">'+k(-b2)+'</td><td class="n">'+k(bal)+'</td></tr>';}).join("")+
+        '<tr class="tot"><td>12 months</td><td class="n">'+k(ti)+'</td><td class="n">'+k(-to2)+'</td><td></td></tr></tbody></table>'+
+        '<p class="fine">equire matches 12 months of deposits to the revenue in the accounts. Customer names and account numbers are masked in this sample.</p><span class="stamp">✓ RECONCILED TO ACCOUNTS · VERIFIED BY EQUIRE · 03 OCT 2026</span>';}
+    else if(fk==="vat"){title="VAT and corporate tax registration";pages=2;
+      body=hd("Tax registration certificate","Federal Tax Authority")+'<div class="kv"><div>VAT TRN</div><div>100'+(lic*7+"").slice(0,12)+'</div><div>VAT effective date</div><div>01 Jan '+Math.max(2018,+m[1]||2018)+'</div><div>Filing</div><div>Quarterly, all returns filed on time</div><div>Corporate tax TRN</div><div>'+(lic*11+"").slice(0,10)+'</div><div>Corporate tax period</div><div>1 Jan to 31 Dec</div><div>Registered address</div><div>'+x.loc+' (registered office)</div></div>'+
+        '<p class="fine">For businesses that work remotely, VAT returns show sales declared to the FTA and back up the accounts.</p><span class="stamp">✓ CONFIRMED WITH THE FTA · 04 OCT 2026</span>';}
+    else if(fk==="staff"){title="Staff and visa list";pages=1;var total=parseInt(m[2],10)||10,roles=[["General manager",1],["Senior staff",Math.max(1,Math.round(total*.25))],["Operations staff",Math.max(1,Math.round(total*.5))],["Admin and accounts",Math.max(1,Math.round(total*.1))]];
+      var used=roles.reduce(function(a,r){return a+r[1];},0);roles.push(["Part-time and support",Math.max(0,total-used)]);
+      body=hd("Staff and visa list","As at 30 Sep 2025")+'<table><thead><tr><th>Role</th><th class="n">Headcount</th><th>Visa</th><th class="n">Avg. tenure</th></tr></thead><tbody>'+
+        roles.filter(function(r){return r[1]>0;}).map(function(r,j){return '<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td><td>'+(j===0?"Company, investor":"Company sponsored")+'</td><td class="n">'+(1.5+seed(i,j)*4).toFixed(1)+' yrs</td></tr>';}).join("")+
+        '<tr class="tot"><td>Total</td><td class="n">'+total+'</td><td></td><td></td></tr></tbody></table><p class="fine">Names and passport details are removed in this sample. Shared by the seller, not checked by equire.</p>';}
+    else{title="Equipment and fit-out register";pages=2;var base=Math.max(rev*.2,150000),items=[["Fit-out and joinery",.38],["Kitchen or specialist equipment",.27],["Furniture and fixtures",.14],["IT, POS and security",.09],["Vehicles and other assets",.12]];
+      body=hd("Equipment and fit-out register","Book values · AED '000")+'<table><thead><tr><th>Asset group</th><th class="n">Cost</th><th class="n">Net book value</th></tr></thead><tbody>'+
+        items.map(function(r,j){return '<tr><td>'+r[0]+'</td><td class="n">'+k(base*r[1]*1.6)+'</td><td class="n">'+k(base*r[1])+'</td></tr>';}).join("")+
+        '<tr class="tot"><td>Total</td><td class="n">'+k(base*1.6)+'</td><td class="n">'+k(base)+'</td></tr></tbody></table><p class="fine">Shared by the seller, not checked by equire. Included in the sale unless stated otherwise.</p>';}
+    return '<div class="dv-box"><div class="dv-head"><b>'+title+'<small>Page 1 of '+pages+' · '+x.ref+'</small></b><button type="button" data-dv="close" aria-label="Close document">'+xIco+'</button></div>'+
+      '<div class="dv-scroll"><div class="paper">'+wm+body+'</div></div><div class="dv-foot">Sample document for the product preview · watermarked to '+nm+' · downloads disabled</div></div>';
+  }
+  var dvFrom=null;
+  function openDoc(i,fk){dvFrom=document.activeElement;dv.innerHTML=docHTML(i,fk);dv.hidden=false;var c=dv.querySelector("[data-dv=close]");c.focus({preventScroll:true});}
+  function closeDoc(){if(dv.hidden)return false;dv.hidden=true;dv.innerHTML="";if(dvFrom&&dvFrom.focus)try{dvFrom.focus({preventScroll:true});}catch(e){}return true;}
+  dv.addEventListener("click",function(e){if(e.target===dv||e.target.closest("[data-dv=close]"))closeDoc();});
   function openListing(i,fromHash){
     ldCur=i;ldFrom=document.activeElement;ld.innerHTML=ldHTML(i);ld.hidden=false;docEl.classList.add("lopen");
     if(!fromHash){try{history.pushState({ld:L[i].ref},"","#"+L[i].ref);ldPushed=true;}catch(e){}}
@@ -1043,7 +1151,7 @@ footer nav a:hover{color:var(--on-navy)}
       f.querySelector("#ldFields").hidden=true;f.querySelector("#ldDone").hidden=false;f.scrollIntoView({behavior:"smooth",block:"nearest"});});
   }
   var docEl=document.documentElement;
-  function closeListing(viaPop){if(ld.hidden)return;ld.hidden=true;ld.innerHTML="";docEl.classList.remove("lopen");ldCur=-1;
+  function closeListing(viaPop){closeDoc();if(ld.hidden)return;ld.hidden=true;ld.innerHTML="";docEl.classList.remove("lopen");ldCur=-1;
     if(!viaPop){if(ldPushed){ldPushed=false;history.back();}else{try{history.replaceState(null,"",location.pathname+location.search);}catch(e){}}}
     else ldPushed=false;
     if(ldFrom&&ldFrom.focus)try{ldFrom.focus({preventScroll:true});}catch(e){}}
@@ -1051,13 +1159,14 @@ footer nav a:hover{color:var(--on-navy)}
     if(e.target===ld){closeListing();return;}
     var a=e.target.closest("[data-ld]");if(!a)return;
     if(a.dataset.ld==="close")closeListing();
+    else if(a.dataset.ld==="doc"){openDoc(ldCur,a.dataset.f);}
     else if(a.dataset.ld==="room"){ld.querySelector("#ldRoom").scrollIntoView({behavior:"smooth",block:"start"});}
     else if(a.dataset.ld==="nda"){var nf=ld.querySelector("#ldNda");if(!nf)return;nf.hidden=false;var lb=ld.querySelector(".ld-nda-btn[data-ld=nda]");if(lb)lb.hidden=true;nf.scrollIntoView({behavior:"smooth",block:"start"});setTimeout(function(){nf.querySelector("#nda-name").focus({preventScroll:true});},450);}
     else if(a.dataset.ld==="save"){saved[ldCur]=!saved[ldCur];ld.querySelectorAll('[data-ld="save"]').forEach(function(b){b.setAttribute("aria-pressed",String(!!saved[ldCur]));if(b.classList.contains("btn"))b.textContent=saved[ldCur]?"Saved":"Save";});
       var h=grid.querySelector('.card[data-i="'+ldCur+'"] .heart');if(h)h.setAttribute("aria-pressed",String(!!saved[ldCur]));}
     else if(a.dataset.ld==="enquire"){var f=ld.querySelector("#ldForm");f.scrollIntoView({behavior:"smooth",block:"start"});setTimeout(function(){var n=ld.querySelector("#ld-name");if(n&&!ld.querySelector("#ldFields").hidden)n.focus({preventScroll:true});},450);}
   });
-  document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!ld.hidden)closeListing();});
+  document.addEventListener("keydown",function(e){if(e.key==="Escape"){if(closeDoc())return;if(!ld.hidden)closeListing();}});
   window.addEventListener("popstate",function(){var r=location.hash.slice(1),k=L.map(function(x){return x.ref;}).indexOf(r);
     if(k>-1){if(ldCur!==k)openListing(k,true);}else closeListing(true);});
   (function(){var r=location.hash.slice(1),k=L.map(function(x){return x.ref;}).indexOf(r);if(k>-1)openListing(k,true);})();
