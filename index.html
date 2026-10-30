@@ -254,7 +254,7 @@ html:not(.js) .fbtn{display:none}
 .ph .row{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .ph .tag{font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:rgba(10,20,36,.55);backdrop-filter:blur(4px);padding:4px 8px;border-radius:5px}
 .ph .tag.distress{background:var(--warn);color:#fff}
-.ph .tag.equity{background:#F3F0E8;color:#0B1626}
+.ph .tag.equity{background:#F3F0E8;color:#0B1626}.ph .tag.startup{background:#1F6F6B;color:#fff}
 .ph .loc{font-size:12.5px;font-weight:500;display:flex;align-items:center;gap:5px}
 .ph .open{color:#F3F0E8;font-weight:600;font-size:12.5px;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
 .cb{padding:16px 16px 14px;display:grid;gap:12px;align-content:start}
@@ -281,7 +281,7 @@ html:not(.js) .fbtn{display:none}
 .mapstage.live .maplegend{z-index:500;bottom:26px}
 .lmap{touch-action:none}
 .lpin{display:block;width:22px;height:22px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--navy);border:3px solid var(--gold);box-shadow:0 4px 10px rgba(11,22,38,.4)}
-.lpin.distress{background:var(--warn)}.lpin.equity{background:#5B4FA0}
+.lpin.distress{background:var(--warn)}.lpin.equity{background:#5B4FA0}.lpin.startup{background:#1F6F6B}
 .lpin.on{background:var(--gold);border-color:var(--navy);transform:rotate(-45deg) scale(1.25)}
 .leaflet-container{font-family:var(--body)}
 .leaflet-control-zoom a{color:var(--fg)!important}
@@ -290,7 +290,7 @@ html:not(.js) .fbtn{display:none}
 .mapstage .pin{cursor:pointer}
 .mapstage .pin circle.dot{fill:var(--navy);stroke:var(--gold);stroke-width:2.5;vector-effect:non-scaling-stroke;transition:fill .15s}
 .mapstage .pin.distress circle.dot{fill:var(--warn)}
-.mapstage .pin.equity circle.dot{fill:#5B4FA0}
+.mapstage .pin.equity circle.dot{fill:#5B4FA0}.mapstage .pin.startup circle.dot{fill:#1F6F6B}
 .mapstage .pin.on circle.dot,.mapstage .pin:hover circle.dot,.mapstage .pin:focus circle.dot{fill:var(--gold);stroke:var(--navy)}
 .mapstage .pin:focus{outline:none}
 .mapctl{position:absolute;top:12px;left:12px;display:flex;gap:6px;flex-wrap:wrap}
@@ -427,7 +427,7 @@ html.lopen{overflow:hidden}
 .ld-hero{position:relative;height:340px;background-size:cover;background-position:center}
 .ld-hero .row{position:absolute;left:20px;right:20px;bottom:18px;display:flex;justify-content:space-between;align-items:center;gap:10px}
 .ld-hero .tag{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(10,20,36,.6);color:#fff;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);padding:6px 10px;border-radius:6px}
-.ld-hero .tag.distress{background:var(--warn)}.ld-hero .tag.equity{background:#F3F0E8;color:#0B1626}
+.ld-hero .tag.distress{background:var(--warn)}.ld-hero .tag.equity{background:#F3F0E8;color:#0B1626}.ld-hero .tag.startup{background:#1F6F6B;color:#fff}
 .ld-x,.ld-sv{position:absolute;top:14px;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:rgba(255,253,248,.92);color:#0B1626;border:0;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25);z-index:2}
 .ld-x{right:14px}.ld-sv{right:64px}
 .ld-x svg,.ld-sv svg{width:20px;height:20px}
@@ -704,8 +704,9 @@ footer nav a:hover{color:var(--on-navy)}
       <div class="tabs" role="group" aria-label="Type of opportunity">
         <button type="button" data-f="all" aria-pressed="true">All</button>
         <button type="button" data-f="sale" aria-pressed="false">Full sale</button>
-        <button type="button" data-f="distress" aria-pressed="false">Distressed</button>
         <button type="button" data-f="equity" aria-pressed="false">Equity stake</button>
+        <button type="button" data-f="startup" aria-pressed="false">Startups</button>
+        <button type="button" data-f="distress" aria-pressed="false">Distressed</button>
       </div>
       <div class="viewtog" role="group" aria-label="View">
         <button type="button" id="vGrid" aria-pressed="true">Grid</button>
@@ -738,7 +739,7 @@ footer nav a:hover{color:var(--on-navy)}
       <div class="fgroup">
         <h4>Opportunity</h4>
         <div class="fchips" data-group="type">
-          <button type="button" aria-pressed="true">Full sale</button><button type="button" aria-pressed="true">Distressed</button><button type="button" aria-pressed="true">Equity stake</button>
+          <button type="button" aria-pressed="true">Full sale</button><button type="button" aria-pressed="true">Equity stake</button><button type="button" aria-pressed="true">Startup</button><button type="button" aria-pressed="true">Distressed</button>
         </div>
       </div>
       <div class="fresult"><span><b class="num" id="matchCount">9</b> <span id="mW">matching businesses</span></span><button type="button" class="btn btn-gold" id="viewRes">Show results</button></div>
@@ -757,7 +758,7 @@ footer nav a:hover{color:var(--on-navy)}
           <button type="button" data-z="uae" aria-pressed="true">All UAE</button>
           <button type="button" data-z="dxb" aria-pressed="false">Dubai &amp; Sharjah</button>
         </div>
-        <div class="maplegend"><span><i style="background:var(--navy)"></i>Full sale</span><span><i style="background:var(--warn)"></i>Distressed</span><span><i style="background:#5B4FA0"></i>Equity stake</span></div>
+        <div class="maplegend"><span><i style="background:var(--navy)"></i>Full sale</span><span><i style="background:var(--warn)"></i>Distressed</span><span><i style="background:#5B4FA0"></i>Equity stake</span><span><i style="background:#1F6F6B"></i>Startup</span></div>
       </div>
       <aside class="mapside" id="mapSide"><p class="hint">Tap a pin to preview the business.</p></aside>
     </div>
@@ -938,27 +939,28 @@ footer nav a:hover{color:var(--on-navy)}
     {t:"sale",sec:"Healthcare · Dental",title:"Dental clinic, 4 chairs",loc:"Al Reem, Abu Dhabi",zone:"Mainland",ask:"3.15m",to:"2.86m",pr:"771k",lease:"6 yrs",ref:"EQ-AUH-00121",img:"photo-1629909613654-28e377c37b09",ll:[54.4,24.5],g:["#2B5C70","#0B1626"]},
     {t:"distress",sec:"F&B · Cloud kitchen",title:"Cloud kitchen running 3 brands",loc:"Al Quoz, Dubai",zone:"Mainland",ask:"415k",to:"1.13m",pr:"−87k",lease:"2 yrs",ref:"EQ-DXB-00402",img:"photo-1790156591731-09dbf6aee75a",ll:[55.23,25.14],g:["#7A3A22","#2A1A14"]},
     {t:"sale",sec:"Education · Nursery",title:"Nursery, 120 seats, KHDA rated Good",loc:"Mirdif, Dubai",zone:"Mainland",ask:"6.45m",to:"4.12m",pr:"1.18m",lease:"9 yrs",ref:"EQ-DXB-00297",img:"photo-1567746455504-cb3213f8f5b8",ll:[55.42,25.22],g:["#3E6B4F","#0B1626"]},
-    {t:"equity",sec:"Tech · B2B logistics SaaS",title:"Raising AED 2m for a 15% stake",loc:"DIFC, Dubai",zone:"Free zone",ask:"2.0m",to:"1.62m",pr:"ARR",lease:"–",ref:"EQ-DXB-00415",img:"photo-1606857521015-7f9fcf423740",ll:[55.28,25.21],g:["#4A3F7A","#0B1626"],labels:["Raising","ARR","Stake"],vals:["2.0m","1.62m","15%"]},
+    {t:"startup",sec:"Tech · B2B logistics SaaS",title:"Raising AED 2m for a 15% stake",loc:"DIFC, Dubai",zone:"Free zone",ask:"2.0m",to:"1.62m",pr:"ARR",lease:"–",ref:"EQ-DXB-00415",img:"photo-1606857521015-7f9fcf423740",ll:[55.28,25.21],g:["#4A3F7A","#0B1626"],labels:["Raising","ARR","Stake"],vals:["2.0m","1.62m","15%"]},
     {t:"distress",sec:"Beauty · Fitness",title:"Boutique gym, fully fitted",loc:"Al Majaz, Sharjah",zone:"Mainland",ask:"365k",to:"874k",pr:"−43k",lease:"3 yrs",ref:"EQ-SHJ-00057",img:"photo-1534438327276-14e5300c3a48",ll:[55.39,25.33],g:["#6B2F45","#1F1420"]},
     {t:"sale",sec:"Logistics · Freight",title:"Freight forwarder with 12-truck fleet",loc:"SAIF Zone, Sharjah",zone:"Free zone",ask:"4.75m",to:"9.27m",pr:"1.04m",lease:"5 yrs",ref:"EQ-SHJ-00061",img:"photo-1492168732976-2676c584c675",ll:[55.51,25.33],g:["#55606E","#0B1626"]},
     {t:"equity",sec:"Beauty · Clean skincare",title:"D2C skincare brand, 30% stake",loc:"Dubai Design District",zone:"Free zone",ref:"EQ-DXB-00421",img:"photo-1598440947619-2c35fc9aa908",ll:[55.3,25.19],g:["#8A6A3A","#2A2016"],labels:["Raising","Revenue","Stake"],vals:["1.2m","3.37m","30%"]},
-    {t:"sale",sec:"Beauty · Salon",title:"Ladies’ salon, 9 stations",loc:"Al Barsha, Dubai",zone:"Mainland",ask:"685k",to:"1.31m",pr:"236k",lease:"3 yrs",ref:"EQ-DXB-00430",img:"photo-1600948836101-f9ffda59d250",ll:[55.2,25.1],g:["#7A4A5A","#0B1626"]}
+    {t:"sale",sec:"Beauty · Salon",title:"Ladies’ salon, 9 stations",loc:"Al Barsha, Dubai",zone:"Mainland",ask:"685k",to:"1.31m",pr:"236k",lease:"3 yrs",ref:"EQ-DXB-00430",img:"photo-1600948836101-f9ffda59d250",ll:[55.2,25.1],g:["#7A4A5A","#0B1626"]},
+    {t:"startup",sec:"Tech · HR and payroll",title:"Arabic-first payroll app, pre-seed",loc:"Hub71, Abu Dhabi",zone:"Free zone",ask:"750k",to:"410k",pr:"ARR",lease:"–",ref:"EQ-AUH-00137",img:"photo-1551434678-e076c223a692",ll:[54.39,24.5],g:["#1F6F6B","#0B1626"],labels:["Raising","ARR","Stake"],vals:["750k","410k","10%"]}
   ];
   var APP="app/";
   var tick='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.4l3 3 6-6.4" stroke="currentColor" stroke-width="2.2" fill="none"/></svg>';
-  var typeName={sale:"Full sale",distress:"Distressed",equity:"Equity stake"};
+  var typeName={sale:"Full sale",distress:"Distressed",equity:"Equity stake",startup:"Startup"}, RAISE={equity:1,startup:1};
   var CW=window.innerWidth<700?Math.min(1000,Math.round(window.innerWidth*(window.devicePixelRatio||1)*.9)):900;
   function U(id,w){return "https://images.unsplash.com/"+id+"?auto=format&fit=crop&w="+w+"&q=70";}
   function bg(x,w){return 'linear-gradient(180deg,rgba(10,20,36,.35),rgba(10,20,36,.05) 40%,rgba(10,20,36,.72)),'+(x.img?'url('+U(x.img,w)+') center/cover,':'')+'linear-gradient(135deg,'+x.g[0]+','+x.g[1]+')';}
-  var BY=[["AN","Al Noor Business Advisory"],["OW","Listed by owner"],["GB","Gulf Bridge Brokers"]], AGO=["2 days ago","4 days ago","1 week ago","3 days ago","5 days ago","1 week ago","6 days ago","2 weeks ago","1 day ago"];
+  var BY=[["AN","Al Noor Business Advisory"],["OW","Listed by owner"],["GB","Gulf Bridge Brokers"]], AGO=["2 days ago","4 days ago","1 week ago","3 days ago","5 days ago","1 week ago","6 days ago","2 weeks ago","1 day ago","3 days ago"];
   var ico={pin:'<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 14.5s-4.5-4.2-4.5-7.6a4.5 4.5 0 019 0c0 3.4-4.5 7.6-4.5 7.6z" stroke="currentColor" stroke-width="1.6" fill="none"/><circle cx="8" cy="6.9" r="1.6" fill="currentColor"/></svg>',
     chat:'<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 3.5h11v7.5H7l-3.5 2.5v-2.5h-1z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/></svg>',
     eye:'<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 8S4 3.5 8 3.5 14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z" stroke="currentColor" stroke-width="1.6" fill="none"/><circle cx="8" cy="8" r="2" fill="currentColor"/></svg>',
     heart:'<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 16.5S3 12.3 3 7.6A3.6 3.6 0 0110 6a3.6 3.6 0 017 1.6c0 4.7-7 8.9-7 8.9z" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linejoin="round"/></svg>'};
   function card(x,i){
     var labels=x.labels||["Asking","Turnover","Profit"], vals=x.vals||[x.ask,x.to,x.pr];
-    var tagCls=x.t==="distress"?" distress":x.t==="equity"?" equity":"", by=BY[i%BY.length];
-    var price=x.t==="equity"?'<small>Raising</small>AED '+vals[0]:'AED '+vals[0];
+    var tagCls=(x.t==="sale"?"":" "+x.t), by=BY[i%BY.length];
+    var price=RAISE[x.t]?'<small>Raising</small>AED '+vals[0]:'AED '+vals[0];
     var spec=labels.slice(1).map(function(l,k){var v=vals[k+1];return l+' <b'+(String(v).charAt(0)==="−"?' class="neg"':'')+'>'+v+'</b>';}).join(' · ');
     return '<article class="card'+(i>=4?' extra':'')+'" data-t="'+x.t+'" data-i="'+i+'" tabindex="0" role="link" aria-label="View details: '+x.title+'">'+
       '<div class="ph" style="background:'+(i<2?bg(x,CW):bg({g:x.g},CW))+'"'+(i<2?'':' data-bgi="'+i+'"')+'>'+
@@ -988,7 +990,8 @@ footer nav a:hover{color:var(--on-navy)}
     "EQ-SHJ-00057":["Sharjah","2019","8","Fully fitted 6,000 sq ft gym with 210 active members. Equipment is under three years old. The owner is exiting to focus on another venture. 38 members are on paused memberships over the summer."],
     "EQ-SHJ-00061":["Sharjah","2009","42","Licensed freight forwarder with 12 owned trucks and a bonded warehouse lease in SAIF Zone. 70% of revenue is from repeat customers. Three of the trucks are due Mulkiya renewal before February."],
     "EQ-DXB-00421":["Dubai","2020","11","Clean skincare brand sold online and in 22 retail doors across the GCC. Raising growth capital for the Saudi launch. Amazon.ae is 27% of sales and a Noon store went live in September."],
-    "EQ-DXB-00430":["Dubai","2016","11","Nine-station ladies’ salon with 1,900 regular clients and a stable team of 11. Fit-out completed in 2023. Two senior stylists hold about 22% of the client book."]};
+    "EQ-DXB-00430":["Dubai","2016","11","Nine-station ladies’ salon with 1,900 regular clients and a stable team of 11. Fit-out completed in 2023. Two senior stylists hold about 22% of the client book."],
+    "EQ-AUH-00137":["Abu Dhabi","2024","6","WPS-compliant payroll and leave app for UAE SMEs, in Arabic and English. 112 paying companies, 61% of them in Abu Dhabi. Raising a pre-seed round to hire two engineers and a sales lead. The co-founders still take half salaries, and a Saudi launch is planned but not yet licensed."]};
   var ld=document.createElement("div");ld.className="ld";ld.hidden=true;ld.setAttribute("role","dialog");ld.setAttribute("aria-modal","true");ld.setAttribute("aria-labelledby","ldT");document.body.appendChild(ld);
   var ldCur=-1, ldPushed=false, ldFrom=null, saved={};
   var xIco='<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
@@ -996,13 +999,13 @@ footer nav a:hover{color:var(--on-navy)}
   function chk(t,d){return '<div class="ld-chk"><b><i>'+tick+'</i>'+t+'</b><span>'+d+'</span></div>';}
   var signedNda={};
   function noLease(x){return !x.lease||x.lease==="–";}
-  function roomFiles(x){var eq=x.t==="equity",nl=noLease(x),bank=["PDF","Bank statements, last 12 months","Verified by equire","bank"];
+  function roomFiles(x){var eq=RAISE[x.t],nl=noLease(x),bank=["PDF","Bank statements, last 12 months","Verified by equire","bank"];
     return [["PDF","Trade licence","Verified against the registry","lic"],["XLS","Audited accounts FY2024","Verified by equire","pl"],["XLS","Management accounts FY2025","Year to date","mgmt"],
       eq?["PDF","Cap table and MoA","Verified by equire","cap"]:nl?bank:["PDF","Tenancy contract and Ejari","Verified by equire","lease"],
       ["PDF","Staff and visa list","Uploaded by the seller","staff"],
       nl?(eq?bank:["PDF","VAT and corporate tax registration","Verified with the FTA","vat"]):["XLS","Equipment and fit-out register","Uploaded by the seller","equip"]];}
   function checks(x){var c=[["Trade licence matched to the registry","02 Oct 2026"],["Financials, last 2 years","03 Oct 2026"]];
-    if(x.t==="equity")c.push(["Cap table and MoA","03 Oct 2026"]);
+    if(RAISE[x.t])c.push(["Cap table and MoA","03 Oct 2026"]);
     if(noLease(x)){c.push(["Bank statements match the accounts","03 Oct 2026"]);c.push(["VAT registration confirmed with the FTA","04 Oct 2026"]);}
     else c.push(["Lease, "+x.lease+" remaining","03 Oct 2026"]);return c;}
   function roomHTML(i){var x=L[i];
@@ -1011,7 +1014,7 @@ footer nav a:hover{color:var(--on-navy)}
         '<ul class="ld-files">'+files.map(function(f,k){return '<li><button type="button" data-ld="doc" data-f="'+f[3]+'"><span class="fi'+(f[0]==="XLS"?" x":"")+'">'+f[0]+'</span><span class="ft"><b style="font-weight:600">'+f[1]+'</b><small>'+f[2]+'</small></span><span class="fo">Open ›</span></button></li>';}).join("")+'</ul>'+
         '<p class="ld-note" style="margin-top:10px">Demo data room: in the live product each document opens with your name watermarked on every page.</p>'+
         '<button type="button" class="btn btn-gold ld-nda-btn" data-ld="enquire">'+ico.chat+'Message the '+party(i)+'</button>';}
-    return '<h4><span>Data room</span><span style="color:var(--gold-ink)">Locked</span></h4><div class="ld-lock">'+lockIco+'<span>6 documents including audited accounts, the '+(x.t==="equity"?'cap table':'tenancy contract')+' and the trade licence. Sign the NDA to unlock them.</span></div>'+
+    return '<h4><span>Data room</span><span style="color:var(--gold-ink)">Locked</span></h4><div class="ld-lock">'+lockIco+'<span>6 documents including audited accounts, the '+(RAISE[x.t]?'cap table':'tenancy contract')+' and the trade licence. Sign the NDA to unlock them.</span></div>'+
       '<button type="button" class="btn btn-ink ld-nda-btn" data-ld="nda">'+lockIco.replace('color:var(--gold-ink)','color:inherit')+'Sign NDA to unlock</button>'+
       '<form class="ld-nda" id="ldNda" hidden novalidate>'+
         '<div class="ld-terms"><p><b>1. Confidential information.</b> Everything in the data room for this listing, including financial statements, contracts and the lease.</p><p><b>2. Use.</b> Only to evaluate a possible acquisition of or investment in the business.</p><p><b>3. No approach.</b> You will not contact staff, landlords or suppliers without the seller’s consent.</p><p><b>4. Term.</b> Two years from signing.</p><p style="margin:0"><b>5. Law.</b> Laws of the United Arab Emirates.</p></div>'+
@@ -1040,9 +1043,9 @@ footer nav a:hover{color:var(--on-navy)}
     return '<div class="rt"><b>Enquire now</b><span>Ask the '+party(i)+' a question or register interest. No NDA needed.</span><button type="button" class="btn btn-gold" data-ld="enquire">'+ico.chat+'Message '+party(i)+'</button></div>'+
       '<div class="rt"><b>See the full details first</b><span>Sign a short NDA to open the financials and documents, then enquire.</span><button type="button" class="btn btn-ink" data-ld="nda">Sign NDA</button></div>';}
   function ldHTML(i){
-    var x=L[i], m=MORE[x.ref]||["UAE","–","–",""], by=BY[i%BY.length], tc=x.t==="distress"?" distress":x.t==="equity"?" equity":"";
+    var x=L[i], m=MORE[x.ref]||["UAE","–","–",""], by=BY[i%BY.length], tc=(x.t==="sale"?"":" "+x.t);
     var labels=x.labels||["Asking","Turnover","Profit"], vals=x.vals||[x.ask,x.to,x.pr];
-    var askT=x.t==="equity"?"I would like to discuss investing in ":"I am interested in ";
+    var askT=RAISE[x.t]?"I would like to discuss investing in ":"I am interested in ";
     return '<div class="ld-box" tabindex="-1">'+
       '<div class="ld-hero" style="background:'+bg(x,window.innerWidth<700?CW:1400)+'">'+
         '<button type="button" class="ld-sv" data-ld="save" aria-pressed="'+!!saved[i]+'" aria-label="Save listing">'+ico.heart+'</button>'+
@@ -1083,7 +1086,7 @@ footer nav a:hover{color:var(--on-navy)}
   function k(n){var neg=n<0;n=Math.round(Math.abs(n)/1000);var t=n.toLocaleString("en-US");return neg?'<span class="neg">('+t+')</span>':t;}
   function seed(i,j){return ((i+3)*(j+7)*9301+49297)%233280/233280;}
   function docHTML(i,fk){
-    var x=L[i],m=MORE[x.ref]||["Dubai","2018","10",""],nm=signedNda[i]||"Investor",by=BY[i%BY.length],eq=x.t==="equity";
+    var x=L[i],m=MORE[x.ref]||["Dubai","2018","10",""],nm=signedNda[i]||"Investor",by=BY[i%BY.length],eq=RAISE[x.t];
     var rev=num(eq?(x.vals&&x.vals[1]):x.to),prof=eq?rev*.08:num(x.pr);if(isNaN(rev))rev=2e6;if(isNaN(prof))prof=rev*.1;
     var auth=x.zone==="Free zone"?(/DIFC/.test(x.loc)?"Dubai International Financial Centre":/SAIF/.test(x.loc)?"Sharjah Airport International Free Zone":/Design/.test(x.loc)?"Dubai Development Authority (d3)":"DMCC Authority"):(m[0]==="Abu Dhabi"?"Abu Dhabi Department of Economic Development":m[0]==="Sharjah"?"Sharjah Economic Development Department":"Dubai Department of Economy and Tourism");
     var lic=(x.ref.replace(/\D/g,"")*37+104221)+"";
@@ -1253,7 +1256,7 @@ footer nav a:hover{color:var(--on-navy)}
   var mc=document.getElementById("matchCount"), fm=document.getElementById("filterMock"), fT=document.getElementById("fToggle");
   var toMin=document.getElementById("toMin"), toMax=document.getElementById("toMax"), toFill=document.getElementById("toFill"), toOut=document.getElementById("toOut");
   var EM={"Dubai":/Dubai|JLT|DIFC/,"Abu Dhabi":/Abu Dhabi/,"Sharjah":/Sharjah/,"Northern Emirates":/Ras Al Khaimah|Ajman|Fujairah|Umm Al Quwain/};
-  var TY={"Full sale":"sale","Distressed":"distress","Equity stake":"equity"};
+  var TY={"Full sale":"sale","Distressed":"distress","Equity stake":"equity","Startup":"startup"};
   var mqSmall=window.matchMedia("(max-width:720px)");
   function setPanel(open){fm.hidden=!open;fT.setAttribute("aria-expanded",String(open));}
   fT.addEventListener("click",function(){setPanel(fm.hidden);});

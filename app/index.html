@@ -24,7 +24,7 @@
   --navy:#0B1626; --navy-2:#132138; --navy-3:#060D18; --navy-line:#1F2F4C;
   --gold:#C9963F; --gold-soft:#E6CFA0; --gold-ink:#7A5512;
   --bg:#E8E2D5; --surface:#F7F3EA; --fg:#0B1626; --muted:#4D576B; --line:#D2C9B6; --chip:#DDD5C3;
-  --good:#1E7A4F; --good-soft:#DCEFE3; --warn:#B4541F; --warn-soft:#F6E2D6; --equity:#4A3F7A; --equity-soft:#E4E0F2;
+  --good:#1E7A4F; --good-soft:#DCEFE3; --warn:#B4541F; --warn-soft:#F6E2D6; --equity:#4A3F7A; --equity-soft:#E4E0F2; --startup:#1F6F6B;
   --on-navy:#F3F0E8; --on-navy-muted:#AEB8CC;
   --display:"Archivo","Arial Narrow",system-ui,sans-serif;
   --body:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -79,8 +79,8 @@ button{cursor:pointer;background:none;border:0;padding:0}
 .search{display:flex;align-items:center;gap:10px;background:var(--surface);color:var(--fg);border-radius:14px;padding:0 14px;height:48px;box-shadow:inset 0 -1px 0 rgba(11,22,38,.06),0 8px 22px rgba(5,10,20,.28)}
 .search svg{flex:none;color:var(--muted)}
 .search input{flex:1;min-width:0;border:0;background:none;outline:none;font-size:15.5px;height:100%}
-.seg{display:grid;grid-template-columns:repeat(4,1fr);background:rgba(12,24,40,.45);border:1px solid rgba(42,63,98,.7);border-radius:12px;padding:3px;gap:3px;box-shadow:inset 0 2px 6px rgba(0,0,0,.25)}
-.seg button{border-radius:9px;padding:8px 0;font-size:12.5px;font-weight:600;color:var(--on-navy-muted);transition:background-color .25s,color .25s,box-shadow .25s,transform .18s var(--ease)}
+.seg{display:flex;overflow-x:auto;scrollbar-width:none;background:rgba(12,24,40,.45);border:1px solid rgba(42,63,98,.7);border-radius:12px;padding:3px;gap:3px;box-shadow:inset 0 2px 6px rgba(0,0,0,.25)}
+.seg button{flex:1 0 auto;white-space:nowrap;border-radius:9px;padding:8px 12px;font-size:12.5px;font-weight:600;color:var(--on-navy-muted);transition:background-color .25s,color .25s,box-shadow .25s,transform .18s var(--ease)}
 .seg button:active{transform:scale(.95)}
 .seg button[aria-pressed="true"]{background:var(--gold);color:var(--navy);box-shadow:none}
 
@@ -106,7 +106,7 @@ button{cursor:pointer;background:none;border:0;padding:0}
 .ph .ico{position:absolute;right:16px;top:50%;margin-top:-23px;width:46px;height:46px;color:rgba(255,255,255,.55)}
 .tag{font:600 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:5px 8px;border-radius:6px;background:var(--gold-soft);color:var(--navy)}
 .tag.distress{background:var(--warn);color:#fff}
-.tag.equity{background:var(--equity);color:#fff}
+.tag.equity{background:var(--equity);color:#fff}.tag.startup{background:var(--startup);color:#fff}
 .badge{display:inline-flex;align-items:center;gap:5px;font:700 11px var(--body);letter-spacing:.04em;padding:5px 9px 5px 7px;border-radius:99px;background:var(--gold);color:var(--navy)}
 .badge svg{width:12px;height:12px}
 .loc{font-size:13px;font-weight:600;text-shadow:0 1px 6px rgba(0,0,0,.4)}
@@ -313,17 +313,17 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%;text-size-adjus
 .mapwrap .leaflet-control-attribution{font-size:10px;border-radius:6px 0 0 6px}
 .mapwrap.live .mapcard{z-index:500}
 .apin{display:block;border-radius:50%;border:2px solid #fff;background:var(--navy);box-shadow:0 3px 8px rgba(12,24,40,.45);position:relative;cursor:pointer}
-.apin.distress{background:var(--warn)}.apin.equity{background:var(--equity)}
+.apin.distress{background:var(--warn)}.apin.equity{background:var(--equity)}.apin.startup{background:var(--startup)}
 .apin.on{background:var(--gold);border-color:var(--navy)}
 .apin::after{content:"";position:absolute;inset:-2px;border-radius:50%;border:2px solid currentColor;color:inherit;opacity:0;animation:ring 3.2s cubic-bezier(.2,.6,.3,1) infinite;animation-delay:var(--d,0s);pointer-events:none}
-.apin.sale::after{border-color:var(--navy)}.apin.distress::after{border-color:var(--warn)}.apin.equity::after{border-color:var(--equity)}.apin.on::after{border-color:var(--gold)}
+.apin.sale::after{border-color:var(--navy)}.apin.distress::after{border-color:var(--warn)}.apin.equity::after{border-color:var(--equity)}.apin.startup::after{border-color:var(--startup)}.apin.on::after{border-color:var(--gold)}
 .land{fill:url(#landG);stroke:#BCB096;stroke-width:1.2}
 .city{fill:var(--muted);font-family:var(--body);font-weight:600;paint-order:stroke;stroke:rgba(251,248,241,.85);stroke-linejoin:round}
 .pin{cursor:pointer}
 .pin .pd{stroke:#fff;stroke-width:2.2}
 .pin.sale .pd{fill:var(--navy)}.pin.sale .ring{stroke:var(--navy)}
 .pin.distress .pd{fill:var(--warn)}.pin.distress .ring{stroke:var(--warn)}
-.pin.equity .pd{fill:var(--equity)}.pin.equity .ring{stroke:var(--equity)}
+.pin.equity .pd{fill:var(--equity)}.pin.equity .ring{stroke:var(--equity)}.pin.startup .pd{fill:var(--startup)}.pin.startup .ring{stroke:var(--startup)}
 .pin.on .pd{fill:var(--gold);stroke:var(--navy)}
 .pin.on .ring{stroke:var(--gold);animation-duration:1.8s}
 .pin .ring{fill:none;opacity:0;transform-box:fill-box;transform-origin:center;animation:ring 3.2s cubic-bezier(.2,.6,.3,1) infinite;animation-delay:var(--d,0s);pointer-events:none}
@@ -476,7 +476,7 @@ var L=[
    desc:"Three delivery brands running from one 1,800 sq ft kitchen. Sales are steady but rent has pushed it into a loss. Brands, recipes and equipment sell as one package. Talabat and Deliveroo bring 81% of orders. Careem was paused in August."},
   {t:"sale",sec:"Education · Nursery",title:"Nursery, 120 seats, KHDA rated Good",loc:"Mirdif, Dubai",em:"Dubai",zone:"Mainland",ask:"6.45m",askN:6.45,to:"4.12m",pr:"1.18m",lease:"9 yrs",ref:"EQ-DXB-00297",img:"photo-1567746455504-cb3213f8f5b8",ll:[55.42,25.22],g:["#3E6B4F","#0B1626"],ico:"star",est:"2012",staff:"31",
    desc:"120-seat nursery rated Good by KHDA, running at 92% occupancy with a waiting list for FS1. Purpose-built villa on a 9-year lease. Next KHDA inspection is expected in spring 2026."},
-  {t:"equity",sec:"Tech · B2B logistics SaaS",title:"Raising AED 2m for a 15% stake",loc:"DIFC, Dubai",em:"Dubai",zone:"Free zone",ask:"2.0m",askN:2,to:"1.62m",pr:"ARR",lease:"–",ref:"EQ-DXB-00415",img:"photo-1606857521015-7f9fcf423740",ll:[55.28,25.21],g:["#4A3F7A","#0B1626"],ico:"chart",labels:["Raising","ARR","Stake"],vals:["2.0m","1.62m","15%"],est:"2022",staff:"12",
+  {t:"startup",sec:"Tech · B2B logistics SaaS",title:"Raising AED 2m for a 15% stake",loc:"DIFC, Dubai",em:"Dubai",zone:"Free zone",ask:"2.0m",askN:2,to:"1.62m",pr:"ARR",lease:"–",ref:"EQ-DXB-00415",img:"photo-1606857521015-7f9fcf423740",ll:[55.28,25.21],g:["#4A3F7A","#0B1626"],ico:"chart",labels:["Raising","ARR","Stake"],vals:["2.0m","1.62m","15%"],est:"2022",staff:"12",
    desc:"Route and fleet software used by 38 GCC logistics firms, growing ARR 9% a month. Raising a seed extension to open Riyadh. Two paid pilots in KSA convert to annual contracts in Q1 if signed."},
   {t:"distress",sec:"Beauty · Fitness",title:"Boutique gym, fully fitted",loc:"Al Majaz, Sharjah",em:"Sharjah",zone:"Mainland",ask:"365k",askN:.365,to:"874k",pr:"−43k",lease:"3 yrs",ref:"EQ-SHJ-00057",img:"photo-1534438327276-14e5300c3a48",ll:[55.39,25.33],g:["#6B2F45","#1F1420"],ico:"bolt",est:"2019",staff:"8",
    desc:"Fully fitted 6,000 sq ft gym with 210 active members. Equipment is under three years old. The owner is exiting to focus on another venture. 38 members are on paused memberships over the summer."},
@@ -491,7 +491,9 @@ var L=[
   {t:"sale",sec:"Retail · Pharmacy",title:"Community pharmacy, Al Nahda",loc:"Al Nahda, Sharjah",em:"Sharjah",zone:"Mainland",ask:"975k",askN:.975,to:"2.24m",pr:"262k",lease:"4 yrs",ref:"EQ-SHJ-00069",img:"photo-1580281657527-47f249e8f4df",ll:[55.37,25.3],g:["#3A5A7A","#0B1626"],ico:"plus",est:"2014",staff:"6",
    desc:"Busy community pharmacy on a residential high street, open 7 days. Stock is valued separately at cost on completion. The pharmacist in charge has agreed to stay for 12 months after the sale."},
   {t:"sale",sec:"F&B · Restaurant",title:"Levantine restaurant, 80 covers",loc:"Al Hamra, Ras Al Khaimah",em:"Ras Al Khaimah",zone:"Mainland",ask:"1.1m",askN:1.1,to:"2.6m",pr:"340k",lease:"6 yrs",ref:"EQ-RAK-00014",img:"photo-1748540459503-19efc015143b",ll:[55.78,25.69],g:["#7A5030","#2A1A10"],ico:"cup",est:"2016",staff:"19",
-   desc:"80-cover restaurant with a terrace near the Al Hamra marina. Strong winter season and steady delivery sales year round."}
+   desc:"80-cover restaurant with a terrace near the Al Hamra marina. Strong winter season and steady delivery sales year round."},
+  {t:"startup",sec:"Tech · HR and payroll",title:"Arabic-first payroll app, pre-seed",loc:"Hub71, Abu Dhabi",em:"Abu Dhabi",zone:"Free zone",ask:"750k",askN:.75,to:"410k",pr:"ARR",lease:"–",ref:"EQ-AUH-00137",img:"photo-1551434678-e076c223a692",ll:[54.39,24.5],g:["#1F6F6B","#0B1626"],ico:"chart",labels:["Raising","ARR","Stake"],vals:["750k","410k","10%"],est:"2024",staff:"6",
+   desc:"WPS-compliant payroll and leave app for UAE SMEs, in Arabic and English. 112 paying companies, 61% of them in Abu Dhabi. Raising a pre-seed round to hire two engineers and a sales lead. The co-founders still take half salaries, and a Saudi launch is planned but not yet licensed."}
 ];
 var BROKERS=[["Omar Rahman","OR"],["Layla Haddad","LH"],["Daniel Pereira","DP"],["Mariam Al Suwaidi","MA"]];
 var OWNERS=[["Khalid Al Marri","KM"],["Priya Nair","PN"],["Hassan Youssef","HY"],["Elena Rossi","ER"]];
@@ -539,7 +541,7 @@ var TAB_ICONS={
   mandates:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z" stroke="currentColor" stroke-width="2" fill="none"/><path d="M9 12h6M9 16h6" stroke="currentColor" stroke-width="2"/></svg>',
   leads:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5" stroke="currentColor" stroke-width="2" fill="none"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 4.5a3.5 3.5 0 010 7M21 20c0-2.6-1.6-4.8-4-5.6" stroke="currentColor" stroke-width="2" fill="none"/></svg>'
 };
-var typeName={sale:"Full sale",distress:"Distressed",equity:"Equity stake"};
+var typeName={sale:"Full sale",distress:"Distressed",equity:"Equity stake",startup:"Startup"}, RAISE={equity:1,startup:1};
 
 /* ---------- state ---------- */
 var KEY="equire-app-v1";
@@ -668,19 +670,19 @@ function filtered(){
       (!q||(x.title+" "+x.loc+" "+x.sec+" "+x.em).toLowerCase().indexOf(q)>-1);});
 }
 function card(x){
-  var i=L.indexOf(x),tc=x.t==="distress"?" distress":x.t==="equity"?" equity":"";
+  var i=L.indexOf(x),tc=(x.t==="sale"?"":" "+x.t);
   return '<article class="card" data-act="open" data-i="'+i+'" role="button" tabindex="0" aria-label="'+esc(x.title)+'">'+
     '<div class="ph'+shimC(x)+'" style="background:'+grad(x)+'">'+icoSvg(x,"ico")+pimg(x,700)+
       '<div class="r"><span class="tag'+tc+'">'+typeName[x.t]+'</span><button type="button" class="heart" data-act="save" data-i="'+i+'" aria-pressed="'+isSaved(i)+'" aria-label="Save listing">'+SV.heart+'</button></div>'+
       '<div class="r"><span class="loc">'+esc(x.loc)+'</span><span class="badge">'+SV.tick+'Verified</span></div></div>'+
     '<div class="cb"><div><span class="eyebrow">'+esc(x.sec)+'</span><h3>'+esc(x.title)+'</h3></div>'+
       '<dl class="figs">'+figs(x).map(function(f){return '<div><dt>'+f[0]+'</dt><dd'+(String(f[1]).charAt(0)==="−"?' class="neg"':'')+'>'+f[1]+'</dd></div>';}).join("")+'</dl>'+
-      '<span class="vf">'+SV.tick+'Licence · financials · '+(x.t==="equity"?'cap table':'lease')+' checked</span></div></article>';
+      '<span class="vf">'+SV.tick+'Licence · financials · '+(RAISE[x.t]?'cap table':'lease')+' checked</span></div></article>';
 }
 var FEATURED=[6,3,1];
 function featuredHTML(){
   return '<section class="feat" aria-label="Featured listings"><div class="fh"><span class="sect">Featured</span><span class="fdots" aria-hidden="true">'+FEATURED.map(function(_,j){return '<i'+(j?'':' class="on"')+'></i>';}).join("")+'</span></div><div class="ftrack">'+
-    FEATURED.map(function(i){var x=L[i],f=figs(x)[0],tc=x.t==="distress"?" distress":x.t==="equity"?" equity":"";
+    FEATURED.map(function(i){var x=L[i],f=figs(x)[0],tc=(x.t==="sale"?"":" "+x.t);
       return '<article class="fc" data-act="open" data-i="'+i+'" role="button" tabindex="0" aria-label="'+esc(x.title)+'"><div class="fcbg'+shimC(x)+'" style="background:'+grad(x)+'">'+icoSvg(x,"ico")+pimg(x,800)+'</div>'+
         '<div class="r"><span class="tag'+tc+'">'+typeName[x.t]+'</span><button type="button" class="heart" data-act="save" data-i="'+i+'" aria-pressed="'+isSaved(i)+'" aria-label="Save listing">'+SV.heart+'</button></div>'+
         '<div class="fcb"><span class="badge">'+SV.tick+'Verified</span><span class="eyebrow">'+esc(x.sec)+'</span><h3>'+esc(x.title)+'</h3><span class="fcm"><span>'+f[0]+' <span class="num">AED '+f[1]+'</span></span><span>'+esc(x.loc)+'</span></span></div></article>';}).join("")+
@@ -694,7 +696,7 @@ function resultsHTML(){
 }
 function greeting(){var h=new Date().getHours();return h<12?"Good morning":h<18?"Good afternoon":"Good evening";}
 function vDiscover(){
-  var types=[["all","All"],["sale","Full sale"],["equity","Equity"],["distress","Distressed"]];
+  var types=[["all","All"],["sale","Full sale"],["equity","Equity stake"],["startup","Startups"],["distress","Distressed"]];
   return mast(greeting()+(S.name?", "+esc(first(S.name)):"")+'.','Find your next business or investment.',
     '<label class="search"><span class="sr">Search listings</span>'+SV.search+'<input id="q" type="search" enterkeyhint="search" placeholder="Clinic, Dubai, kitchen…" value="'+esc(UI.q)+'"></label>'+
     '<div class="seg" role="group" aria-label="Deal type">'+types.map(function(t){return '<button type="button" data-act="type" data-v="'+t[0]+'" aria-pressed="'+(UI.type===t[0])+'">'+t[1]+'</button>';}).join("")+'</div>')+
@@ -707,7 +709,7 @@ function vDiscover(){
 function vMap(){
   return mast("","",'')+'<div class="mapwrap" id="mapwrap"><div id="lmap" class="lmap"></div><svg id="uae" viewBox="0 0 480 400" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Map of the UAE with listing pins"></svg>'+
    '<div class="mapctl"><div class="zoom" role="group" aria-label="Map area"><button type="button" data-act="zoom" data-v="uae" aria-pressed="'+(UI.mapView==="uae")+'">UAE</button><button type="button" data-act="zoom" data-v="dxb" aria-pressed="'+(UI.mapView==="dxb")+'">Dubai</button></div>'+
-   '<div class="legend"><span><i style="background:var(--navy)"></i>Sale</span><span><i style="background:var(--equity)"></i>Equity</span><span><i style="background:var(--warn)"></i>Distressed</span></div></div>'+
+   '<div class="legend"><span><i style="background:var(--navy)"></i>Sale</span><span><i style="background:var(--equity)"></i>Equity</span><span><i style="background:var(--startup)"></i>Startup</span><span><i style="background:var(--warn)"></i>Distressed</span></div></div>'+
    '<div id="mapcard"></div></div>';
 }
 var NS="http://www.w3.org/2000/svg";
@@ -847,20 +849,20 @@ function fillPage(el,p,keep){
 }
 function phead(title,sub,right){return '<header class="phead"><button type="button" class="iconbtn" data-act="back" aria-label="Back">'+SV.back+'</button><h2>'+title+(sub?'<small>'+sub+'</small>':'')+'</h2>'+(right||'<span style="width:40px"></span>')+'</header>';}
 function pListing(p){
-  var i=p.i,x=L[i],nl=!x.lease||x.lease==="–",b=broker(i),signed=!!S.signed[i],broker_=S.role==="broker",f=figs(x),tc=x.t==="distress"?" distress":x.t==="equity"?" equity":"";
+  var i=p.i,x=L[i],nl=!x.lease||x.lease==="–",b=broker(i),signed=!!S.signed[i],broker_=S.role==="broker",f=figs(x),tc=(x.t==="sale"?"":" "+x.t);
   return '<div class="pbar"><button type="button" class="iconbtn glass" data-act="back" aria-label="Back">'+SV.back+'</button><span class="pbt" aria-hidden="true">'+esc(x.title)+'</span><button type="button" class="iconbtn glass" data-act="share" aria-label="Share listing">'+SV.share+'</button><button type="button" class="iconbtn glass heart" data-act="save" data-i="'+i+'" aria-pressed="'+isSaved(i)+'" aria-label="Save listing">'+SV.heart+'</button></div>'+
     '<div class="pbody"><div class="hero"><div class="hbg'+shimC(x)+'" style="background:'+grad(x)+'">'+icoSvg(x,"ico")+pimg(x,1000)+'</div>'+
       '<div class="hcap"><span class="tag'+tc+'">'+typeName[x.t]+'</span><span class="badge">'+SV.tick+'Verified by equire</span></div></div>'+
     '<div class="det lift"><div><span class="eyebrow">'+esc(x.sec)+'</span><h1>'+esc(x.title)+'</h1><div class="meta">'+esc(x.loc)+' · '+x.zone+' · '+x.ref+'</div></div>'+
-      '<dl class="big-figs">'+f.map(function(a,j){return '<div><dt>'+a[0]+'</dt><dd'+(String(a[1]).charAt(0)==="−"?' class="neg"':'')+'>'+(j===0&&x.t!=="equity"?'<small style="font-size:11px;color:var(--muted)">AED </small>':'')+a[1]+'</dd></div>';}).join("")+'</dl>'+
+      '<dl class="big-figs">'+f.map(function(a,j){return '<div><dt>'+a[0]+'</dt><dd'+(String(a[1]).charAt(0)==="−"?' class="neg"':'')+'>'+(j===0&&!RAISE[x.t]?'<small style="font-size:11px;color:var(--muted)">AED </small>':'')+a[1]+'</dd></div>';}).join("")+'</dl>'+
       '<p style="margin:0">'+esc(x.desc)+'</p>'+
       (broker_||signed?'':'<div class="routes"><div><b>Enquire now</b><span>Ask the '+b[2]+' a question or register interest. No NDA needed.</span><button type="button" class="btn btn-line" data-act="chat" data-i="'+i+'">Message '+b[2]+'</button></div><div><b>See full details first</b><span>Sign a short NDA to open the financials, then enquire.</span><button type="button" class="btn btn-gold" data-act="nda" data-i="'+i+'">'+SV.lock+'Sign NDA</button></div></div>')+
-      '<div class="box"><h4><span>Verified by equire</span><span style="color:var(--good)">'+(nl?(x.t==="equity"?5:4):3)+' of '+(nl?(x.t==="equity"?5:4):3)+'</span></h4>'+
+      '<div class="box"><h4><span>Verified by equire</span><span style="color:var(--good)">'+(nl?(RAISE[x.t]?5:4):3)+' of '+(nl?(RAISE[x.t]?5:4):3)+'</span></h4>'+
         chk("Trade licence matched to registry","02 Oct 2026")+chk("Financials, last 2 years","03 Oct 2026")+
-        (x.t==="equity"?chk("Cap table and MoA","03 Oct 2026"):"")+(nl?chk("Bank statements match the accounts","03 Oct 2026")+chk("VAT registration confirmed with the FTA","04 Oct 2026")+'<p class="note" style="margin:6px 0 0">No premises lease: this business works remotely, so it is verified through its licence, accounts, bank statements and VAT records.</p>':chk("Lease, "+x.lease+" remaining","03 Oct 2026"))+'</div>'+
+        (RAISE[x.t]?chk("Cap table and MoA","03 Oct 2026"):"")+(nl?chk("Bank statements match the accounts","03 Oct 2026")+chk("VAT registration confirmed with the FTA","04 Oct 2026")+'<p class="note" style="margin:6px 0 0">No premises lease: this business works remotely, so it is verified through its licence, accounts, bank statements and VAT records.</p>':chk("Lease, "+x.lease+" remaining","03 Oct 2026"))+'</div>'+
       '<div class="box"><h4><span>Key facts</span></h4><dl class="kv"><div><dt>Established</dt><dd class="mono">'+x.est+'</dd></div><div><dt>Staff</dt><dd class="mono">'+x.staff+'</dd></div><div><dt>Licence</dt><dd>'+x.zone+'</dd></div><div><dt>Emirate</dt><dd>'+x.em+'</dd></div></dl></div>'+
       '<div class="box"><h4><span>Data room</span><span style="display:flex;gap:5px;align-items:center;color:'+(signed?'var(--good)':'var(--gold-ink)')+'">'+(signed?'Unlocked':SV.lock+'Locked')+'</span></h4>'+
-        (signed?'<p style="font-size:14px">You signed the NDA on '+esc(S.signed[i].at)+'. 6 documents are open to you.</p>':'<div class="locked"><div style="width:90%"></div><div style="width:70%"></div><div style="width:82%"></div><div style="width:60%"></div></div><p class="note">6 documents including audited accounts, the '+(x.t==="equity"?'cap table':'tenancy contract')+' and the trade licence. Sign the NDA to unlock them.</p>')+'</div>'+
+        (signed?'<p style="font-size:14px">You signed the NDA on '+esc(S.signed[i].at)+'. 6 documents are open to you.</p>':'<div class="locked"><div style="width:90%"></div><div style="width:70%"></div><div style="width:82%"></div><div style="width:60%"></div></div><p class="note">6 documents including audited accounts, the '+(RAISE[x.t]?'cap table':'tenancy contract')+' and the trade licence. Sign the NDA to unlock them.</p>')+'</div>'+
       '<div class="box"><h4><span>Listed by '+(b[2]==="owner"?'the owner':'a broker')+'</span></h4><div class="person"><span class="pa">'+b[1]+'</span><div><b>'+b[0]+'</b><span>'+b[3]+'</span></div></div></div>'+
       '<p class="note">Illustrative listing created to show the product.</p>'+
     '</div></div>'+
@@ -870,7 +872,7 @@ function pListing(p){
 }
 function chk(t,d){return '<div class="check"><span><span class="ok">'+SV.tick+'</span>'+t+'</span><span class="when">'+d+'</span></div>';}
 function roomFiles(x){return [["PDF","Trade licence","Verified against the registry","lic"],["XLS","Audited accounts FY2024","Verified by equire","pl"],["XLS","Management accounts FY2025","Year to date, uploaded by the seller","pl25"],
-  x.t==="equity"?["PDF","Cap table and MoA","Verified by equire","gen"]:["PDF","Tenancy contract and Ejari","Verified by equire","lease"],["PDF","Staff and visa list","Uploaded by the seller","gen"],(!x.lease||x.lease==="–")?["PDF","Bank statements, last 12 months","Verified by equire","gen"]:["XLS","Equipment and fit-out register","Uploaded by the seller","gen"]];}
+  RAISE[x.t]?["PDF","Cap table and MoA","Verified by equire","gen"]:["PDF","Tenancy contract and Ejari","Verified by equire","lease"],["PDF","Staff and visa list","Uploaded by the seller","gen"],(!x.lease||x.lease==="–")?["PDF","Bank statements, last 12 months","Verified by equire","gen"]:["XLS","Equipment and fit-out register","Uploaded by the seller","gen"]];}
 function pRoom(p){
   var x=L[p.i],s=S.signed[p.i]||{name:S.name,at:today()};
   return phead("Data room",x.ref+' · '+x.title)+'<div class="pbody"><div class="det">'+
